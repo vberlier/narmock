@@ -1,2 +1,3 @@
 # narmock
-Minimal mocking utility for C projects.
+
+> A minimal mocking utility for C projects.
