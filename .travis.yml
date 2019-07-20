@@ -1,0 +1,33 @@
+language: python
+dist: bionic
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-8
+compiler: gcc-8
+
+cache:
+  pip: true
+  directories:
+    - $HOME/.cache/pypoetry
+
+install:
+  - curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+  - source $HOME/.poetry/env
+  - poetry install
+
+script: poetry run make -C tests
+
+jobs:
+  include:
+    - python: 3.7
+
+    - stage: publish
+      python: 3.7
+      if: tag IS present
+      script:
+        - poetry build
+        - poetry publish --username="$PYPI_USERNAME" --password="$PYPI_PASSWORD"
