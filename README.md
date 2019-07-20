@@ -34,6 +34,29 @@ The package can be installed with `pip`.
 $ pip install narmock
 ```
 
+## Getting started
+
+The command-line utility provides three essential commands that should make it possible to integrate Narmock in any kind of build system.
+
+```bash
+$ narmock --help
+usage: narmock [-h] (-g <file> | -d <file> | -f) [-p <string>] [<file>]
+
+A minimal mocking utility for C projects.
+
+positional arguments:
+  <file>       expanded code or generated mocks
+
+optional arguments:
+  -h, --help   show this help message and exit
+  -g <file>    generate mocks
+  -d <file>    extract declarations
+  -f           output linker flags
+  -p <string>  getter prefix
+```
+
+_TODO_
+
 ## Contributing
 
 Contributions are welcome. Feel free to open issues and suggest improvements. This project uses [poetry](https://poetry.eustace.io/) so you'll need to install it first if you want to be able to work with the project locally.
