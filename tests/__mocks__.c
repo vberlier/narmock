@@ -26,8 +26,8 @@ struct _narmock_state_type_add
 };
 
 _narmock_state_type_add *other_mock_prefix_add();
-_narmock_state_type_add *narmock_add();
 _narmock_state_type_add *get_mock_add();
+_narmock_state_type_add *narmock_add();
 
 // NARMOCK_DECLARATION output_message
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=output_message
@@ -125,7 +125,7 @@ struct _narmock_state_private_type_add
 {
     _narmock_state_type_add public;
 
-    int state;
+    int mode;
     int return_value;
     int (*implementation)(int arg1, int arg2);
 };
@@ -142,12 +142,12 @@ _narmock_state_private_type_add _narmock_state_global_add =
         .disable_mock = _narmock_function_disable_mock_add
     },
 
-    .state = 0
+    .mode = 0
 };
 
 int __wrap_add(int arg1, int arg2)
 {
-    switch (_narmock_state_global_add.state)
+    switch (_narmock_state_global_add.mode)
     {
         case 1:
             return _narmock_state_global_add.return_value;
@@ -160,7 +160,7 @@ int __wrap_add(int arg1, int arg2)
 
 _narmock_state_type_add *_narmock_function_mock_return_add(int return_value)
 {
-    _narmock_state_global_add.state = 1;
+    _narmock_state_global_add.mode = 1;
     _narmock_state_global_add.return_value = return_value;
 
     return &_narmock_state_global_add.public;
@@ -168,7 +168,7 @@ _narmock_state_type_add *_narmock_function_mock_return_add(int return_value)
 
 _narmock_state_type_add *_narmock_function_mock_implementation_add(int (*implementation)(int arg1, int arg2))
 {
-    _narmock_state_global_add.state = 2;
+    _narmock_state_global_add.mode = 2;
     _narmock_state_global_add.implementation = implementation;
 
     return &_narmock_state_global_add.public;
@@ -176,7 +176,7 @@ _narmock_state_type_add *_narmock_function_mock_implementation_add(int (*impleme
 
 _narmock_state_type_add *_narmock_function_disable_mock_add()
 {
-    _narmock_state_global_add.state = 0;
+    _narmock_state_global_add.mode = 0;
 
     return &_narmock_state_global_add.public;
 }
@@ -186,12 +186,12 @@ _narmock_state_type_add *other_mock_prefix_add()
     return &_narmock_state_global_add.public;
 }
 
-_narmock_state_type_add *narmock_add()
+_narmock_state_type_add *get_mock_add()
 {
     return &_narmock_state_global_add.public;
 }
 
-_narmock_state_type_add *get_mock_add()
+_narmock_state_type_add *narmock_add()
 {
     return &_narmock_state_global_add.public;
 }
@@ -206,7 +206,7 @@ struct _narmock_state_private_type_output_message
 {
     _narmock_state_type_output_message public;
 
-    int state;
+    int mode;
     void (*implementation)(char *arg1);
 };
 
@@ -222,12 +222,12 @@ _narmock_state_private_type_output_message _narmock_state_global_output_message 
         .disable_mock = _narmock_function_disable_mock_output_message
     },
 
-    .state = 0
+    .mode = 0
 };
 
 void __wrap_output_message(char *arg1)
 {
-    switch (_narmock_state_global_output_message.state)
+    switch (_narmock_state_global_output_message.mode)
     {
         case 1:
             return;
@@ -240,14 +240,14 @@ void __wrap_output_message(char *arg1)
 
 _narmock_state_type_output_message *_narmock_function_mock_return_output_message()
 {
-    _narmock_state_global_output_message.state = 1;
+    _narmock_state_global_output_message.mode = 1;
 
     return &_narmock_state_global_output_message.public;
 }
 
 _narmock_state_type_output_message *_narmock_function_mock_implementation_output_message(void (*implementation)(char *arg1))
 {
-    _narmock_state_global_output_message.state = 2;
+    _narmock_state_global_output_message.mode = 2;
     _narmock_state_global_output_message.implementation = implementation;
 
     return &_narmock_state_global_output_message.public;
@@ -255,7 +255,7 @@ _narmock_state_type_output_message *_narmock_function_mock_implementation_output
 
 _narmock_state_type_output_message *_narmock_function_disable_mock_output_message()
 {
-    _narmock_state_global_output_message.state = 0;
+    _narmock_state_global_output_message.mode = 0;
 
     return &_narmock_state_global_output_message.public;
 }
@@ -275,7 +275,7 @@ struct _narmock_state_private_type_edit_number
 {
     _narmock_state_type_edit_number public;
 
-    int state;
+    int mode;
     DummyStruct *return_value;
     DummyStruct *(*implementation)(DummyStruct *arg1, int arg2);
 };
@@ -292,12 +292,12 @@ _narmock_state_private_type_edit_number _narmock_state_global_edit_number =
         .disable_mock = _narmock_function_disable_mock_edit_number
     },
 
-    .state = 0
+    .mode = 0
 };
 
 DummyStruct *__wrap_edit_number(DummyStruct *arg1, int arg2)
 {
-    switch (_narmock_state_global_edit_number.state)
+    switch (_narmock_state_global_edit_number.mode)
     {
         case 1:
             return _narmock_state_global_edit_number.return_value;
@@ -310,7 +310,7 @@ DummyStruct *__wrap_edit_number(DummyStruct *arg1, int arg2)
 
 _narmock_state_type_edit_number *_narmock_function_mock_return_edit_number(DummyStruct *return_value)
 {
-    _narmock_state_global_edit_number.state = 1;
+    _narmock_state_global_edit_number.mode = 1;
     _narmock_state_global_edit_number.return_value = return_value;
 
     return &_narmock_state_global_edit_number.public;
@@ -318,7 +318,7 @@ _narmock_state_type_edit_number *_narmock_function_mock_return_edit_number(Dummy
 
 _narmock_state_type_edit_number *_narmock_function_mock_implementation_edit_number(DummyStruct *(*implementation)(DummyStruct *arg1, int arg2))
 {
-    _narmock_state_global_edit_number.state = 2;
+    _narmock_state_global_edit_number.mode = 2;
     _narmock_state_global_edit_number.implementation = implementation;
 
     return &_narmock_state_global_edit_number.public;
@@ -326,7 +326,7 @@ _narmock_state_type_edit_number *_narmock_function_mock_implementation_edit_numb
 
 _narmock_state_type_edit_number *_narmock_function_disable_mock_edit_number()
 {
-    _narmock_state_global_edit_number.state = 0;
+    _narmock_state_global_edit_number.mode = 0;
 
     return &_narmock_state_global_edit_number.public;
 }
@@ -346,7 +346,7 @@ struct _narmock_state_private_type_compose_twice
 {
     _narmock_state_type_compose_twice public;
 
-    int state;
+    int mode;
     DummyStruct *return_value;
     DummyStruct *(*implementation)(DummyStruct *arg1, DummyStruct *(*arg2)(DummyStruct *dummy_struct));
 };
@@ -363,12 +363,12 @@ _narmock_state_private_type_compose_twice _narmock_state_global_compose_twice =
         .disable_mock = _narmock_function_disable_mock_compose_twice
     },
 
-    .state = 0
+    .mode = 0
 };
 
 DummyStruct *__wrap_compose_twice(DummyStruct *arg1, DummyStruct *(*arg2)(DummyStruct *dummy_struct))
 {
-    switch (_narmock_state_global_compose_twice.state)
+    switch (_narmock_state_global_compose_twice.mode)
     {
         case 1:
             return _narmock_state_global_compose_twice.return_value;
@@ -381,7 +381,7 @@ DummyStruct *__wrap_compose_twice(DummyStruct *arg1, DummyStruct *(*arg2)(DummyS
 
 _narmock_state_type_compose_twice *_narmock_function_mock_return_compose_twice(DummyStruct *return_value)
 {
-    _narmock_state_global_compose_twice.state = 1;
+    _narmock_state_global_compose_twice.mode = 1;
     _narmock_state_global_compose_twice.return_value = return_value;
 
     return &_narmock_state_global_compose_twice.public;
@@ -389,7 +389,7 @@ _narmock_state_type_compose_twice *_narmock_function_mock_return_compose_twice(D
 
 _narmock_state_type_compose_twice *_narmock_function_mock_implementation_compose_twice(DummyStruct *(*implementation)(DummyStruct *arg1, DummyStruct *(*arg2)(DummyStruct *dummy_struct)))
 {
-    _narmock_state_global_compose_twice.state = 2;
+    _narmock_state_global_compose_twice.mode = 2;
     _narmock_state_global_compose_twice.implementation = implementation;
 
     return &_narmock_state_global_compose_twice.public;
@@ -397,7 +397,7 @@ _narmock_state_type_compose_twice *_narmock_function_mock_implementation_compose
 
 _narmock_state_type_compose_twice *_narmock_function_disable_mock_compose_twice()
 {
-    _narmock_state_global_compose_twice.state = 0;
+    _narmock_state_global_compose_twice.mode = 0;
 
     return &_narmock_state_global_compose_twice.public;
 }
@@ -417,7 +417,7 @@ struct _narmock_state_private_type_mount
 {
     _narmock_state_type_mount public;
 
-    int state;
+    int mode;
     int return_value;
     int (*implementation)(const char *arg1, const char *arg2, const char *arg3, unsigned long int arg4, const void *arg5);
 };
@@ -434,12 +434,12 @@ _narmock_state_private_type_mount _narmock_state_global_mount =
         .disable_mock = _narmock_function_disable_mock_mount
     },
 
-    .state = 0
+    .mode = 0
 };
 
 int __wrap_mount(const char *arg1, const char *arg2, const char *arg3, unsigned long int arg4, const void *arg5)
 {
-    switch (_narmock_state_global_mount.state)
+    switch (_narmock_state_global_mount.mode)
     {
         case 1:
             return _narmock_state_global_mount.return_value;
@@ -452,7 +452,7 @@ int __wrap_mount(const char *arg1, const char *arg2, const char *arg3, unsigned 
 
 _narmock_state_type_mount *_narmock_function_mock_return_mount(int return_value)
 {
-    _narmock_state_global_mount.state = 1;
+    _narmock_state_global_mount.mode = 1;
     _narmock_state_global_mount.return_value = return_value;
 
     return &_narmock_state_global_mount.public;
@@ -460,7 +460,7 @@ _narmock_state_type_mount *_narmock_function_mock_return_mount(int return_value)
 
 _narmock_state_type_mount *_narmock_function_mock_implementation_mount(int (*implementation)(const char *arg1, const char *arg2, const char *arg3, unsigned long int arg4, const void *arg5))
 {
-    _narmock_state_global_mount.state = 2;
+    _narmock_state_global_mount.mode = 2;
     _narmock_state_global_mount.implementation = implementation;
 
     return &_narmock_state_global_mount.public;
@@ -468,7 +468,7 @@ _narmock_state_type_mount *_narmock_function_mock_implementation_mount(int (*imp
 
 _narmock_state_type_mount *_narmock_function_disable_mock_mount()
 {
-    _narmock_state_global_mount.state = 0;
+    _narmock_state_global_mount.mode = 0;
 
     return &_narmock_state_global_mount.public;
 }
@@ -488,7 +488,7 @@ struct _narmock_state_private_type_time
 {
     _narmock_state_type_time public;
 
-    int state;
+    int mode;
     time_t return_value;
     time_t (*implementation)(time_t *arg1);
 };
@@ -505,12 +505,12 @@ _narmock_state_private_type_time _narmock_state_global_time =
         .disable_mock = _narmock_function_disable_mock_time
     },
 
-    .state = 0
+    .mode = 0
 };
 
 time_t __wrap_time(time_t *arg1)
 {
-    switch (_narmock_state_global_time.state)
+    switch (_narmock_state_global_time.mode)
     {
         case 1:
             return _narmock_state_global_time.return_value;
@@ -523,7 +523,7 @@ time_t __wrap_time(time_t *arg1)
 
 _narmock_state_type_time *_narmock_function_mock_return_time(time_t return_value)
 {
-    _narmock_state_global_time.state = 1;
+    _narmock_state_global_time.mode = 1;
     _narmock_state_global_time.return_value = return_value;
 
     return &_narmock_state_global_time.public;
@@ -531,7 +531,7 @@ _narmock_state_type_time *_narmock_function_mock_return_time(time_t return_value
 
 _narmock_state_type_time *_narmock_function_mock_implementation_time(time_t (*implementation)(time_t *arg1))
 {
-    _narmock_state_global_time.state = 2;
+    _narmock_state_global_time.mode = 2;
     _narmock_state_global_time.implementation = implementation;
 
     return &_narmock_state_global_time.public;
@@ -539,7 +539,7 @@ _narmock_state_type_time *_narmock_function_mock_implementation_time(time_t (*im
 
 _narmock_state_type_time *_narmock_function_disable_mock_time()
 {
-    _narmock_state_global_time.state = 0;
+    _narmock_state_global_time.mode = 0;
 
     return &_narmock_state_global_time.public;
 }
@@ -559,7 +559,7 @@ struct _narmock_state_private_type_pipe
 {
     _narmock_state_type_pipe public;
 
-    int state;
+    int mode;
     int return_value;
     int (*implementation)(int arg1[2]);
 };
@@ -576,12 +576,12 @@ _narmock_state_private_type_pipe _narmock_state_global_pipe =
         .disable_mock = _narmock_function_disable_mock_pipe
     },
 
-    .state = 0
+    .mode = 0
 };
 
 int __wrap_pipe(int arg1[2])
 {
-    switch (_narmock_state_global_pipe.state)
+    switch (_narmock_state_global_pipe.mode)
     {
         case 1:
             return _narmock_state_global_pipe.return_value;
@@ -594,7 +594,7 @@ int __wrap_pipe(int arg1[2])
 
 _narmock_state_type_pipe *_narmock_function_mock_return_pipe(int return_value)
 {
-    _narmock_state_global_pipe.state = 1;
+    _narmock_state_global_pipe.mode = 1;
     _narmock_state_global_pipe.return_value = return_value;
 
     return &_narmock_state_global_pipe.public;
@@ -602,7 +602,7 @@ _narmock_state_type_pipe *_narmock_function_mock_return_pipe(int return_value)
 
 _narmock_state_type_pipe *_narmock_function_mock_implementation_pipe(int (*implementation)(int arg1[2]))
 {
-    _narmock_state_global_pipe.state = 2;
+    _narmock_state_global_pipe.mode = 2;
     _narmock_state_global_pipe.implementation = implementation;
 
     return &_narmock_state_global_pipe.public;
@@ -610,7 +610,7 @@ _narmock_state_type_pipe *_narmock_function_mock_implementation_pipe(int (*imple
 
 _narmock_state_type_pipe *_narmock_function_disable_mock_pipe()
 {
-    _narmock_state_global_pipe.state = 0;
+    _narmock_state_global_pipe.mode = 0;
 
     return &_narmock_state_global_pipe.public;
 }

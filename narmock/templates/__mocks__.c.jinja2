@@ -40,7 +40,7 @@ struct {{ mock.private_state_type }}
 {
     {{ mock.state_type }} public;
 
-    int state;
+    int mode;
     {% if mock.return_value %}
     {{ mock.return_value_decl | render }};
     {% endif %}
@@ -59,12 +59,12 @@ struct {{ mock.private_state_type }}
         .disable_mock = _narmock_function_disable_mock_{{ mock.func_name }}
     },
 
-    .state = 0
+    .mode = 0
 };
 
 {{ mock.wrapped_decl | render }}
 {
-    switch ({{ mock.state_name }}.state)
+    switch ({{ mock.state_name }}.mode)
     {
         case 1:
             return{% if mock.return_value %} {{ mock.state_name }}.return_value{% endif %};
@@ -77,7 +77,7 @@ struct {{ mock.private_state_type }}
 
 {{ mock.state_type }} *_narmock_function_mock_return_{{ mock.func_name }}({% if mock.return_value %}{{ mock.return_value_decl | render }}{% endif %})
 {
-    {{ mock.state_name }}.state = 1;
+    {{ mock.state_name }}.mode = 1;
     {% if mock.return_value %}
     {{ mock.state_name }}.return_value = return_value;
     {% endif %}
@@ -87,7 +87,7 @@ struct {{ mock.private_state_type }}
 
 {{ mock.state_type }} *_narmock_function_mock_implementation_{{ mock.func_name }}({{ mock.implementation_decl | render }})
 {
-    {{ mock.state_name }}.state = 2;
+    {{ mock.state_name }}.mode = 2;
     {{ mock.state_name }}.implementation = implementation;
 
     return &{{ mock.state_name }}.public;
@@ -95,7 +95,7 @@ struct {{ mock.private_state_type }}
 
 {{ mock.state_type }} *_narmock_function_disable_mock_{{ mock.func_name }}()
 {
-    {{ mock.state_name }}.state = 0;
+    {{ mock.state_name }}.mode = 0;
 
     return &{{ mock.state_name }}.public;
 }
