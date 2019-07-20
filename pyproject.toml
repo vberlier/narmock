@@ -12,6 +12,10 @@ documentation = "https://github.com/vberlier/narmock"
 readme = "README.md"
 
 keywords = [
+  "c",
+  "mocking",
+  "tests",
+  "narwhal",
 ]
 
 [tool.poetry.dependencies]
