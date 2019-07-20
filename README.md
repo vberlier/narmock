@@ -59,3 +59,7 @@ You can run the tests with `poetry run make -C tests`. The test suite is built w
 ```bash
 $ poetry run make -C tests
 ```
+
+---
+
+License - [MIT](https://github.com/vberlier/narmock/blob/master/LICENSE)
