@@ -1,0 +1,16 @@
+#ifndef TEST_DUMMY_FUNCTIONS_H
+#define TEST_DUMMY_FUNCTIONS_H
+
+typedef struct DummyStruct
+{
+    int number;
+} DummyStruct;
+
+int add(int x, int y);
+void output_message(char *message);
+DummyStruct *edit_number(DummyStruct *dummy_struct, int number);
+DummyStruct *add_one(DummyStruct *dummy_struct);
+DummyStruct *compose_twice(DummyStruct *dummy_struct,
+                           DummyStruct *(*dummy_struct_modifier)(DummyStruct *dummy_struct));
+
+#endif

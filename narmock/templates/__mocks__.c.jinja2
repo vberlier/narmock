@@ -1,0 +1,109 @@
+/*
+Mocks source file
+
+Generated with Narmock v{{ narmock_version }} (https://github.com/vberlier/narmock)
+Do not edit manually
+*/
+
+{{ decl_begin }}
+
+{{ includes }}
+{% for mock in mocks %}
+
+{{ mock.DECL_MARKER }} {{ mock.func_name }}
+{{ mock.FLAGS_MARKER }} {{ mock.linker_flags }}
+
+typedef struct {{ mock.state_type }} {{ mock.state_type }};
+
+struct {{ mock.state_type }}
+{
+    {{ mock.mock_return_decl | render }};
+    {{ mock.mock_implementation_decl | render }};
+    {{ mock.disable_mock_decl | render }};
+};
+
+{% for getter in mock.function.getters %}
+{{ mock.state_type }} *{{ getter }}();
+{% endfor %}
+{% endfor %}
+
+{{ decl_end }}
+{% for mock in mocks %}
+
+{{ mock.IMPL_MARKER }} {{ mock.func_name }}
+
+{{ mock.real_decl | render }};
+
+typedef struct {{ mock.private_state_type }} {{ mock.private_state_type }};
+
+struct {{ mock.private_state_type }}
+{
+    {{ mock.state_type }} public;
+
+    int state;
+    {% if mock.return_value %}
+    {{ mock.return_value_decl | render }};
+    {% endif %}
+    {{ mock.implementation_decl | render }};
+};
+
+{{ mock.state_type }} *_narmock_function_mock_return_{{ mock.func_name }}({% if mock.return_value %}{{ mock.return_value_decl | render }}{% endif %});
+{{ mock.state_type }} *_narmock_function_mock_implementation_{{ mock.func_name }}({{ mock.implementation_decl | render }});
+{{ mock.state_type }} *_narmock_function_disable_mock_{{ mock.func_name }}();
+
+{{ mock.private_state_type }} {{ mock.state_name }} =
+{
+    .public = {
+        .mock_return = _narmock_function_mock_return_{{ mock.func_name }},
+        .mock_implementation = _narmock_function_mock_implementation_{{ mock.func_name }},
+        .disable_mock = _narmock_function_disable_mock_{{ mock.func_name }}
+    },
+
+    .state = 0
+};
+
+{{ mock.wrapped_decl | render }}
+{
+    switch ({{ mock.state_name }}.state)
+    {
+        case 1:
+            return{% if mock.return_value %} {{ mock.state_name }}.return_value{% endif %};
+        case 2:
+            return {{ mock.state_name }}.implementation({{ mock.forward_args }});
+        default:
+            return {{ mock.real_func }}({{ mock.forward_args }});
+    }
+}
+
+{{ mock.state_type }} *_narmock_function_mock_return_{{ mock.func_name }}({% if mock.return_value %}{{ mock.return_value_decl | render }}{% endif %})
+{
+    {{ mock.state_name }}.state = 1;
+    {% if mock.return_value %}
+    {{ mock.state_name }}.return_value = return_value;
+    {% endif %}
+
+    return &{{ mock.state_name }}.public;
+}
+
+{{ mock.state_type }} *_narmock_function_mock_implementation_{{ mock.func_name }}({{ mock.implementation_decl | render }})
+{
+    {{ mock.state_name }}.state = 2;
+    {{ mock.state_name }}.implementation = implementation;
+
+    return &{{ mock.state_name }}.public;
+}
+
+{{ mock.state_type }} *_narmock_function_disable_mock_{{ mock.func_name }}()
+{
+    {{ mock.state_name }}.state = 0;
+
+    return &{{ mock.state_name }}.public;
+}
+{% for getter in mock.function.getters %}
+
+{{ mock.state_type }} *{{ getter }}()
+{
+    return &{{ mock.state_name }}.public;
+}
+{% endfor %}
+{% endfor %}
