@@ -9,6 +9,14 @@
 
 🚧 Work in progress 🚧
 
+## Installation
+
+The package can be installed with `pip`.
+
+```bash
+$ pip install narmock
+```
+
 ## Contributing
 
 Contributions are welcome. Feel free to open issues and suggest improvements. This project uses [poetry](https://poetry.eustace.io/) so you'll need to install it first if you want to be able to work with the project locally.
