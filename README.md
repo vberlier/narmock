@@ -9,6 +9,23 @@
 
 🚧 Work in progress 🚧
 
+Narmock identifies the mocks being used in your tests and generates easy-to-use implementations with a slick API.
+
+```c
+#include <time.h>
+
+#include "__mocks__.h"
+#include "narwhal.h"
+
+TEST(example)
+{
+    MOCK(time)->mock_return(42);
+    ASSERT_EQ(time(NULL), 42);
+}
+```
+
+> Most of the examples in this README are tests written with [Narwhal](https://github.com/vberlier/narwhal) but Narmock can be used with other test frameworks and anywhere in regular source code.
+
 ## Installation
 
 The package can be installed with `pip`.
