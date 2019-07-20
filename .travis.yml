@@ -1,5 +1,10 @@
 language: python
-dist: bionic
+dist: xenial
+
+cache:
+  pip: true
+  directories:
+    - $HOME/.cache/pypoetry
 
 addons:
   apt:
@@ -7,12 +12,12 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - gcc-8
-compiler: gcc-8
 
-cache:
-  pip: true
-  directories:
-    - $HOME/.cache/pypoetry
+env:
+  - CC=gcc-8
+
+before_install:
+  - $CC --version
 
 install:
   - curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
