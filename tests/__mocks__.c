@@ -1,7 +1,7 @@
 /*
 Mocks source file
 
-Generated with Narmock v0.1.3 (https://github.com/vberlier/narmock)
+Generated with Narmock v0.1.4 (https://github.com/vberlier/narmock)
 Do not edit manually
 */
 
