@@ -38,7 +38,7 @@ $ pip install narmock
 
 The command-line utility provides three essential commands that should make it possible to integrate Narmock in any kind of build system.
 
-```bash
+```
 $ narmock --help
 usage: narmock [-h] (-g <file> | -d <file> | -f) [-p <string>] [<file>]
 
