@@ -28,8 +28,8 @@ The code follows the [black](https://github.com/ambv/black) code style.
 $ poetry run black narmock
 ```
 
-You can run the tests with `poetry run make test`. The test suite is built with [Narwhal](https://github.com/vberlier/narwhal).
+You can run the tests with `poetry run make -C tests`. The test suite is built with [Narwhal](https://github.com/vberlier/narwhal).
 
 ```bash
-$ cd tests && poetry run make test
+$ poetry run make -C tests
 ```
