@@ -22,6 +22,12 @@ You should now be able to install the required dependencies.
 $ poetry install
 ```
 
+The code follows the [black](https://github.com/ambv/black) code style.
+
+```bash
+$ poetry run black narmock
+```
+
 You can run the tests with `poetry run make test`. The test suite is built with [Narwhal](https://github.com/vberlier/narwhal).
 
 ```bash
