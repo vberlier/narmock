@@ -1,4 +1,4 @@
-# 🔧 narmock
+# 🎣 narmock
 
 [![Build Status](https://travis-ci.com/vberlier/narmock.svg?branch=master)](https://travis-ci.com/vberlier/narmock)
 [![PyPI](https://img.shields.io/pypi/v/narmock.svg)](https://pypi.org/project/narmock/)
