@@ -14,7 +14,7 @@ import os
 import sys
 import re
 from collections import defaultdict
-from typing import NamedTuple, Optional, Dict, Set, Tuple
+from typing import NamedTuple, List, Tuple
 
 from pycparser import c_ast as node
 from pycparser.c_parser import CParser
@@ -98,7 +98,7 @@ class MockedFunction(NamedTuple):
     name: str
     declaration: str
     include: IncludeDirective
-    getters: Set[str]
+    getters: List[str]
 
 
 class Token(NamedTuple):
@@ -291,5 +291,5 @@ class ForgivingDeclarationParser:
                 func_name,
                 rename_arguments(file_ast.ext[-1]),
                 IncludeDirective.from_source_context(self.source_context),
-                getters,
+                list(sorted(getters)),
             )

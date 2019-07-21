@@ -27,8 +27,8 @@ struct _narmock_state_type_add
 };
 
 _narmock_state_type_add *get_mock_add();
-_narmock_state_type_add *other_mock_prefix_add();
 _narmock_state_type_add *narmock_add();
+_narmock_state_type_add *other_mock_prefix_add();
 
 // NARMOCK_DECLARATION compose_twice
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=compose_twice
