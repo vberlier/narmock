@@ -61,9 +61,9 @@ class GeneratedMock:
         self.real_func = f"__real_{self.func_name}"
         self.linker_flags = f"-Wl,--wrap={self.func_name}"
 
-        self.state_name = f"_narmock_state_global_{self.func_name}"
-        self.state_type = f"_narmock_state_type_{self.func_name}"
-        self.private_state_type = f"_narmock_state_private_type_{self.func_name}"
+        self.state_name = f"_narmock_state_for_{self.func_name}"
+        self.state_type = f"_narmock_state_type_for_{self.func_name}"
+        self.private_state_type = f"_narmock_private_state_type_for_{self.func_name}"
 
         self.func_decl = self.function.declaration.type
         self.func_params = self.func_decl.args.params if self.func_decl.args else []
