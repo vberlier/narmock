@@ -66,9 +66,8 @@ class GeneratedMock:
         self.private_state_type = f"_narmock_state_private_type_{self.func_name}"
 
         self.func_decl = self.function.declaration.type
-        self.forward_args = ", ".join(
-            param.name for param in self.func_decl.args.params
-        )
+        self.func_params = self.func_decl.args.params if self.func_decl.args else []
+        self.forward_args = ", ".join(param.name for param in self.func_params)
 
         return_type = self.func_decl.type
         self.return_value = (
@@ -85,7 +84,7 @@ class GeneratedMock:
         self.implementation_decl = function_ptr_decl(
             "implementation",
             rename_return_type(return_type, "implementation"),
-            self.func_decl.args.params,
+            self.func_params,
         )
 
         self.mock_return_decl = self.state_function(

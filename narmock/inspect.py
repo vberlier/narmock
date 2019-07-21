@@ -46,12 +46,18 @@ def collect_mocked_functions(expanded_source_code, getter_prefixes):
 
 
 def rename_arguments(function_declaration):
+    if not function_declaration.type.args:
+        return function_declaration
+
     for i, param in enumerate(function_declaration.type.args.params):
         param.name = f"arg{i + 1}"
         param_type = param.type
+
         while not isinstance(param_type, node.TypeDecl):
             param_type = param_type.type
+
         param_type.declname = param.name
+
     return function_declaration
 
 
@@ -154,6 +160,7 @@ class ForgivingDeclarationParser:
         self.source_code = source_code
         self.getters = getters
         self.token_stream = self.tokenize(source_code)
+        self.previous = None
         self.current = None
 
         self.bracket_stack = []
@@ -187,6 +194,7 @@ class ForgivingDeclarationParser:
                 self.next()
 
     def next(self):
+        self.previous = self.current
         self.current = next(self.token_stream, None)
 
         if not self.current:
@@ -235,8 +243,13 @@ class ForgivingDeclarationParser:
         start_index = self.current.span[0]
         return_type = []
 
-        while self.current and not self.current.is_punctuation("("):
-            if self.current.is_punctuation(";"):
+        while (
+            self.current
+            and not self.current.is_punctuation("(")
+            or self.next()
+            and self.current.is_punctuation("*")
+        ):
+            if not self.bracket_stack and self.current.is_punctuation(";"):
                 return None
 
             return_type.append(self.current.value)
@@ -247,8 +260,6 @@ class ForgivingDeclarationParser:
 
         func_name = return_type.pop()
 
-        self.next()
-
         getters = set()
 
         if self.getters is not None:
@@ -257,10 +268,15 @@ class ForgivingDeclarationParser:
             else:
                 return None
 
-        while self.current and self.bracket_stack:
+        while (
+            self.current
+            and self.bracket_stack
+            or self.next()
+            and self.current.is_punctuation("(")
+        ):
             self.next()
 
-        signature = self.source_code[start_index : self.current.span[1]] + ";"
+        signature = self.source_code[start_index : self.previous.span[1]] + ";"
         code = "\n".join(self.typedefs) + "\n" + signature
 
         try:

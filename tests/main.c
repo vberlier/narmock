@@ -132,6 +132,24 @@ TEST(compose_twice_function)
     ASSERT_EQ(dummy_struct.number, 3);
 }
 
+DummyStruct *(*fake_return_add_one())(DummyStruct *dummy_struct)
+{
+    return NULL;
+}
+
+TEST(return_add_one_function)
+{
+    DummyStruct dummy_struct = { .number = 1 };
+
+    ASSERT_EQ(return_add_one()(&dummy_struct)->number, 2);
+
+    MOCK(return_add_one)->mock_return(add_two);
+    ASSERT_EQ(return_add_one()(&dummy_struct)->number, 4);
+
+    MOCK(return_add_one)->mock_implementation(fake_return_add_one);
+    ASSERT_EQ(return_add_one(), NULL);
+}
+
 int main()
 {
     return RUN_TESTS(mock_getters,
@@ -142,5 +160,6 @@ int main()
                      pipe_function,
                      mount_function,
                      edit_number_function,
-                     compose_twice_function);
+                     compose_twice_function,
+                     return_add_one_function);
 }

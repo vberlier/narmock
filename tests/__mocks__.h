@@ -26,9 +26,9 @@ struct _narmock_state_type_add
     _narmock_state_type_add *(*disable_mock)(void);
 };
 
-_narmock_state_type_add *other_mock_prefix_add();
 _narmock_state_type_add *get_mock_add();
 _narmock_state_type_add *narmock_add();
+_narmock_state_type_add *other_mock_prefix_add();
 
 // NARMOCK_DECLARATION output_message
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=output_message
@@ -52,8 +52,7 @@ typedef struct _narmock_state_type_edit_number _narmock_state_type_edit_number;
 struct _narmock_state_type_edit_number
 {
     _narmock_state_type_edit_number *(*mock_return)(DummyStruct *return_value);
-    _narmock_state_type_edit_number *(*mock_implementation)(
-        DummyStruct *(*implementation)(DummyStruct *arg1, int arg2));
+    _narmock_state_type_edit_number *(*mock_implementation)(DummyStruct *(*implementation)(DummyStruct *arg1, int arg2));
     _narmock_state_type_edit_number *(*disable_mock)(void);
 };
 
@@ -67,12 +66,25 @@ typedef struct _narmock_state_type_compose_twice _narmock_state_type_compose_twi
 struct _narmock_state_type_compose_twice
 {
     _narmock_state_type_compose_twice *(*mock_return)(DummyStruct *return_value);
-    _narmock_state_type_compose_twice *(*mock_implementation)(DummyStruct *(
-        *implementation)(DummyStruct *arg1, DummyStruct *(*arg2)(DummyStruct *dummy_struct)));
+    _narmock_state_type_compose_twice *(*mock_implementation)(DummyStruct *(*implementation)(DummyStruct *arg1, DummyStruct *(*arg2)(DummyStruct *dummy_struct)));
     _narmock_state_type_compose_twice *(*disable_mock)(void);
 };
 
 _narmock_state_type_compose_twice *narmock_compose_twice();
+
+// NARMOCK_DECLARATION return_add_one
+// NARMOCK_LINKER_FLAGS -Wl,--wrap=return_add_one
+
+typedef struct _narmock_state_type_return_add_one _narmock_state_type_return_add_one;
+
+struct _narmock_state_type_return_add_one
+{
+    _narmock_state_type_return_add_one *(*mock_return)(DummyStruct *(*return_value)(DummyStruct *dummy_struct));
+    _narmock_state_type_return_add_one *(*mock_implementation)(DummyStruct *(*(*implementation)())(DummyStruct *dummy_struct));
+    _narmock_state_type_return_add_one *(*disable_mock)(void);
+};
+
+_narmock_state_type_return_add_one *narmock_return_add_one();
 
 // NARMOCK_DECLARATION mount
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=mount
@@ -82,11 +94,7 @@ typedef struct _narmock_state_type_mount _narmock_state_type_mount;
 struct _narmock_state_type_mount
 {
     _narmock_state_type_mount *(*mock_return)(int return_value);
-    _narmock_state_type_mount *(*mock_implementation)(int (*implementation)(const char *arg1,
-                                                                            const char *arg2,
-                                                                            const char *arg3,
-                                                                            unsigned long int arg4,
-                                                                            const void *arg5));
+    _narmock_state_type_mount *(*mock_implementation)(int (*implementation)(const char *arg1, const char *arg2, const char *arg3, unsigned long int arg4, const void *arg5));
     _narmock_state_type_mount *(*disable_mock)(void);
 };
 
