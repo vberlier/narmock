@@ -188,7 +188,7 @@ class ImplementationFileGenerator:
             decl_begin=self.DECL_BEGIN,
             decl_end=self.DECL_END,
             includes=self.generate_includes_relative_to(directory),
-            mocks=self.mocks,
+            mocks=sorted(self.mocks, key=lambda m: m.func_name),
         )
 
         with open(output_file, "w") as implementation_file:
