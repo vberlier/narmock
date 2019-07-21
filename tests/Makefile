@@ -10,7 +10,7 @@ clean:
 	rm -f run_tests
 
 format:
-	clang-format -i *.{c,h}
+	clang-format -i main.c dummy_functions.h dummy_functions.c
 
 narwhal.c:
 	curl -O -sSL https://raw.githubusercontent.com/vberlier/narwhal/master/dist/$@
