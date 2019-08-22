@@ -12,10 +12,7 @@ clean:
 format:
 	clang-format -i main.c dummy_functions.h dummy_functions.c
 
-narwhal.c:
-	curl -O -sSL https://raw.githubusercontent.com/vberlier/narwhal/master/dist/$@
-
-narwhal.h:
+narwhal.c narwhal.h:
 	curl -O -sSL https://raw.githubusercontent.com/vberlier/narwhal/master/dist/$@
 
 __mocks__.c: $(filter-out __mocks__.c,$(wildcard *.c))
