@@ -158,18 +158,18 @@ class ImplementationFileGenerator:
                 header_file.write(extracted_header + "\n")
 
     def __init__(self):
+        self.code_generator = CGenerator()
+
         jinja_env = Environment(
             loader=PackageLoader("narmock", "templates"), **JINJA_CONFIG
         )
-        jinja_env.filters["render"] = self.render
+        jinja_env.filters["render"] = self.code_generator.visit
 
         self.template = jinja_env.get_template("__mocks__.c.jinja2")
 
         self.mocks = []
         self.system_includes = set()
         self.local_includes = set()
-
-        self.code_generator = CGenerator()
 
     def add_mock(self, mocked_function):
         self.mocks.append(GeneratedMock(mocked_function))
@@ -209,6 +209,3 @@ class ImplementationFileGenerator:
                 ),
             )
         )
-
-    def render(self, ast_node):
-        return self.code_generator.visit(ast_node)
