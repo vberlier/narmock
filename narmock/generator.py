@@ -155,7 +155,7 @@ class ImplementationFileGenerator:
             )
 
             with open(output_file, "w") as header_file:
-                header_file.write(extracted_header)
+                header_file.write(extracted_header + "\n")
 
     def __init__(self):
         jinja_env = Environment(
