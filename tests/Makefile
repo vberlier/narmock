@@ -15,11 +15,8 @@ format:
 narwhal.c narwhal.h:
 	curl -O -sSL https://raw.githubusercontent.com/vberlier/narwhal/master/dist/$@
 
-__mocks__.c: $(filter-out __mocks__.c,$(wildcard *.c))
-	$(CPP) $(CPPFLAGS) $^ | narmock -g $@ -p get_mock_ -p other_mock_prefix_
-
-__mocks__.h: __mocks__.c
-	narmock -d $@ $<
+__mocks__%c __mocks__%h: $(filter-out __mocks__%c,$(wildcard *.c))
+	$(CPP) $^ | narmock -g -p get_mock_ -p other_mock_prefix_
 
 run_tests: narwhal.h narwhal.c __mocks__.h __mocks__.c $(wildcard *.c) $(wildcard *.h)
-	$(CC) $(CFLAGS) $$(narmock -f __mocks__.h) *.c -o $@
+	$(CC) $(CFLAGS) $$(narmock -f) *.c -o $@

@@ -8,6 +8,24 @@ Do not edit manually
 #ifndef {{ guard_name }}
 #define {{ guard_name }}
 
-{{ declarations }}
+{{ includes }}
+{% for mock in mocks %}
+
+{{ mock.DECL_MARKER }} {{ mock.func_name }}
+{{ mock.FLAGS_MARKER }} {{ mock.linker_flags }}
+
+typedef struct {{ mock.state_type }} {{ mock.state_type }};
+
+struct {{ mock.state_type }}
+{
+    {{ mock.mock_return_decl | render }};
+    {{ mock.mock_implementation_decl | render }};
+    {{ mock.disable_mock_decl | render }};
+};
+
+{% for getter in mock.function.getters %}
+{{ mock.state_type }} *{{ getter }}();
+{% endfor %}
+{% endfor %}
 
 #endif

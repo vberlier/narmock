@@ -1,23 +1,18 @@
 """Module in charge of generating mocks."""
 
 
-__all__ = ["GeneratedMock", "ImplementationFileGenerator"]
+__all__ = ["GeneratedMock", "FileGenerator"]
 
 
 import os
 import re
 from copy import deepcopy
-from importlib.resources import read_text
 
-from jinja2 import Environment, PackageLoader, Template
+from jinja2 import Environment, PackageLoader
 from pycparser import c_ast as node
 from pycparser.c_generator import CGenerator
 
 from . import __version__
-from .inspect import MockedFunction
-
-
-JINJA_CONFIG = {"trim_blocks": True, "lstrip_blocks": True}
 
 
 def decl(name, type):
@@ -39,6 +34,25 @@ def rename_return_type(return_type, name):
 
     type_decl.declname = name
     return return_type
+
+
+def get_guard_name(filename):
+    slug = re.sub(r"[^a-zA-Z0-9]", "_", os.path.normpath(os.path.relpath(filename)))
+    return re.sub(r"_+", "_", slug).upper().strip("_")
+
+
+def generate_includes(system_includes, local_includes, directory):
+    return "\n\n".join(
+        includes
+        for includes in (
+            "\n".join(f"#include <{path}>" for path in sorted(system_includes)),
+            "\n".join(
+                f'#include "{os.path.relpath(path, directory)}"'
+                for path in sorted(local_includes)
+            ),
+        )
+        if includes
+    )
 
 
 class GeneratedMock:
@@ -119,53 +133,22 @@ class GeneratedMock:
         )
 
 
-class ImplementationFileGenerator:
-    DECL_BEGIN = "// NARMOCK_DECLARATIONS_BEGIN"
-    DECL_END = "// NARMOCK_DECLARATIONS_END"
-
-    @classmethod
-    def extract_declarations(cls, generated_mocks, output_file):
-        header_template = Template(
-            read_text("narmock.templates", "__mocks__.h.jinja2"), **JINJA_CONFIG
-        )
-
-        guard_name = (
-            re.sub(
-                r"_+",
-                "_",
-                re.sub(
-                    r"[^a-zA-Z0-9]", "_", os.path.normpath(os.path.relpath(output_file))
-                ),
-            )
-            .upper()
-            .strip("_")
-        )
-
-        try:
-            begin = generated_mocks.index(cls.DECL_BEGIN) + len(cls.DECL_BEGIN)
-            end = generated_mocks.index(cls.DECL_END)
-        except ValueError:
-            return
-
-        if 0 <= begin <= end:
-            extracted_header = header_template.render(
-                narmock_version=__version__,
-                guard_name=guard_name,
-                declarations=generated_mocks[begin:end].strip(),
-            )
-
-            with open(output_file, "w") as header_file:
-                header_file.write(extracted_header + "\n")
+class FileGenerator:
+    SOURCE_FILE = "__mocks__.c"
+    HEADER_FILE = "__mocks__.h"
 
     def __init__(self):
         self.code_generator = CGenerator()
 
-        jinja_env = Environment(
-            loader=PackageLoader("narmock", "templates"), **JINJA_CONFIG
+        self.jinja_env = Environment(
+            loader=PackageLoader("narmock", "templates"),
+            trim_blocks=True,
+            lstrip_blocks=True,
         )
-        jinja_env.filters["render"] = self.code_generator.visit
+        self.jinja_env.filters["render"] = self.code_generator.visit
 
-        self.template = jinja_env.get_template("__mocks__.c.jinja2")
+        self.source_template = self.jinja_env.get_template(f"{self.SOURCE_FILE}.jinja2")
+        self.header_template = self.jinja_env.get_template(f"{self.HEADER_FILE}.jinja2")
 
         self.mocks = []
         self.system_includes = set()
@@ -180,32 +163,34 @@ class ImplementationFileGenerator:
             else:
                 self.local_includes.add(mocked_function.include.path)
 
-    def write_to_file(self, output_file):
-        directory = os.path.dirname(output_file)
+    def write_to_directory(self, directory):
+        source_filename = os.path.join(directory, self.SOURCE_FILE)
+        header_filename = os.path.join(directory, self.HEADER_FILE)
 
-        generated_code = self.template.render(
+        mocks = list(sorted(self.mocks, key=lambda m: m.func_name))
+
+        source_code = self.source_template.render(
             narmock_version=__version__,
-            decl_begin=self.DECL_BEGIN,
-            decl_end=self.DECL_END,
-            includes=self.generate_includes_relative_to(directory),
-            mocks=sorted(self.mocks, key=lambda m: m.func_name),
+            includes=generate_includes([], [header_filename], directory),
+            mocks=mocks,
         )
 
-        with open(output_file, "w") as implementation_file:
-            implementation_file.write(generated_code)
-
-    def generate_includes_relative_to(self, directory):
-        return "\n\n".join(
-            filter(
-                None,
-                (
-                    "\n".join(
-                        f"#include <{path}>" for path in sorted(self.system_includes)
-                    ),
-                    "\n".join(
-                        f'#include "{os.path.relpath(path, directory)}"'
-                        for path in sorted(self.local_includes)
-                    ),
-                ),
-            )
+        header_code = self.header_template.render(
+            narmock_version=__version__,
+            guard_name=get_guard_name(header_filename),
+            includes=generate_includes(
+                self.system_includes, self.local_includes, directory
+            ),
+            mocks=mocks,
         )
+
+        with open(source_filename, "w") as source_file:
+            source_file.write(source_code.strip() + "\n")
+
+        with open(header_filename, "w") as header_file:
+            header_file.write(header_code.strip() + "\n")
+
+    @classmethod
+    def read_declarations(cls, directory):
+        with open(os.path.join(directory, cls.HEADER_FILE)) as header_file:
+            return header_file.read()

@@ -7,7 +7,7 @@ __all__ = ["main"]
 import sys
 from argparse import ArgumentParser, FileType
 
-from .api import generate_mocks, extract_declarations, collect_linker_flags
+from .api import generate_mocks, collect_linker_flags
 
 
 parser = ArgumentParser(
@@ -15,19 +15,18 @@ parser = ArgumentParser(
 )
 
 group = parser.add_mutually_exclusive_group(required=True)
-group.add_argument("-g", metavar="<file>", help="generate mocks")
-group.add_argument("-d", metavar="<file>", help="extract declarations")
-group.add_argument("-f", action="store_true", help="output linker flags")
-
-parser.add_argument("-p", metavar="<string>", action="append", help="getter prefix")
-parser.add_argument(
-    "file",
-    metavar="<file>",
+group.add_argument(
+    "-g",
+    metavar="<code>",
     nargs="?",
     type=FileType("r"),
-    default=sys.stdin,
-    help="expanded code or generated mocks",
+    const=sys.stdin,
+    help="generate mocks",
 )
+group.add_argument("-f", action="store_true", help="output linker flags")
+
+parser.add_argument("-p", metavar="<prefix>", action="append", help="getter prefix")
+parser.add_argument("-d", metavar="<directory>", default=".", help="mocks directory")
 
 
 def main():
@@ -35,13 +34,9 @@ def main():
 
     if args.g:
         generate_mocks(
-            expanded_code=args.file.read(),
-            output_file=args.g,
+            expanded_code=args.g.read(),
+            directory=args.d,
             getter_prefixes=["narmock_"] + (args.p or []),
         )
-    elif args.d:
-        extract_declarations(generated_mocks=args.file.read(), output_file=args.d)
     elif args.f:
-        print(
-            " ".join(collect_linker_flags(mock_declarations=args.file.read())).strip()
-        )
+        print(" ".join(collect_linker_flags(args.d)).strip())
