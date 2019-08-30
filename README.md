@@ -82,6 +82,49 @@ By default, the command looks for `__mocks__.h` in the current directory. You ca
 $ gcc $(narmock -f -d tests) tests/*.c
 ```
 
+## Mock API
+
+The `MOCK` macro returns a pointer to the mock API of a given function.
+
+```c
+MOCK(time);
+```
+
+### Mock return
+
+You can make a function return a specific value without calling its original implementation.
+
+```c
+MOCK(time)->mock_return(42);
+
+printf("%ld\n", time(NULL));  // Outputs 42
+```
+
+### Mock implementation
+
+You can switch the implementation of a function.
+
+```c
+time_t time_stub(time_t *timer)
+{
+    return 42;
+}
+
+MOCK(time)->mock_implementation(time_stub);
+
+printf("%ld\n", time(NULL));  // Outputs 42
+```
+
+### Disable mock
+
+You can disable the mock and make the function call its original implementation.
+
+```c
+MOCK(time)->disable_mock();
+
+printf("%ld\n", time(NULL));  // Outputs the current time
+```
+
 ## Contributing
 
 Contributions are welcome. Feel free to open issues and suggest improvements. This project uses [poetry](https://poetry.eustace.io/) so you'll need to install it first if you want to be able to work with the project locally.
