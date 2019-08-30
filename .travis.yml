@@ -24,7 +24,9 @@ install:
   - source $HOME/.poetry/env
   - poetry install
 
-script: poetry run make -C tests
+script:
+  - poetry run make -C tests
+  - poetry run make -C examples/basic
 
 jobs:
   include:
