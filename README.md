@@ -9,7 +9,7 @@
 
 **🚧 Work in progress 🚧**
 
-Narmock identifies the mocks being used in your tests and generates easy-to-use implementations with a slick API.
+Narmock finds the functions mocked in your tests and generates mocks with a slick API.
 
 ```c
 #include <time.h>
@@ -24,7 +24,7 @@ TEST(example)
 }
 ```
 
-> Most of the examples in this README are tests written with [Narwhal](https://github.com/vberlier/narwhal) but Narmock can be used with other test frameworks and anywhere in regular source code.
+> This example is a test written with [Narwhal](https://github.com/vberlier/narwhal) but Narmock can be used with other test frameworks and anywhere in regular source code.
 
 ## Installation
 
@@ -36,26 +36,51 @@ $ pip install narmock
 
 ## Getting started
 
-The command-line utility provides three essential commands that should make it possible to integrate Narmock in any kind of build system.
+The command-line utility provides two essential commands that should make it possible to integrate Narmock in any kind of build system.
 
 ```
-$ narmock --help
-usage: narmock [-h] (-g <file> | -d <file> | -f) [-p <string>] [<file>]
+usage: narmock [-h] (-g [<code>] | -f) [-d <directory>]
 
 A minimal mocking utility for C projects.
 
-positional arguments:
-  <file>       expanded code or generated mocks
-
 optional arguments:
-  -h, --help   show this help message and exit
-  -g <file>    generate mocks
-  -d <file>    extract declarations
-  -f           output linker flags
-  -p <string>  getter prefix
+  -h, --help      show this help message and exit
+  -g [<code>]     generate mocks
+  -f              output linker flags
+  -d <directory>  mocks directory
 ```
 
-_TODO_
+> Check out the [basic example](https://github.com/vberlier/narmock/tree/master/examples/basic) for a simple Makefile that integrates both [Narwhal](https://github.com/vberlier/narwhal) and Narmock.
+
+### Generating mocks
+
+The `narmock -g` command finds the functions mocked in your code and generates a `__mocks__.c` file and a `__mocks__.h` file that respectively define and declare all the required mocks.
+
+```bash
+$ gcc -E *.c | narmock -g
+```
+
+Narmock requires source code to be expanded by the preprocessor. You can directly pipe the output of `gcc -E` to the command-line utility.
+
+By default, `__mocks__.c` and `__mocks__.h` will be created in the current directory. You can specify a different output directory with the `-d` option.
+
+```bash
+$ gcc -E tests/*.c | narmock -g -d tests
+```
+
+### Retrieving linker flags
+
+The `narmock -f` command reads the generated `__mocks__.h` file and outputs the necessary linker flags for linking all your source files together.
+
+```bash
+$ gcc $(narmock -f) *.c
+```
+
+By default, the command looks for `__mocks__.h` in the current directory. You can specify a different directory with the `-d` option.
+
+```bash
+$ gcc $(narmock -f -d tests) tests/*.c
+```
 
 ## Contributing
 
