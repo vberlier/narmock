@@ -443,6 +443,148 @@ _narmock_state_type_for_pipe *_narmock_get_mock_for_pipe(void *function)
     return &_narmock_state_for_pipe.public;
 }
 
+// NARMOCK_IMPLEMENTATION print_hello
+
+void __real_print_hello();
+
+typedef struct _narmock_private_state_type_for_print_hello _narmock_private_state_type_for_print_hello;
+
+struct _narmock_private_state_type_for_print_hello
+{
+    _narmock_state_type_for_print_hello public;
+
+    int mode;
+    void (*implementation)();
+};
+
+_narmock_state_type_for_print_hello *_narmock_mock_return_function_for_print_hello();
+_narmock_state_type_for_print_hello *_narmock_mock_implementation_function_for_print_hello(void (*implementation)());
+_narmock_state_type_for_print_hello *_narmock_disable_mock_function_for_print_hello();
+
+_narmock_private_state_type_for_print_hello _narmock_state_for_print_hello =
+{
+    .public = {
+        .mock_return = _narmock_mock_return_function_for_print_hello,
+        .mock_implementation = _narmock_mock_implementation_function_for_print_hello,
+        .disable_mock = _narmock_disable_mock_function_for_print_hello
+    },
+
+    .mode = 0
+};
+
+void __wrap_print_hello()
+{
+    switch (_narmock_state_for_print_hello.mode)
+    {
+        case 1:
+            return;
+        case 2:
+            return _narmock_state_for_print_hello.implementation();
+        default:
+            return __real_print_hello();
+    }
+}
+
+_narmock_state_type_for_print_hello *_narmock_mock_return_function_for_print_hello()
+{
+    _narmock_state_for_print_hello.mode = 1;
+
+    return &_narmock_state_for_print_hello.public;
+}
+
+_narmock_state_type_for_print_hello *_narmock_mock_implementation_function_for_print_hello(void (*implementation)())
+{
+    _narmock_state_for_print_hello.mode = 2;
+    _narmock_state_for_print_hello.implementation = implementation;
+
+    return &_narmock_state_for_print_hello.public;
+}
+
+_narmock_state_type_for_print_hello *_narmock_disable_mock_function_for_print_hello()
+{
+    _narmock_state_for_print_hello.mode = 0;
+
+    return &_narmock_state_for_print_hello.public;
+}
+
+_narmock_state_type_for_print_hello *_narmock_get_mock_for_print_hello(void *function)
+{
+    (void)function;
+
+    return &_narmock_state_for_print_hello.public;
+}
+
+// NARMOCK_IMPLEMENTATION print_world
+
+void __real_print_world(void);
+
+typedef struct _narmock_private_state_type_for_print_world _narmock_private_state_type_for_print_world;
+
+struct _narmock_private_state_type_for_print_world
+{
+    _narmock_state_type_for_print_world public;
+
+    int mode;
+    void (*implementation)(void);
+};
+
+_narmock_state_type_for_print_world *_narmock_mock_return_function_for_print_world();
+_narmock_state_type_for_print_world *_narmock_mock_implementation_function_for_print_world(void (*implementation)(void));
+_narmock_state_type_for_print_world *_narmock_disable_mock_function_for_print_world();
+
+_narmock_private_state_type_for_print_world _narmock_state_for_print_world =
+{
+    .public = {
+        .mock_return = _narmock_mock_return_function_for_print_world,
+        .mock_implementation = _narmock_mock_implementation_function_for_print_world,
+        .disable_mock = _narmock_disable_mock_function_for_print_world
+    },
+
+    .mode = 0
+};
+
+void __wrap_print_world(void)
+{
+    switch (_narmock_state_for_print_world.mode)
+    {
+        case 1:
+            return;
+        case 2:
+            return _narmock_state_for_print_world.implementation();
+        default:
+            return __real_print_world();
+    }
+}
+
+_narmock_state_type_for_print_world *_narmock_mock_return_function_for_print_world()
+{
+    _narmock_state_for_print_world.mode = 1;
+
+    return &_narmock_state_for_print_world.public;
+}
+
+_narmock_state_type_for_print_world *_narmock_mock_implementation_function_for_print_world(void (*implementation)(void))
+{
+    _narmock_state_for_print_world.mode = 2;
+    _narmock_state_for_print_world.implementation = implementation;
+
+    return &_narmock_state_for_print_world.public;
+}
+
+_narmock_state_type_for_print_world *_narmock_disable_mock_function_for_print_world()
+{
+    _narmock_state_for_print_world.mode = 0;
+
+    return &_narmock_state_for_print_world.public;
+}
+
+_narmock_state_type_for_print_world *_narmock_get_mock_for_print_world(void *function)
+{
+    (void)function;
+
+    return &_narmock_state_for_print_world.public;
+}
+
 // NARMOCK_IMPLEMENTATION return_add_one
 
 DummyStruct *(*__real_return_add_one())(DummyStruct *dummy_struct);

@@ -50,8 +50,16 @@ def rename_arguments(function_declaration):
         return function_declaration
 
     for i, param in enumerate(function_declaration.type.args.params):
-        param.name = f"arg{i + 1}"
         param_type = param.type
+
+        if (
+            not param.name
+            and isinstance(param_type.type, node.IdentifierType)
+            and param_type.type.names == ["void"]
+        ):
+            continue
+
+        param.name = f"arg{i + 1}"
 
         while not isinstance(param_type, node.TypeDecl):
             param_type = param_type.type

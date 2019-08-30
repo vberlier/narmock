@@ -81,7 +81,9 @@ class GeneratedMock:
 
         self.func_decl = self.function.declaration.type
         self.func_params = self.func_decl.args.params if self.func_decl.args else []
-        self.forward_args = ", ".join(param.name for param in self.func_params)
+        self.forward_args = ", ".join(
+            param.name for param in self.func_params if param.name
+        )
 
         return_type = self.func_decl.type
         self.return_value = (

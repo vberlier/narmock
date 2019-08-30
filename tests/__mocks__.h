@@ -102,6 +102,34 @@ struct _narmock_state_type_for_pipe
 
 _narmock_state_type_for_pipe *_narmock_get_mock_for_pipe(void *function);
 
+// NARMOCK_DECLARATION print_hello
+// NARMOCK_LINKER_FLAGS -Wl,--wrap=print_hello
+
+typedef struct _narmock_state_type_for_print_hello _narmock_state_type_for_print_hello;
+
+struct _narmock_state_type_for_print_hello
+{
+    _narmock_state_type_for_print_hello *(*mock_return)(void);
+    _narmock_state_type_for_print_hello *(*mock_implementation)(void (*implementation)());
+    _narmock_state_type_for_print_hello *(*disable_mock)(void);
+};
+
+_narmock_state_type_for_print_hello *_narmock_get_mock_for_print_hello(void *function);
+
+// NARMOCK_DECLARATION print_world
+// NARMOCK_LINKER_FLAGS -Wl,--wrap=print_world
+
+typedef struct _narmock_state_type_for_print_world _narmock_state_type_for_print_world;
+
+struct _narmock_state_type_for_print_world
+{
+    _narmock_state_type_for_print_world *(*mock_return)(void);
+    _narmock_state_type_for_print_world *(*mock_implementation)(void (*implementation)(void));
+    _narmock_state_type_for_print_world *(*disable_mock)(void);
+};
+
+_narmock_state_type_for_print_world *_narmock_get_mock_for_print_world(void *function);
+
 // NARMOCK_DECLARATION return_add_one
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=return_add_one
 

@@ -12,6 +12,16 @@ void output_message(char *message)
     printf("%s\n", message);
 }
 
+void print_hello()
+{
+    output_message("hello");
+}
+
+void print_world(void)
+{
+    output_message("world");
+}
+
 DummyStruct *edit_number(DummyStruct *dummy_struct, int number)
 {
     dummy_struct->number = number;

@@ -8,6 +8,8 @@ typedef struct DummyStruct
 
 int add(int x, int y);
 void output_message(char *message);
+void print_hello();
+void print_world(void);
 DummyStruct *edit_number(DummyStruct *dummy_struct, int number);
 DummyStruct *add_one(DummyStruct *dummy_struct);
 DummyStruct *compose_twice(DummyStruct *dummy_struct,

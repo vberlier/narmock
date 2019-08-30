@@ -44,6 +44,38 @@ TEST(output_message_function)
     ASSERT_EQ(fake_output, "fake hello\n");
 }
 
+TEST(print_hello_function)
+{
+    CAPTURE_OUTPUT(original_output) { print_hello(); }
+    ASSERT_EQ(original_output, "hello\n");
+
+    MOCK(print_hello)->mock_return();
+
+    CAPTURE_OUTPUT(mocked_output) { print_hello(); }
+    ASSERT_EQ(mocked_output, "");
+
+    MOCK(print_hello)->mock_implementation(print_world);
+
+    CAPTURE_OUTPUT(other_output) { print_hello(); }
+    ASSERT_EQ(other_output, "world\n");
+}
+
+TEST(print_world_function)
+{
+    CAPTURE_OUTPUT(original_output) { print_world(); }
+    ASSERT_EQ(original_output, "world\n");
+
+    MOCK(print_world)->mock_return();
+
+    CAPTURE_OUTPUT(mocked_output) { print_world(); }
+    ASSERT_EQ(mocked_output, "");
+
+    MOCK(print_world)->mock_implementation(print_hello);
+
+    CAPTURE_OUTPUT(other_output) { print_world(); }
+    ASSERT_EQ(other_output, "hello\n");
+}
+
 TEST(time_function)
 {
     time_t start = time(NULL);
@@ -141,6 +173,8 @@ int main()
 {
     return RUN_TESTS(add_function,
                      output_message_function,
+                     print_hello_function,
+                     print_world_function,
                      time_function,
                      pipe_function,
                      mount_function,
