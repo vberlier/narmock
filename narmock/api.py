@@ -20,4 +20,7 @@ def generate_mocks(expanded_code, directory):
 
 def collect_linker_flags(directory):
     """Return the flags needed for wrapping the declared mocked functions."""
-    return GeneratedMock.extract_flags(FileGenerator.read_declarations(directory))
+    try:
+        return GeneratedMock.extract_flags(FileGenerator.read_declarations(directory))
+    except FileNotFoundError:
+        return []
