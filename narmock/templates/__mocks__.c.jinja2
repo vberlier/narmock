@@ -77,11 +77,11 @@ struct {{ mock.private_state_type }}
 
     return &{{ mock.state_name }}.public;
 }
-{% for getter in mock.function.getters %}
 
-{{ mock.state_type }} *{{ getter }}()
+{{ mock.state_type }} *_narmock_get_mock_for_{{ mock.func_name }}(void *function)
 {
+    (void)function;
+
     return &{{ mock.state_name }}.public;
 }
-{% endfor %}
 {% endfor %}

@@ -21,26 +21,26 @@ from pycparser.c_parser import CParser
 from pycparser.plyparser import ParseError
 
 
-def collect_mocked_functions(expanded_source_code, getter_prefixes):
+GETTER_REGEX = re.compile(
+    r"(_narmock_state_type_for_[A-Za-z0-9_]+\s*\*\s*)?\b"
+    + fr"_narmock_get_mock_for_([A-Za-z0-9_]+)\s*\("
+)
+
+
+def collect_mocked_functions(expanded_source_code):
     """Yield all the mocked functions used in the expanded source code."""
 
-    regex = (
-        r"(_narmock_state_type_[A-Za-z0-9_]+\s*\*\s*)?\b((?:"
-        + "|".join(getter_prefixes)
-        + r")([A-Za-z0-9_]+))\s*\(\s*\)"
-    )
+    functions = set()
 
-    getters = defaultdict(set)
-
-    for match in re.finditer(regex, expanded_source_code):
-        return_type, getter, function_name = match.groups()
+    for match in GETTER_REGEX.finditer(expanded_source_code):
+        return_type, function_name = match.groups()
         if not return_type:
-            getters[function_name].add(getter)
+            functions.add(function_name)
 
-    yield from ForgivingDeclarationParser(expanded_source_code, getters)
+    yield from ForgivingDeclarationParser(expanded_source_code, functions)
 
-    if getters:
-        for function in getters:
+    if functions:
+        for function in functions:
             print("error:", f"'{function}' undeclared", file=sys.stderr)
         sys.exit(1)
 
@@ -98,7 +98,6 @@ class MockedFunction(NamedTuple):
     name: str
     declaration: str
     include: IncludeDirective
-    getters: List[str]
 
 
 class Token(NamedTuple):
@@ -156,9 +155,9 @@ class ForgivingDeclarationParser:
         flags=re.MULTILINE,
     )
 
-    def __init__(self, source_code, getters=None):
+    def __init__(self, source_code, functions=None):
         self.source_code = source_code
-        self.getters = getters
+        self.functions = functions
         self.token_stream = self.tokenize(source_code)
         self.previous = None
         self.current = None
@@ -185,7 +184,7 @@ class ForgivingDeclarationParser:
             if function is not None:
                 yield function
 
-            if self.getters is not None and not self.getters:
+            if self.functions is not None and not self.functions:
                 break
 
             while self.current and not (
@@ -260,13 +259,8 @@ class ForgivingDeclarationParser:
 
         func_name = return_type.pop()
 
-        getters = set()
-
-        if self.getters is not None:
-            if func_name in self.getters:
-                getters = self.getters[func_name]
-            else:
-                return None
+        if self.functions is not None and func_name not in self.functions:
+            return None
 
         while (
             self.current
@@ -284,12 +278,11 @@ class ForgivingDeclarationParser:
         except ParseError:
             return None
         else:
-            if self.getters is not None and func_name in self.getters:
-                del self.getters[func_name]
+            if self.functions is not None:
+                self.functions.remove(func_name)
 
             return MockedFunction(
                 func_name,
                 rename_arguments(file_ast.ext[-1]),
                 IncludeDirective.from_source_context(self.source_context),
-                list(sorted(getters)),
             )

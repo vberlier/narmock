@@ -8,6 +8,10 @@ Do not edit manually
 #ifndef {{ guard_name }}
 #define {{ guard_name }}
 
+#ifndef MOCK
+#define MOCK(function) (_narmock_get_mock_for_##function((void *)&function))
+#endif
+
 {{ includes }}
 {% for mock in mocks %}
 
@@ -23,9 +27,7 @@ struct {{ mock.state_type }}
     {{ mock.disable_mock_decl | render }};
 };
 
-{% for getter in mock.function.getters %}
-{{ mock.state_type }} *{{ getter }}();
-{% endfor %}
+{{ mock.state_type }} *_narmock_get_mock_for_{{ mock.func_name }}(void *function);
 {% endfor %}
 
 #endif

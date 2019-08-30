@@ -8,6 +8,10 @@ Do not edit manually
 #ifndef MOCKS_H
 #define MOCKS_H
 
+#ifndef MOCK
+#define MOCK(function) (_narmock_get_mock_for_##function((void *)&function))
+#endif
+
 #include <sys/mount.h>
 #include <time.h>
 #include <unistd.h>
@@ -26,9 +30,7 @@ struct _narmock_state_type_for_add
     _narmock_state_type_for_add *(*disable_mock)(void);
 };
 
-_narmock_state_type_for_add *get_mock_add();
-_narmock_state_type_for_add *narmock_add();
-_narmock_state_type_for_add *other_mock_prefix_add();
+_narmock_state_type_for_add *_narmock_get_mock_for_add(void *function);
 
 // NARMOCK_DECLARATION compose_twice
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=compose_twice
@@ -42,7 +44,7 @@ struct _narmock_state_type_for_compose_twice
     _narmock_state_type_for_compose_twice *(*disable_mock)(void);
 };
 
-_narmock_state_type_for_compose_twice *narmock_compose_twice();
+_narmock_state_type_for_compose_twice *_narmock_get_mock_for_compose_twice(void *function);
 
 // NARMOCK_DECLARATION edit_number
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=edit_number
@@ -56,7 +58,7 @@ struct _narmock_state_type_for_edit_number
     _narmock_state_type_for_edit_number *(*disable_mock)(void);
 };
 
-_narmock_state_type_for_edit_number *narmock_edit_number();
+_narmock_state_type_for_edit_number *_narmock_get_mock_for_edit_number(void *function);
 
 // NARMOCK_DECLARATION mount
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=mount
@@ -70,7 +72,7 @@ struct _narmock_state_type_for_mount
     _narmock_state_type_for_mount *(*disable_mock)(void);
 };
 
-_narmock_state_type_for_mount *narmock_mount();
+_narmock_state_type_for_mount *_narmock_get_mock_for_mount(void *function);
 
 // NARMOCK_DECLARATION output_message
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=output_message
@@ -84,7 +86,7 @@ struct _narmock_state_type_for_output_message
     _narmock_state_type_for_output_message *(*disable_mock)(void);
 };
 
-_narmock_state_type_for_output_message *narmock_output_message();
+_narmock_state_type_for_output_message *_narmock_get_mock_for_output_message(void *function);
 
 // NARMOCK_DECLARATION pipe
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=pipe
@@ -98,7 +100,7 @@ struct _narmock_state_type_for_pipe
     _narmock_state_type_for_pipe *(*disable_mock)(void);
 };
 
-_narmock_state_type_for_pipe *narmock_pipe();
+_narmock_state_type_for_pipe *_narmock_get_mock_for_pipe(void *function);
 
 // NARMOCK_DECLARATION return_add_one
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=return_add_one
@@ -112,7 +114,7 @@ struct _narmock_state_type_for_return_add_one
     _narmock_state_type_for_return_add_one *(*disable_mock)(void);
 };
 
-_narmock_state_type_for_return_add_one *narmock_return_add_one();
+_narmock_state_type_for_return_add_one *_narmock_get_mock_for_return_add_one(void *function);
 
 // NARMOCK_DECLARATION time
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=time
@@ -126,6 +128,6 @@ struct _narmock_state_type_for_time
     _narmock_state_type_for_time *(*disable_mock)(void);
 };
 
-_narmock_state_type_for_time *narmock_time();
+_narmock_state_type_for_time *_narmock_get_mock_for_time(void *function);
 
 #endif

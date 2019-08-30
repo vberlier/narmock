@@ -6,19 +6,6 @@
 #include "dummy_functions.h"
 #include "narwhal.h"
 
-TEST(mock_getters)
-{
-    ASSERT_NE(narmock_add(), NULL);
-
-    ASSERT_EQ(narmock_add(), get_mock_add());
-    ASSERT_EQ(get_mock_add(), other_mock_prefix_add());
-}
-
-TEST(narwhal_mock_macro)
-{
-    ASSERT_EQ(MOCK(add), narmock_add());
-}
-
 int fake_add(int x, int y)
 {
     return x + y + 1;
@@ -152,9 +139,7 @@ TEST(return_add_one_function)
 
 int main()
 {
-    return RUN_TESTS(mock_getters,
-                     narwhal_mock_macro,
-                     add_function,
+    return RUN_TESTS(add_function,
                      output_message_function,
                      time_function,
                      pipe_function,

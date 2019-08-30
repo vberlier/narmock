@@ -73,18 +73,10 @@ _narmock_state_type_for_add *_narmock_disable_mock_function_for_add()
     return &_narmock_state_for_add.public;
 }
 
-_narmock_state_type_for_add *get_mock_add()
+_narmock_state_type_for_add *_narmock_get_mock_for_add(void *function)
 {
-    return &_narmock_state_for_add.public;
-}
+    (void)function;
 
-_narmock_state_type_for_add *narmock_add()
-{
-    return &_narmock_state_for_add.public;
-}
-
-_narmock_state_type_for_add *other_mock_prefix_add()
-{
     return &_narmock_state_for_add.public;
 }
 
@@ -154,8 +146,10 @@ _narmock_state_type_for_compose_twice *_narmock_disable_mock_function_for_compos
     return &_narmock_state_for_compose_twice.public;
 }
 
-_narmock_state_type_for_compose_twice *narmock_compose_twice()
+_narmock_state_type_for_compose_twice *_narmock_get_mock_for_compose_twice(void *function)
 {
+    (void)function;
+
     return &_narmock_state_for_compose_twice.public;
 }
 
@@ -225,8 +219,10 @@ _narmock_state_type_for_edit_number *_narmock_disable_mock_function_for_edit_num
     return &_narmock_state_for_edit_number.public;
 }
 
-_narmock_state_type_for_edit_number *narmock_edit_number()
+_narmock_state_type_for_edit_number *_narmock_get_mock_for_edit_number(void *function)
 {
+    (void)function;
+
     return &_narmock_state_for_edit_number.public;
 }
 
@@ -296,8 +292,10 @@ _narmock_state_type_for_mount *_narmock_disable_mock_function_for_mount()
     return &_narmock_state_for_mount.public;
 }
 
-_narmock_state_type_for_mount *narmock_mount()
+_narmock_state_type_for_mount *_narmock_get_mock_for_mount(void *function)
 {
+    (void)function;
+
     return &_narmock_state_for_mount.public;
 }
 
@@ -365,8 +363,10 @@ _narmock_state_type_for_output_message *_narmock_disable_mock_function_for_outpu
     return &_narmock_state_for_output_message.public;
 }
 
-_narmock_state_type_for_output_message *narmock_output_message()
+_narmock_state_type_for_output_message *_narmock_get_mock_for_output_message(void *function)
 {
+    (void)function;
+
     return &_narmock_state_for_output_message.public;
 }
 
@@ -436,8 +436,10 @@ _narmock_state_type_for_pipe *_narmock_disable_mock_function_for_pipe()
     return &_narmock_state_for_pipe.public;
 }
 
-_narmock_state_type_for_pipe *narmock_pipe()
+_narmock_state_type_for_pipe *_narmock_get_mock_for_pipe(void *function)
 {
+    (void)function;
+
     return &_narmock_state_for_pipe.public;
 }
 
@@ -507,8 +509,10 @@ _narmock_state_type_for_return_add_one *_narmock_disable_mock_function_for_retur
     return &_narmock_state_for_return_add_one.public;
 }
 
-_narmock_state_type_for_return_add_one *narmock_return_add_one()
+_narmock_state_type_for_return_add_one *_narmock_get_mock_for_return_add_one(void *function)
 {
+    (void)function;
+
     return &_narmock_state_for_return_add_one.public;
 }
 
@@ -578,7 +582,9 @@ _narmock_state_type_for_time *_narmock_disable_mock_function_for_time()
     return &_narmock_state_for_time.public;
 }
 
-_narmock_state_type_for_time *narmock_time()
+_narmock_state_type_for_time *_narmock_get_mock_for_time(void *function)
 {
+    (void)function;
+
     return &_narmock_state_for_time.public;
 }
