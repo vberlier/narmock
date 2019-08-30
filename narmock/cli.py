@@ -14,8 +14,6 @@ parser = ArgumentParser(
     prog="narmock", description="A minimal mocking utility for C projects."
 )
 
-parser.add_argument("-d", metavar="<directory>", default=".", help="mocks directory")
-
 group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument(
     "-g",
@@ -26,6 +24,8 @@ group.add_argument(
     help="generate mocks",
 )
 group.add_argument("-f", action="store_true", help="output linker flags")
+
+parser.add_argument("-d", metavar="<directory>", default=".", help="mocks directory")
 
 
 def main():
