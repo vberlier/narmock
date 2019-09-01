@@ -187,7 +187,7 @@ TEST(add_function_last_call)
     ASSERT_EQ(MOCK(add)->last_call->return_value, 42);
 }
 
-TEST(time_last_call)
+TEST(time_function_last_call)
 {
     ASSERT_EQ(MOCK(time)->last_call, NULL);
 
@@ -223,6 +223,6 @@ int main()
                      compose_twice_function,
                      return_add_one_function,
                      add_function_last_call,
-                     time_last_call,
+                     time_function_last_call,
                      add_one_function_last_call);
 }
