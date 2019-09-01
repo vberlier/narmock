@@ -7,8 +7,6 @@
 
 > A minimal mocking utility for C projects.
 
-**🚧 Work in progress 🚧**
-
 Narmock finds the functions mocked in your tests and generates mocks with a slick API.
 
 ```c
@@ -20,6 +18,7 @@ Narmock finds the functions mocked in your tests and generates mocks with a slic
 TEST(example)
 {
     MOCK(time)->mock_return(42);
+
     ASSERT_EQ(time(NULL), 42);
 }
 ```
