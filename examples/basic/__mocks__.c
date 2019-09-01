@@ -33,6 +33,7 @@ _narmock_private_state_type_for_time _narmock_state_for_time =
         .mock_return = _narmock_mock_return_function_for_time,
         .mock_implementation = _narmock_mock_implementation_function_for_time,
         .disable_mock = _narmock_disable_mock_function_for_time,
+        .call_count = 0,
         .last_call = NULL
     },
 
@@ -58,6 +59,8 @@ time_t __wrap_time(time_t *arg1)
             __real_time(arg1);
             break;
     }
+
+    _narmock_state_for_time.public.call_count++;
 
     _narmock_params_type_for_time last_call = { arg1, return_value };
 

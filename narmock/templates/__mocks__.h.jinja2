@@ -26,6 +26,7 @@ struct {{ mock.state_type }}
     {{ mock.mock_return_decl | render }};
     {{ mock.mock_implementation_decl | render }};
     {{ mock.disable_mock_decl | render }};
+    size_t call_count;
     const {{ mock.params_type }} *last_call;
 };
 

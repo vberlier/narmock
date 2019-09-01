@@ -36,6 +36,7 @@ struct {{ mock.private_state_type }}
         .mock_return = _narmock_mock_return_function_for_{{ mock.func_name }},
         .mock_implementation = _narmock_mock_implementation_function_for_{{ mock.func_name }},
         .disable_mock = _narmock_disable_mock_function_for_{{ mock.func_name }},
+        .call_count = 0,
         .last_call = NULL
     },
 
@@ -69,6 +70,8 @@ struct {{ mock.private_state_type }}
             {{ mock.real_func }}({{ mock.forward_args }});
             break;
     }
+
+    {{ mock.state_name }}.public.call_count++;
 
     {{ mock.params_type }} last_call = { {%- if mock.forward_args %} {{ mock.forward_args }}{% if mock.return_value %},{% endif %}{% endif %}{% if mock.return_value %} return_value{% endif %} };
 

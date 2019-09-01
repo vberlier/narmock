@@ -33,6 +33,7 @@ _narmock_private_state_type_for_add _narmock_state_for_add =
         .mock_return = _narmock_mock_return_function_for_add,
         .mock_implementation = _narmock_mock_implementation_function_for_add,
         .disable_mock = _narmock_disable_mock_function_for_add,
+        .call_count = 0,
         .last_call = NULL
     },
 
@@ -58,6 +59,8 @@ int __wrap_add(int arg1, int arg2)
             __real_add(arg1, arg2);
             break;
     }
+
+    _narmock_state_for_add.public.call_count++;
 
     _narmock_params_type_for_add last_call = { arg1, arg2, return_value };
 
@@ -123,6 +126,7 @@ _narmock_private_state_type_for_add_one _narmock_state_for_add_one =
         .mock_return = _narmock_mock_return_function_for_add_one,
         .mock_implementation = _narmock_mock_implementation_function_for_add_one,
         .disable_mock = _narmock_disable_mock_function_for_add_one,
+        .call_count = 0,
         .last_call = NULL
     },
 
@@ -148,6 +152,8 @@ DummyStruct *__wrap_add_one(DummyStruct *arg1)
             __real_add_one(arg1);
             break;
     }
+
+    _narmock_state_for_add_one.public.call_count++;
 
     _narmock_params_type_for_add_one last_call = { arg1, return_value };
 
@@ -213,6 +219,7 @@ _narmock_private_state_type_for_compose_twice _narmock_state_for_compose_twice =
         .mock_return = _narmock_mock_return_function_for_compose_twice,
         .mock_implementation = _narmock_mock_implementation_function_for_compose_twice,
         .disable_mock = _narmock_disable_mock_function_for_compose_twice,
+        .call_count = 0,
         .last_call = NULL
     },
 
@@ -238,6 +245,8 @@ DummyStruct *__wrap_compose_twice(DummyStruct *arg1, DummyStruct *(*arg2)(DummyS
             __real_compose_twice(arg1, arg2);
             break;
     }
+
+    _narmock_state_for_compose_twice.public.call_count++;
 
     _narmock_params_type_for_compose_twice last_call = { arg1, arg2, return_value };
 
@@ -303,6 +312,7 @@ _narmock_private_state_type_for_edit_number _narmock_state_for_edit_number =
         .mock_return = _narmock_mock_return_function_for_edit_number,
         .mock_implementation = _narmock_mock_implementation_function_for_edit_number,
         .disable_mock = _narmock_disable_mock_function_for_edit_number,
+        .call_count = 0,
         .last_call = NULL
     },
 
@@ -328,6 +338,8 @@ DummyStruct *__wrap_edit_number(DummyStruct *arg1, int arg2)
             __real_edit_number(arg1, arg2);
             break;
     }
+
+    _narmock_state_for_edit_number.public.call_count++;
 
     _narmock_params_type_for_edit_number last_call = { arg1, arg2, return_value };
 
@@ -393,6 +405,7 @@ _narmock_private_state_type_for_mount _narmock_state_for_mount =
         .mock_return = _narmock_mock_return_function_for_mount,
         .mock_implementation = _narmock_mock_implementation_function_for_mount,
         .disable_mock = _narmock_disable_mock_function_for_mount,
+        .call_count = 0,
         .last_call = NULL
     },
 
@@ -418,6 +431,8 @@ int __wrap_mount(const char *arg1, const char *arg2, const char *arg3, unsigned 
             __real_mount(arg1, arg2, arg3, arg4, arg5);
             break;
     }
+
+    _narmock_state_for_mount.public.call_count++;
 
     _narmock_params_type_for_mount last_call = { arg1, arg2, arg3, arg4, arg5, return_value };
 
@@ -482,6 +497,7 @@ _narmock_private_state_type_for_output_message _narmock_state_for_output_message
         .mock_return = _narmock_mock_return_function_for_output_message,
         .mock_implementation = _narmock_mock_implementation_function_for_output_message,
         .disable_mock = _narmock_disable_mock_function_for_output_message,
+        .call_count = 0,
         .last_call = NULL
     },
 
@@ -501,6 +517,8 @@ void __wrap_output_message(const char *arg1)
             __real_output_message(arg1);
             break;
     }
+
+    _narmock_state_for_output_message.public.call_count++;
 
     _narmock_params_type_for_output_message last_call = { arg1 };
 
@@ -565,6 +583,7 @@ _narmock_private_state_type_for_pipe _narmock_state_for_pipe =
         .mock_return = _narmock_mock_return_function_for_pipe,
         .mock_implementation = _narmock_mock_implementation_function_for_pipe,
         .disable_mock = _narmock_disable_mock_function_for_pipe,
+        .call_count = 0,
         .last_call = NULL
     },
 
@@ -590,6 +609,8 @@ int __wrap_pipe(int arg1[2])
             __real_pipe(arg1);
             break;
     }
+
+    _narmock_state_for_pipe.public.call_count++;
 
     _narmock_params_type_for_pipe last_call = { arg1, return_value };
 
@@ -654,6 +675,7 @@ _narmock_private_state_type_for_print_hello _narmock_state_for_print_hello =
         .mock_return = _narmock_mock_return_function_for_print_hello,
         .mock_implementation = _narmock_mock_implementation_function_for_print_hello,
         .disable_mock = _narmock_disable_mock_function_for_print_hello,
+        .call_count = 0,
         .last_call = NULL
     },
 
@@ -673,6 +695,8 @@ void __wrap_print_hello()
             __real_print_hello();
             break;
     }
+
+    _narmock_state_for_print_hello.public.call_count++;
 
     _narmock_params_type_for_print_hello last_call = { };
 
@@ -736,6 +760,7 @@ _narmock_private_state_type_for_print_world _narmock_state_for_print_world =
         .mock_return = _narmock_mock_return_function_for_print_world,
         .mock_implementation = _narmock_mock_implementation_function_for_print_world,
         .disable_mock = _narmock_disable_mock_function_for_print_world,
+        .call_count = 0,
         .last_call = NULL
     },
 
@@ -755,6 +780,8 @@ void __wrap_print_world(void)
             __real_print_world();
             break;
     }
+
+    _narmock_state_for_print_world.public.call_count++;
 
     _narmock_params_type_for_print_world last_call = { };
 
@@ -819,6 +846,7 @@ _narmock_private_state_type_for_return_add_one _narmock_state_for_return_add_one
         .mock_return = _narmock_mock_return_function_for_return_add_one,
         .mock_implementation = _narmock_mock_implementation_function_for_return_add_one,
         .disable_mock = _narmock_disable_mock_function_for_return_add_one,
+        .call_count = 0,
         .last_call = NULL
     },
 
@@ -844,6 +872,8 @@ DummyStruct *(*__wrap_return_add_one())(DummyStruct *dummy_struct)
             __real_return_add_one();
             break;
     }
+
+    _narmock_state_for_return_add_one.public.call_count++;
 
     _narmock_params_type_for_return_add_one last_call = { return_value };
 
@@ -909,6 +939,7 @@ _narmock_private_state_type_for_time _narmock_state_for_time =
         .mock_return = _narmock_mock_return_function_for_time,
         .mock_implementation = _narmock_mock_implementation_function_for_time,
         .disable_mock = _narmock_disable_mock_function_for_time,
+        .call_count = 0,
         .last_call = NULL
     },
 
@@ -934,6 +965,8 @@ time_t __wrap_time(time_t *arg1)
             __real_time(arg1);
             break;
     }
+
+    _narmock_state_for_time.public.call_count++;
 
     _narmock_params_type_for_time last_call = { arg1, return_value };
 

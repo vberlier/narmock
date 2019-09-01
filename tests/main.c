@@ -169,6 +169,18 @@ TEST(return_add_one_function)
     ASSERT_EQ(return_add_one(), NULL);
 }
 
+TEST(add_function_call_count)
+{
+    ASSERT_EQ(MOCK(add)->call_count, (size_t)0);
+
+    for (int i = 0; i < 10; i++)
+    {
+        ASSERT_EQ(add(i, i * 2), 3 * i);
+    }
+
+    ASSERT_EQ(MOCK(add)->call_count, (size_t)10);
+}
+
 TEST(add_function_last_call)
 {
     ASSERT_EQ(MOCK(add)->last_call, NULL);
@@ -222,6 +234,7 @@ int main()
                      edit_number_function,
                      compose_twice_function,
                      return_add_one_function,
+                     add_function_call_count,
                      add_function_last_call,
                      time_function_last_call,
                      add_one_function_last_call);
