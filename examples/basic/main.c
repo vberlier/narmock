@@ -6,6 +6,7 @@
 TEST(example)
 {
     MOCK(time)->mock_return(42);
+
     ASSERT_EQ(time(NULL), 42);
 }
 
