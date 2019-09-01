@@ -169,6 +169,37 @@ TEST(return_add_one_function)
     ASSERT_EQ(return_add_one(), NULL);
 }
 
+TEST(add_function_last_call)
+{
+    ASSERT_EQ(MOCK(add)->last_call, NULL);
+
+    ASSERT_EQ(add(1, 2), 3);
+
+    ASSERT_NE(MOCK(add)->last_call, NULL);
+    ASSERT_EQ(MOCK(add)->last_call->arg1, 1);
+    ASSERT_EQ(MOCK(add)->last_call->arg2, 2);
+    ASSERT_EQ(MOCK(add)->last_call->return_value, 3);
+
+    ASSERT_EQ(add(23, 19), 42);
+
+    ASSERT_EQ(MOCK(add)->last_call->arg1, 23);
+    ASSERT_EQ(MOCK(add)->last_call->arg2, 19);
+    ASSERT_EQ(MOCK(add)->last_call->return_value, 42);
+}
+
+TEST(add_one_function_last_call)
+{
+    ASSERT_EQ(MOCK(add_one)->last_call, NULL);
+
+    DummyStruct dummy_struct = { .number = 1 };
+
+    ASSERT_EQ(add_one(&dummy_struct)->number, 2);
+
+    ASSERT_NE(MOCK(add_one)->last_call, NULL);
+    ASSERT_EQ(MOCK(add_one)->last_call->arg1, &dummy_struct);
+    ASSERT_EQ(MOCK(add_one)->last_call->return_value, &dummy_struct);
+}
+
 int main()
 {
     return RUN_TESTS(add_function,
@@ -180,5 +211,7 @@ int main()
                      mount_function,
                      edit_number_function,
                      compose_twice_function,
-                     return_add_one_function);
+                     return_add_one_function,
+                     add_function_last_call,
+                     add_one_function_last_call);
 }

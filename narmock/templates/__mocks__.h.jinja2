@@ -19,12 +19,24 @@ Do not edit manually
 {{ mock.FLAGS_MARKER }} {{ mock.linker_flags }}
 
 typedef struct {{ mock.state_type }} {{ mock.state_type }};
+typedef struct {{ mock.params_type }} {{ mock.params_type }};
 
 struct {{ mock.state_type }}
 {
     {{ mock.mock_return_decl | render }};
     {{ mock.mock_implementation_decl | render }};
     {{ mock.disable_mock_decl | render }};
+    {{ mock.params_type }} *last_call;
+};
+
+struct {{ mock.params_type }}
+{
+    {% for param in mock.params_struct %}
+    {{ param | render }};
+    {% endfor %}
+    {% if mock.return_value %}
+    {{ mock.return_value_decl | render }};
+    {% endif %}
 };
 
 {{ mock.state_type }} *_narmock_get_mock_for_{{ mock.func_name }}(const void *function);

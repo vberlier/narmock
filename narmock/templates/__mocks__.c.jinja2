@@ -23,6 +23,7 @@ struct {{ mock.private_state_type }}
     {{ mock.return_value_decl | render }};
     {% endif %}
     {{ mock.implementation_decl | render }};
+    {{ mock.params_type }} last_call;
 };
 
 {{ mock.state_type }} *_narmock_mock_return_function_for_{{ mock.func_name }}({% if mock.return_value %}{{ mock.return_value_decl | render }}{% endif %});
@@ -34,7 +35,8 @@ struct {{ mock.private_state_type }}
     .public = {
         .mock_return = _narmock_mock_return_function_for_{{ mock.func_name }},
         .mock_implementation = _narmock_mock_implementation_function_for_{{ mock.func_name }},
-        .disable_mock = _narmock_disable_mock_function_for_{{ mock.func_name }}
+        .disable_mock = _narmock_disable_mock_function_for_{{ mock.func_name }},
+        .last_call = NULL
     },
 
     .mode = 0
@@ -42,15 +44,38 @@ struct {{ mock.private_state_type }}
 
 {{ mock.wrapped_decl | render }}
 {
+    {% if mock.return_value %}
+    {{ mock.return_value_decl | render }};
+
+    {% endif %}
     switch ({{ mock.state_name }}.mode)
     {
         case 1:
-            return{% if mock.return_value %} {{ mock.state_name }}.return_value{% endif %};
+            {% if mock.return_value %}
+            return_value =
+            {{ mock.state_name }}.return_value;
+            {% endif %}
+            break;
         case 2:
-            return {{ mock.state_name }}.implementation({{ mock.forward_args }});
+            {% if mock.return_value %}
+            return_value =
+            {% endif %}
+            {{ mock.state_name }}.implementation({{ mock.forward_args }});
+            break;
         default:
-            return {{ mock.real_func }}({{ mock.forward_args }});
+            {% if mock.return_value %}
+            return_value =
+            {% endif %}
+            {{ mock.real_func }}({{ mock.forward_args }});
+            break;
     }
+
+    {{ mock.params_type }} last_call = { {%- if mock.forward_args %} {{ mock.forward_args }}{% if mock.return_value %},{% endif %}{% endif %}{% if mock.return_value %} return_value{% endif %} };
+
+    {{ mock.state_name }}.last_call = last_call;
+    {{ mock.state_name }}.public.last_call = &{{ mock.state_name }}.last_call;
+
+    return{% if mock.return_value %} return_value{% endif %};
 }
 
 {{ mock.state_type }} *_narmock_mock_return_function_for_{{ mock.func_name }}({% if mock.return_value %}{{ mock.return_value_decl | render }}{% endif %})

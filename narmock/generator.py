@@ -78,12 +78,18 @@ class GeneratedMock:
         self.state_name = f"_narmock_state_for_{self.func_name}"
         self.state_type = f"_narmock_state_type_for_{self.func_name}"
         self.private_state_type = f"_narmock_private_state_type_for_{self.func_name}"
+        self.params_type = f"_narmock_params_type_for_{self.func_name}"
 
         self.func_decl = self.function.declaration.type
         self.func_params = self.func_decl.args.params if self.func_decl.args else []
-        self.forward_args = ", ".join(
-            param.name for param in self.func_params if param.name
-        )
+        self.params_struct = [
+            decl(param.name, node.PtrDecl([], param.type.type))
+            if isinstance(param.type, node.ArrayDecl)
+            else param
+            for param in self.func_params
+            if param.name
+        ]
+        self.forward_args = ", ".join(param.name for param in self.params_struct)
 
         return_type = self.func_decl.type
         self.return_value = (
