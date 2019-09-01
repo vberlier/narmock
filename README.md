@@ -125,6 +125,19 @@ MOCK(time)->disable_mock();
 printf("%ld\n", time(NULL));  // Outputs the current time
 ```
 
+### Call history
+
+You can inspect the last call of a function.
+
+```c
+printf("%ld\n", time(NULL));  // Outputs the current time
+
+printf("%p\n", MOCK(time)->last_call->arg1);           // Outputs (nil)
+printf("%ld\n", MOCK(time)->last_call->return_value);  // Outputs the current time
+```
+
+Note that the `last_call` pointer is `NULL` until the function gets called for the first time.
+
 ## Contributing
 
 Contributions are welcome. Feel free to open issues and suggest improvements. This project uses [poetry](https://poetry.eustace.io/) so you'll need to install it first if you want to be able to work with the project locally.
