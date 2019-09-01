@@ -1,5 +1,5 @@
 ASAN_FLAGS = -fsanitize=address -fno-omit-frame-pointer
-CFLAGS = -Wall -Wextra -std=c11 -g -Og $(ASAN_FLAGS)
+CFLAGS = -Wall -Wextra -Wconversion -std=c11 -g -Og $(ASAN_FLAGS)
 
 .PHONY: test clean format
 
