@@ -23,10 +23,10 @@ typedef struct _narmock_params_type_for_time _narmock_params_type_for_time;
 
 struct _narmock_state_type_for_time
 {
-    _narmock_state_type_for_time *(*mock_return)(time_t return_value);
-    _narmock_state_type_for_time *(*mock_implementation)(time_t (*implementation)(time_t *arg1));
-    _narmock_state_type_for_time *(*disable_mock)(void);
-    _narmock_state_type_for_time *(*reset)(void);
+    const _narmock_state_type_for_time *(*mock_return)(time_t return_value);
+    const _narmock_state_type_for_time *(*mock_implementation)(time_t (*implementation)(time_t *arg1));
+    const _narmock_state_type_for_time *(*disable_mock)(void);
+    const _narmock_state_type_for_time *(*reset)(void);
     size_t call_count;
     const _narmock_params_type_for_time *last_call;
 };
@@ -37,6 +37,6 @@ struct _narmock_params_type_for_time
     time_t return_value;
 };
 
-_narmock_state_type_for_time *_narmock_get_mock_for_time(const void *function);
+const _narmock_state_type_for_time *_narmock_get_mock_for_time(const void *function);
 
 #endif

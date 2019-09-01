@@ -129,7 +129,8 @@ class GeneratedMock:
         return function_ptr_decl(
             name,
             node.PtrDecl(
-                [], node.TypeDecl(name, [], node.IdentifierType([self.state_type]))
+                [],
+                node.TypeDecl(name, ["const"], node.IdentifierType([self.state_type])),
             ),
             parameters,
         )

@@ -41,7 +41,7 @@ struct {{ mock.params_type }}
     {% endif %}
 };
 
-{{ mock.state_type }} *_narmock_get_mock_for_{{ mock.func_name }}(const void *function);
+const {{ mock.state_type }} *_narmock_get_mock_for_{{ mock.func_name }}(const void *function);
 {% endfor %}
 
 #endif
