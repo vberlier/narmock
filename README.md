@@ -90,7 +90,7 @@ The `MOCK` macro returns a pointer to the mock API of a given function.
 MOCK(time);
 ```
 
-### Mock return
+### Mock return value
 
 You can make a function return a specific value without calling its original implementation.
 
@@ -125,9 +125,17 @@ MOCK(time)->disable_mock();
 printf("%ld\n", time(NULL));  // Outputs the current time
 ```
 
-### Call history
+### Count and inspect calls
 
-You can inspect the last call of a function.
+Narmock keeps track of the number of times mocked functions are called.
+
+```c
+printf("%ld\n", time(NULL));  // Outputs the current time
+
+printf("%ld\n", MOCK(time)->call_count);  // Outputs 1
+```
+
+You can also inspect the last call of a function.
 
 ```c
 printf("%ld\n", time(NULL));  // Outputs the current time
@@ -137,6 +145,22 @@ printf("%ld\n", MOCK(time)->last_call->return_value);  // Outputs the current ti
 ```
 
 Note that the `last_call` pointer is `NULL` until the function gets called for the first time.
+
+### Reset everything
+
+You can reset the mock to its initial state. This will make the function use its original implementation and reset `call_count` to `0` and `last_call` to `NULL`.
+
+```c
+MOCK(time)->mock_return(42);
+
+printf("%ld\n", time(NULL));  // Outputs 42
+
+MOCK(time)->reset();
+
+printf("%ld\n", MOCK(time)->call_count);  // Outputs 0
+printf("%p\n", MOCK(time)->last_call);    // Outputs (nil)
+printf("%ld\n", time(NULL));              // Outputs the current time
+```
 
 ## Contributing
 
