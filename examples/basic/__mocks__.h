@@ -25,7 +25,7 @@ struct _narmock_state_type_for_time
     _narmock_state_type_for_time *(*mock_return)(time_t return_value);
     _narmock_state_type_for_time *(*mock_implementation)(time_t (*implementation)(time_t *arg1));
     _narmock_state_type_for_time *(*disable_mock)(void);
-    _narmock_params_type_for_time *last_call;
+    const _narmock_params_type_for_time *last_call;
 };
 
 struct _narmock_params_type_for_time

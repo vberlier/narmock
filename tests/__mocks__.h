@@ -29,7 +29,7 @@ struct _narmock_state_type_for_add
     _narmock_state_type_for_add *(*mock_return)(int return_value);
     _narmock_state_type_for_add *(*mock_implementation)(int (*implementation)(int arg1, int arg2));
     _narmock_state_type_for_add *(*disable_mock)(void);
-    _narmock_params_type_for_add *last_call;
+    const _narmock_params_type_for_add *last_call;
 };
 
 struct _narmock_params_type_for_add
@@ -52,7 +52,7 @@ struct _narmock_state_type_for_add_one
     _narmock_state_type_for_add_one *(*mock_return)(DummyStruct *return_value);
     _narmock_state_type_for_add_one *(*mock_implementation)(DummyStruct *(*implementation)(DummyStruct *arg1));
     _narmock_state_type_for_add_one *(*disable_mock)(void);
-    _narmock_params_type_for_add_one *last_call;
+    const _narmock_params_type_for_add_one *last_call;
 };
 
 struct _narmock_params_type_for_add_one
@@ -74,7 +74,7 @@ struct _narmock_state_type_for_compose_twice
     _narmock_state_type_for_compose_twice *(*mock_return)(DummyStruct *return_value);
     _narmock_state_type_for_compose_twice *(*mock_implementation)(DummyStruct *(*implementation)(DummyStruct *arg1, DummyStruct *(*arg2)(DummyStruct *dummy_struct)));
     _narmock_state_type_for_compose_twice *(*disable_mock)(void);
-    _narmock_params_type_for_compose_twice *last_call;
+    const _narmock_params_type_for_compose_twice *last_call;
 };
 
 struct _narmock_params_type_for_compose_twice
@@ -97,7 +97,7 @@ struct _narmock_state_type_for_edit_number
     _narmock_state_type_for_edit_number *(*mock_return)(DummyStruct *return_value);
     _narmock_state_type_for_edit_number *(*mock_implementation)(DummyStruct *(*implementation)(DummyStruct *arg1, int arg2));
     _narmock_state_type_for_edit_number *(*disable_mock)(void);
-    _narmock_params_type_for_edit_number *last_call;
+    const _narmock_params_type_for_edit_number *last_call;
 };
 
 struct _narmock_params_type_for_edit_number
@@ -120,7 +120,7 @@ struct _narmock_state_type_for_mount
     _narmock_state_type_for_mount *(*mock_return)(int return_value);
     _narmock_state_type_for_mount *(*mock_implementation)(int (*implementation)(const char *arg1, const char *arg2, const char *arg3, unsigned long int arg4, const void *arg5));
     _narmock_state_type_for_mount *(*disable_mock)(void);
-    _narmock_params_type_for_mount *last_call;
+    const _narmock_params_type_for_mount *last_call;
 };
 
 struct _narmock_params_type_for_mount
@@ -146,7 +146,7 @@ struct _narmock_state_type_for_output_message
     _narmock_state_type_for_output_message *(*mock_return)(void);
     _narmock_state_type_for_output_message *(*mock_implementation)(void (*implementation)(const char *arg1));
     _narmock_state_type_for_output_message *(*disable_mock)(void);
-    _narmock_params_type_for_output_message *last_call;
+    const _narmock_params_type_for_output_message *last_call;
 };
 
 struct _narmock_params_type_for_output_message
@@ -167,7 +167,7 @@ struct _narmock_state_type_for_pipe
     _narmock_state_type_for_pipe *(*mock_return)(int return_value);
     _narmock_state_type_for_pipe *(*mock_implementation)(int (*implementation)(int arg1[2]));
     _narmock_state_type_for_pipe *(*disable_mock)(void);
-    _narmock_params_type_for_pipe *last_call;
+    const _narmock_params_type_for_pipe *last_call;
 };
 
 struct _narmock_params_type_for_pipe
@@ -189,7 +189,7 @@ struct _narmock_state_type_for_print_hello
     _narmock_state_type_for_print_hello *(*mock_return)(void);
     _narmock_state_type_for_print_hello *(*mock_implementation)(void (*implementation)());
     _narmock_state_type_for_print_hello *(*disable_mock)(void);
-    _narmock_params_type_for_print_hello *last_call;
+    const _narmock_params_type_for_print_hello *last_call;
 };
 
 struct _narmock_params_type_for_print_hello
@@ -209,7 +209,7 @@ struct _narmock_state_type_for_print_world
     _narmock_state_type_for_print_world *(*mock_return)(void);
     _narmock_state_type_for_print_world *(*mock_implementation)(void (*implementation)(void));
     _narmock_state_type_for_print_world *(*disable_mock)(void);
-    _narmock_params_type_for_print_world *last_call;
+    const _narmock_params_type_for_print_world *last_call;
 };
 
 struct _narmock_params_type_for_print_world
@@ -229,7 +229,7 @@ struct _narmock_state_type_for_return_add_one
     _narmock_state_type_for_return_add_one *(*mock_return)(DummyStruct *(*return_value)(DummyStruct *dummy_struct));
     _narmock_state_type_for_return_add_one *(*mock_implementation)(DummyStruct *(*(*implementation)())(DummyStruct *dummy_struct));
     _narmock_state_type_for_return_add_one *(*disable_mock)(void);
-    _narmock_params_type_for_return_add_one *last_call;
+    const _narmock_params_type_for_return_add_one *last_call;
 };
 
 struct _narmock_params_type_for_return_add_one
@@ -250,7 +250,7 @@ struct _narmock_state_type_for_time
     _narmock_state_type_for_time *(*mock_return)(time_t return_value);
     _narmock_state_type_for_time *(*mock_implementation)(time_t (*implementation)(time_t *arg1));
     _narmock_state_type_for_time *(*disable_mock)(void);
-    _narmock_params_type_for_time *last_call;
+    const _narmock_params_type_for_time *last_call;
 };
 
 struct _narmock_params_type_for_time

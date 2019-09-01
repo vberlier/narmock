@@ -26,7 +26,7 @@ struct {{ mock.state_type }}
     {{ mock.mock_return_decl | render }};
     {{ mock.mock_implementation_decl | render }};
     {{ mock.disable_mock_decl | render }};
-    {{ mock.params_type }} *last_call;
+    const {{ mock.params_type }} *last_call;
 };
 
 struct {{ mock.params_type }}
