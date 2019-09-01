@@ -23,7 +23,7 @@ TEST(add_function)
     ASSERT_EQ(add(1, 2), 4);
 }
 
-void fake_output_message(char *message)
+void fake_output_message(const char *message)
 {
     printf("fake %s\n", message);
 }

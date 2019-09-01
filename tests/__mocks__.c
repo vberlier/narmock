@@ -301,7 +301,7 @@ _narmock_state_type_for_mount *_narmock_get_mock_for_mount(void *function)
 
 // NARMOCK_IMPLEMENTATION output_message
 
-void __real_output_message(char *arg1);
+void __real_output_message(const char *arg1);
 
 typedef struct _narmock_private_state_type_for_output_message _narmock_private_state_type_for_output_message;
 
@@ -310,11 +310,11 @@ struct _narmock_private_state_type_for_output_message
     _narmock_state_type_for_output_message public;
 
     int mode;
-    void (*implementation)(char *arg1);
+    void (*implementation)(const char *arg1);
 };
 
 _narmock_state_type_for_output_message *_narmock_mock_return_function_for_output_message();
-_narmock_state_type_for_output_message *_narmock_mock_implementation_function_for_output_message(void (*implementation)(char *arg1));
+_narmock_state_type_for_output_message *_narmock_mock_implementation_function_for_output_message(void (*implementation)(const char *arg1));
 _narmock_state_type_for_output_message *_narmock_disable_mock_function_for_output_message();
 
 _narmock_private_state_type_for_output_message _narmock_state_for_output_message =
@@ -328,7 +328,7 @@ _narmock_private_state_type_for_output_message _narmock_state_for_output_message
     .mode = 0
 };
 
-void __wrap_output_message(char *arg1)
+void __wrap_output_message(const char *arg1)
 {
     switch (_narmock_state_for_output_message.mode)
     {
@@ -348,7 +348,7 @@ _narmock_state_type_for_output_message *_narmock_mock_return_function_for_output
     return &_narmock_state_for_output_message.public;
 }
 
-_narmock_state_type_for_output_message *_narmock_mock_implementation_function_for_output_message(void (*implementation)(char *arg1))
+_narmock_state_type_for_output_message *_narmock_mock_implementation_function_for_output_message(void (*implementation)(const char *arg1))
 {
     _narmock_state_for_output_message.mode = 2;
     _narmock_state_for_output_message.implementation = implementation;

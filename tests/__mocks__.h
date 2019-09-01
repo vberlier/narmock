@@ -82,7 +82,7 @@ typedef struct _narmock_state_type_for_output_message _narmock_state_type_for_ou
 struct _narmock_state_type_for_output_message
 {
     _narmock_state_type_for_output_message *(*mock_return)(void);
-    _narmock_state_type_for_output_message *(*mock_implementation)(void (*implementation)(char *arg1));
+    _narmock_state_type_for_output_message *(*mock_implementation)(void (*implementation)(const char *arg1));
     _narmock_state_type_for_output_message *(*disable_mock)(void);
 };
 

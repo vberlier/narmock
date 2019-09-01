@@ -7,7 +7,7 @@ int add(int x, int y)
     return x + y;
 }
 
-void output_message(char *message)
+void output_message(const char *message)
 {
     printf("%s\n", message);
 }
