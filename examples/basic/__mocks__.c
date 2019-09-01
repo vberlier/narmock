@@ -73,7 +73,7 @@ _narmock_state_type_for_time *_narmock_disable_mock_function_for_time()
     return &_narmock_state_for_time.public;
 }
 
-_narmock_state_type_for_time *_narmock_get_mock_for_time(void *function)
+_narmock_state_type_for_time *_narmock_get_mock_for_time(const void *function)
 {
     (void)function;
 

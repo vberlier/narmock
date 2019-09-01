@@ -27,7 +27,7 @@ struct {{ mock.state_type }}
     {{ mock.disable_mock_decl | render }};
 };
 
-{{ mock.state_type }} *_narmock_get_mock_for_{{ mock.func_name }}(void *function);
+{{ mock.state_type }} *_narmock_get_mock_for_{{ mock.func_name }}(const void *function);
 {% endfor %}
 
 #endif

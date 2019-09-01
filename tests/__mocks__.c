@@ -73,7 +73,7 @@ _narmock_state_type_for_add *_narmock_disable_mock_function_for_add()
     return &_narmock_state_for_add.public;
 }
 
-_narmock_state_type_for_add *_narmock_get_mock_for_add(void *function)
+_narmock_state_type_for_add *_narmock_get_mock_for_add(const void *function)
 {
     (void)function;
 
@@ -146,7 +146,7 @@ _narmock_state_type_for_compose_twice *_narmock_disable_mock_function_for_compos
     return &_narmock_state_for_compose_twice.public;
 }
 
-_narmock_state_type_for_compose_twice *_narmock_get_mock_for_compose_twice(void *function)
+_narmock_state_type_for_compose_twice *_narmock_get_mock_for_compose_twice(const void *function)
 {
     (void)function;
 
@@ -219,7 +219,7 @@ _narmock_state_type_for_edit_number *_narmock_disable_mock_function_for_edit_num
     return &_narmock_state_for_edit_number.public;
 }
 
-_narmock_state_type_for_edit_number *_narmock_get_mock_for_edit_number(void *function)
+_narmock_state_type_for_edit_number *_narmock_get_mock_for_edit_number(const void *function)
 {
     (void)function;
 
@@ -292,7 +292,7 @@ _narmock_state_type_for_mount *_narmock_disable_mock_function_for_mount()
     return &_narmock_state_for_mount.public;
 }
 
-_narmock_state_type_for_mount *_narmock_get_mock_for_mount(void *function)
+_narmock_state_type_for_mount *_narmock_get_mock_for_mount(const void *function)
 {
     (void)function;
 
@@ -363,7 +363,7 @@ _narmock_state_type_for_output_message *_narmock_disable_mock_function_for_outpu
     return &_narmock_state_for_output_message.public;
 }
 
-_narmock_state_type_for_output_message *_narmock_get_mock_for_output_message(void *function)
+_narmock_state_type_for_output_message *_narmock_get_mock_for_output_message(const void *function)
 {
     (void)function;
 
@@ -436,7 +436,7 @@ _narmock_state_type_for_pipe *_narmock_disable_mock_function_for_pipe()
     return &_narmock_state_for_pipe.public;
 }
 
-_narmock_state_type_for_pipe *_narmock_get_mock_for_pipe(void *function)
+_narmock_state_type_for_pipe *_narmock_get_mock_for_pipe(const void *function)
 {
     (void)function;
 
@@ -507,7 +507,7 @@ _narmock_state_type_for_print_hello *_narmock_disable_mock_function_for_print_he
     return &_narmock_state_for_print_hello.public;
 }
 
-_narmock_state_type_for_print_hello *_narmock_get_mock_for_print_hello(void *function)
+_narmock_state_type_for_print_hello *_narmock_get_mock_for_print_hello(const void *function)
 {
     (void)function;
 
@@ -578,7 +578,7 @@ _narmock_state_type_for_print_world *_narmock_disable_mock_function_for_print_wo
     return &_narmock_state_for_print_world.public;
 }
 
-_narmock_state_type_for_print_world *_narmock_get_mock_for_print_world(void *function)
+_narmock_state_type_for_print_world *_narmock_get_mock_for_print_world(const void *function)
 {
     (void)function;
 
@@ -651,7 +651,7 @@ _narmock_state_type_for_return_add_one *_narmock_disable_mock_function_for_retur
     return &_narmock_state_for_return_add_one.public;
 }
 
-_narmock_state_type_for_return_add_one *_narmock_get_mock_for_return_add_one(void *function)
+_narmock_state_type_for_return_add_one *_narmock_get_mock_for_return_add_one(const void *function)
 {
     (void)function;
 
@@ -724,7 +724,7 @@ _narmock_state_type_for_time *_narmock_disable_mock_function_for_time()
     return &_narmock_state_for_time.public;
 }
 
-_narmock_state_type_for_time *_narmock_get_mock_for_time(void *function)
+_narmock_state_type_for_time *_narmock_get_mock_for_time(const void *function)
 {
     (void)function;
 

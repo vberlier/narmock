@@ -26,6 +26,6 @@ struct _narmock_state_type_for_time
     _narmock_state_type_for_time *(*disable_mock)(void);
 };
 
-_narmock_state_type_for_time *_narmock_get_mock_for_time(void *function);
+_narmock_state_type_for_time *_narmock_get_mock_for_time(const void *function);
 
 #endif

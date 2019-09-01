@@ -30,7 +30,7 @@ struct _narmock_state_type_for_add
     _narmock_state_type_for_add *(*disable_mock)(void);
 };
 
-_narmock_state_type_for_add *_narmock_get_mock_for_add(void *function);
+_narmock_state_type_for_add *_narmock_get_mock_for_add(const void *function);
 
 // NARMOCK_DECLARATION compose_twice
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=compose_twice
@@ -44,7 +44,7 @@ struct _narmock_state_type_for_compose_twice
     _narmock_state_type_for_compose_twice *(*disable_mock)(void);
 };
 
-_narmock_state_type_for_compose_twice *_narmock_get_mock_for_compose_twice(void *function);
+_narmock_state_type_for_compose_twice *_narmock_get_mock_for_compose_twice(const void *function);
 
 // NARMOCK_DECLARATION edit_number
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=edit_number
@@ -58,7 +58,7 @@ struct _narmock_state_type_for_edit_number
     _narmock_state_type_for_edit_number *(*disable_mock)(void);
 };
 
-_narmock_state_type_for_edit_number *_narmock_get_mock_for_edit_number(void *function);
+_narmock_state_type_for_edit_number *_narmock_get_mock_for_edit_number(const void *function);
 
 // NARMOCK_DECLARATION mount
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=mount
@@ -72,7 +72,7 @@ struct _narmock_state_type_for_mount
     _narmock_state_type_for_mount *(*disable_mock)(void);
 };
 
-_narmock_state_type_for_mount *_narmock_get_mock_for_mount(void *function);
+_narmock_state_type_for_mount *_narmock_get_mock_for_mount(const void *function);
 
 // NARMOCK_DECLARATION output_message
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=output_message
@@ -86,7 +86,7 @@ struct _narmock_state_type_for_output_message
     _narmock_state_type_for_output_message *(*disable_mock)(void);
 };
 
-_narmock_state_type_for_output_message *_narmock_get_mock_for_output_message(void *function);
+_narmock_state_type_for_output_message *_narmock_get_mock_for_output_message(const void *function);
 
 // NARMOCK_DECLARATION pipe
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=pipe
@@ -100,7 +100,7 @@ struct _narmock_state_type_for_pipe
     _narmock_state_type_for_pipe *(*disable_mock)(void);
 };
 
-_narmock_state_type_for_pipe *_narmock_get_mock_for_pipe(void *function);
+_narmock_state_type_for_pipe *_narmock_get_mock_for_pipe(const void *function);
 
 // NARMOCK_DECLARATION print_hello
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=print_hello
@@ -114,7 +114,7 @@ struct _narmock_state_type_for_print_hello
     _narmock_state_type_for_print_hello *(*disable_mock)(void);
 };
 
-_narmock_state_type_for_print_hello *_narmock_get_mock_for_print_hello(void *function);
+_narmock_state_type_for_print_hello *_narmock_get_mock_for_print_hello(const void *function);
 
 // NARMOCK_DECLARATION print_world
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=print_world
@@ -128,7 +128,7 @@ struct _narmock_state_type_for_print_world
     _narmock_state_type_for_print_world *(*disable_mock)(void);
 };
 
-_narmock_state_type_for_print_world *_narmock_get_mock_for_print_world(void *function);
+_narmock_state_type_for_print_world *_narmock_get_mock_for_print_world(const void *function);
 
 // NARMOCK_DECLARATION return_add_one
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=return_add_one
@@ -142,7 +142,7 @@ struct _narmock_state_type_for_return_add_one
     _narmock_state_type_for_return_add_one *(*disable_mock)(void);
 };
 
-_narmock_state_type_for_return_add_one *_narmock_get_mock_for_return_add_one(void *function);
+_narmock_state_type_for_return_add_one *_narmock_get_mock_for_return_add_one(const void *function);
 
 // NARMOCK_DECLARATION time
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=time
@@ -156,6 +156,6 @@ struct _narmock_state_type_for_time
     _narmock_state_type_for_time *(*disable_mock)(void);
 };
 
-_narmock_state_type_for_time *_narmock_get_mock_for_time(void *function);
+_narmock_state_type_for_time *_narmock_get_mock_for_time(const void *function);
 
 #endif
