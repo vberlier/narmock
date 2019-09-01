@@ -246,7 +246,7 @@ typedef struct _narmock_params_type_for_return_add_one _narmock_params_type_for_
 struct _narmock_state_type_for_return_add_one
 {
     _narmock_state_type_for_return_add_one *(*mock_return)(DummyStruct *(*return_value)(DummyStruct *dummy_struct));
-    _narmock_state_type_for_return_add_one *(*mock_implementation)(DummyStruct *(*(*implementation)())(DummyStruct *dummy_struct));
+    _narmock_state_type_for_return_add_one *(*mock_implementation)(DummyStruct *(*(*implementation)(void))(DummyStruct *dummy_struct));
     _narmock_state_type_for_return_add_one *(*disable_mock)(void);
     _narmock_state_type_for_return_add_one *(*reset)(void);
     size_t call_count;

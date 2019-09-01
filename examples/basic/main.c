@@ -9,7 +9,7 @@ TEST(example)
     ASSERT_EQ(time(NULL), 42);
 }
 
-int main()
+int main(void)
 {
     return RUN_TESTS(example);
 }

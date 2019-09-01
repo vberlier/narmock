@@ -25,8 +25,8 @@ struct _narmock_private_state_type_for_time
 
 _narmock_state_type_for_time *_narmock_mock_return_function_for_time(time_t return_value);
 _narmock_state_type_for_time *_narmock_mock_implementation_function_for_time(time_t (*implementation)(time_t *arg1));
-_narmock_state_type_for_time *_narmock_disable_mock_function_for_time();
-_narmock_state_type_for_time *_narmock_reset_function_for_time();
+_narmock_state_type_for_time *_narmock_disable_mock_function_for_time(void);
+_narmock_state_type_for_time *_narmock_reset_function_for_time(void);
 
 _narmock_private_state_type_for_time _narmock_state_for_time =
 {
@@ -88,14 +88,14 @@ _narmock_state_type_for_time *_narmock_mock_implementation_function_for_time(tim
     return &_narmock_state_for_time.public;
 }
 
-_narmock_state_type_for_time *_narmock_disable_mock_function_for_time()
+_narmock_state_type_for_time *_narmock_disable_mock_function_for_time(void)
 {
     _narmock_state_for_time.mode = 0;
 
     return &_narmock_state_for_time.public;
 }
 
-_narmock_state_type_for_time *_narmock_reset_function_for_time()
+_narmock_state_type_for_time *_narmock_reset_function_for_time(void)
 {
     _narmock_state_for_time.mode = 0;
     _narmock_state_for_time.public.call_count = 0;

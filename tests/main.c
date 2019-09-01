@@ -236,7 +236,7 @@ TEST(add_one_function_last_call)
     ASSERT_EQ(MOCK(add_one)->last_call->return_value, &dummy_struct);
 }
 
-int main()
+int main(void)
 {
     return RUN_TESTS(add_function,
                      output_message_function,

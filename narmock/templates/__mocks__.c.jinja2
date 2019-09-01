@@ -26,10 +26,10 @@ struct {{ mock.private_state_type }}
     {{ mock.params_type }} last_call;
 };
 
-{{ mock.state_type }} *_narmock_mock_return_function_for_{{ mock.func_name }}({% if mock.return_value %}{{ mock.return_value_decl | render }}{% endif %});
+{{ mock.state_type }} *_narmock_mock_return_function_for_{{ mock.func_name }}({{ mock.return_value_decl | render }});
 {{ mock.state_type }} *_narmock_mock_implementation_function_for_{{ mock.func_name }}({{ mock.implementation_decl | render }});
-{{ mock.state_type }} *_narmock_disable_mock_function_for_{{ mock.func_name }}();
-{{ mock.state_type }} *_narmock_reset_function_for_{{ mock.func_name }}();
+{{ mock.state_type }} *_narmock_disable_mock_function_for_{{ mock.func_name }}(void);
+{{ mock.state_type }} *_narmock_reset_function_for_{{ mock.func_name }}(void);
 
 {{ mock.private_state_type }} {{ mock.state_name }} =
 {
@@ -83,7 +83,7 @@ struct {{ mock.private_state_type }}
     return{% if mock.return_value %} return_value{% endif %};
 }
 
-{{ mock.state_type }} *_narmock_mock_return_function_for_{{ mock.func_name }}({% if mock.return_value %}{{ mock.return_value_decl | render }}{% endif %})
+{{ mock.state_type }} *_narmock_mock_return_function_for_{{ mock.func_name }}({{ mock.return_value_decl | render }})
 {
     {{ mock.state_name }}.mode = 1;
     {% if mock.return_value %}
@@ -101,14 +101,14 @@ struct {{ mock.private_state_type }}
     return &{{ mock.state_name }}.public;
 }
 
-{{ mock.state_type }} *_narmock_disable_mock_function_for_{{ mock.func_name }}()
+{{ mock.state_type }} *_narmock_disable_mock_function_for_{{ mock.func_name }}(void)
 {
     {{ mock.state_name }}.mode = 0;
 
     return &{{ mock.state_name }}.public;
 }
 
-{{ mock.state_type }} *_narmock_reset_function_for_{{ mock.func_name }}()
+{{ mock.state_type }} *_narmock_reset_function_for_{{ mock.func_name }}(void)
 {
     {{ mock.state_name }}.mode = 0;
     {{ mock.state_name }}.public.call_count = 0;

@@ -45,7 +45,7 @@ DummyStruct *add_two(DummyStruct *dummy_struct)
     return compose_twice(dummy_struct, add_one);
 }
 
-DummyStruct *(*return_add_one())(DummyStruct *dummy_struct)
+DummyStruct *(*return_add_one(void))(DummyStruct *dummy_struct)
 {
     return add_one;
 }
