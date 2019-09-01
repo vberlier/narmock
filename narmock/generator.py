@@ -25,6 +25,10 @@ def function_ptr_decl(name, return_type, parameters):
     )
 
 
+def void_params():
+    return [decl(None, node.TypeDecl(None, [], node.IdentifierType(["void"])))]
+
+
 def rename_return_type(return_type, name):
     return_type = deepcopy(return_type)
     type_decl = return_type
@@ -115,10 +119,8 @@ class GeneratedMock:
         self.mock_implementation_decl = self.state_function(
             "mock_implementation", [self.implementation_decl]
         )
-        self.disable_mock_decl = self.state_function(
-            "disable_mock",
-            [decl(None, node.TypeDecl(None, [], node.IdentifierType(["void"])))],
-        )
+        self.disable_mock_decl = self.state_function("disable_mock", void_params())
+        self.reset_decl = self.state_function("reset", void_params())
 
         self.real_decl = self.rename_function(self.real_func)
         self.wrapped_decl = self.rename_function(self.wrapped_func)

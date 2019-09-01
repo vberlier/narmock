@@ -114,6 +114,12 @@ TEST(mount_function)
     MOCK(mount)->mock_return(0);
 
     ASSERT_EQ(mount("a", "b", "c", 0, ""), 0);
+
+    MOCK(mount)->reset();
+
+    ASSERT_EQ(MOCK(mount)->call_count, (size_t)0);
+    ASSERT_EQ(MOCK(mount)->last_call, NULL);
+    ASSERT_EQ(mount("a", "b", "c", 0, ""), -1);
 }
 
 DummyStruct *fake_edit_number(DummyStruct *dummy_struct, int number)
@@ -179,6 +185,10 @@ TEST(add_function_call_count)
     }
 
     ASSERT_EQ(MOCK(add)->call_count, (size_t)10);
+
+    MOCK(add)->reset();
+
+    ASSERT_EQ(MOCK(add)->call_count, (size_t)0);
 }
 
 TEST(add_function_last_call)
@@ -207,6 +217,10 @@ TEST(time_function_last_call)
 
     ASSERT_EQ(MOCK(time)->last_call->arg1, NULL);
     ASSERT_EQ(MOCK(time)->last_call->return_value, current_time);
+
+    MOCK(time)->reset();
+
+    ASSERT_EQ(MOCK(time)->last_call, NULL);
 }
 
 TEST(add_one_function_last_call)
