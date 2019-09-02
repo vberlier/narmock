@@ -23,12 +23,12 @@ struct _narmock_private_state_type_for_add
     _narmock_params_type_for_add last_call;
 };
 
-const _narmock_state_type_for_add *_narmock_mock_return_function_for_add(int return_value);
-const _narmock_state_type_for_add *_narmock_mock_implementation_function_for_add(int (*implementation)(int arg1, int arg2));
-const _narmock_state_type_for_add *_narmock_disable_mock_function_for_add(void);
-const _narmock_state_type_for_add *_narmock_reset_function_for_add(void);
+static const _narmock_state_type_for_add *_narmock_mock_return_function_for_add(int return_value);
+static const _narmock_state_type_for_add *_narmock_mock_implementation_function_for_add(int (*implementation)(int arg1, int arg2));
+static const _narmock_state_type_for_add *_narmock_disable_mock_function_for_add(void);
+static const _narmock_state_type_for_add *_narmock_reset_function_for_add(void);
 
-_narmock_private_state_type_for_add _narmock_state_for_add =
+static _narmock_private_state_type_for_add _narmock_state_for_add =
 {
     .public = {
         .mock_return = _narmock_mock_return_function_for_add,
@@ -72,7 +72,7 @@ int __wrap_add(int arg1, int arg2)
     return return_value;
 }
 
-const _narmock_state_type_for_add *_narmock_mock_return_function_for_add(int return_value)
+static const _narmock_state_type_for_add *_narmock_mock_return_function_for_add(int return_value)
 {
     _narmock_state_for_add.mode = 1;
     _narmock_state_for_add.return_value = return_value;
@@ -80,7 +80,7 @@ const _narmock_state_type_for_add *_narmock_mock_return_function_for_add(int ret
     return &_narmock_state_for_add.public;
 }
 
-const _narmock_state_type_for_add *_narmock_mock_implementation_function_for_add(int (*implementation)(int arg1, int arg2))
+static const _narmock_state_type_for_add *_narmock_mock_implementation_function_for_add(int (*implementation)(int arg1, int arg2))
 {
     _narmock_state_for_add.mode = 2;
     _narmock_state_for_add.implementation = implementation;
@@ -88,14 +88,14 @@ const _narmock_state_type_for_add *_narmock_mock_implementation_function_for_add
     return &_narmock_state_for_add.public;
 }
 
-const _narmock_state_type_for_add *_narmock_disable_mock_function_for_add(void)
+static const _narmock_state_type_for_add *_narmock_disable_mock_function_for_add(void)
 {
     _narmock_state_for_add.mode = 0;
 
     return &_narmock_state_for_add.public;
 }
 
-const _narmock_state_type_for_add *_narmock_reset_function_for_add(void)
+static const _narmock_state_type_for_add *_narmock_reset_function_for_add(void)
 {
     _narmock_state_for_add.mode = 0;
     _narmock_state_for_add.public.call_count = 0;
@@ -127,12 +127,12 @@ struct _narmock_private_state_type_for_add_one
     _narmock_params_type_for_add_one last_call;
 };
 
-const _narmock_state_type_for_add_one *_narmock_mock_return_function_for_add_one(DummyStruct *return_value);
-const _narmock_state_type_for_add_one *_narmock_mock_implementation_function_for_add_one(DummyStruct *(*implementation)(DummyStruct *arg1));
-const _narmock_state_type_for_add_one *_narmock_disable_mock_function_for_add_one(void);
-const _narmock_state_type_for_add_one *_narmock_reset_function_for_add_one(void);
+static const _narmock_state_type_for_add_one *_narmock_mock_return_function_for_add_one(DummyStruct *return_value);
+static const _narmock_state_type_for_add_one *_narmock_mock_implementation_function_for_add_one(DummyStruct *(*implementation)(DummyStruct *arg1));
+static const _narmock_state_type_for_add_one *_narmock_disable_mock_function_for_add_one(void);
+static const _narmock_state_type_for_add_one *_narmock_reset_function_for_add_one(void);
 
-_narmock_private_state_type_for_add_one _narmock_state_for_add_one =
+static _narmock_private_state_type_for_add_one _narmock_state_for_add_one =
 {
     .public = {
         .mock_return = _narmock_mock_return_function_for_add_one,
@@ -176,7 +176,7 @@ DummyStruct *__wrap_add_one(DummyStruct *arg1)
     return return_value;
 }
 
-const _narmock_state_type_for_add_one *_narmock_mock_return_function_for_add_one(DummyStruct *return_value)
+static const _narmock_state_type_for_add_one *_narmock_mock_return_function_for_add_one(DummyStruct *return_value)
 {
     _narmock_state_for_add_one.mode = 1;
     _narmock_state_for_add_one.return_value = return_value;
@@ -184,7 +184,7 @@ const _narmock_state_type_for_add_one *_narmock_mock_return_function_for_add_one
     return &_narmock_state_for_add_one.public;
 }
 
-const _narmock_state_type_for_add_one *_narmock_mock_implementation_function_for_add_one(DummyStruct *(*implementation)(DummyStruct *arg1))
+static const _narmock_state_type_for_add_one *_narmock_mock_implementation_function_for_add_one(DummyStruct *(*implementation)(DummyStruct *arg1))
 {
     _narmock_state_for_add_one.mode = 2;
     _narmock_state_for_add_one.implementation = implementation;
@@ -192,14 +192,14 @@ const _narmock_state_type_for_add_one *_narmock_mock_implementation_function_for
     return &_narmock_state_for_add_one.public;
 }
 
-const _narmock_state_type_for_add_one *_narmock_disable_mock_function_for_add_one(void)
+static const _narmock_state_type_for_add_one *_narmock_disable_mock_function_for_add_one(void)
 {
     _narmock_state_for_add_one.mode = 0;
 
     return &_narmock_state_for_add_one.public;
 }
 
-const _narmock_state_type_for_add_one *_narmock_reset_function_for_add_one(void)
+static const _narmock_state_type_for_add_one *_narmock_reset_function_for_add_one(void)
 {
     _narmock_state_for_add_one.mode = 0;
     _narmock_state_for_add_one.public.call_count = 0;
@@ -231,12 +231,12 @@ struct _narmock_private_state_type_for_compose_twice
     _narmock_params_type_for_compose_twice last_call;
 };
 
-const _narmock_state_type_for_compose_twice *_narmock_mock_return_function_for_compose_twice(DummyStruct *return_value);
-const _narmock_state_type_for_compose_twice *_narmock_mock_implementation_function_for_compose_twice(DummyStruct *(*implementation)(DummyStruct *arg1, DummyStruct *(*arg2)(DummyStruct *dummy_struct)));
-const _narmock_state_type_for_compose_twice *_narmock_disable_mock_function_for_compose_twice(void);
-const _narmock_state_type_for_compose_twice *_narmock_reset_function_for_compose_twice(void);
+static const _narmock_state_type_for_compose_twice *_narmock_mock_return_function_for_compose_twice(DummyStruct *return_value);
+static const _narmock_state_type_for_compose_twice *_narmock_mock_implementation_function_for_compose_twice(DummyStruct *(*implementation)(DummyStruct *arg1, DummyStruct *(*arg2)(DummyStruct *dummy_struct)));
+static const _narmock_state_type_for_compose_twice *_narmock_disable_mock_function_for_compose_twice(void);
+static const _narmock_state_type_for_compose_twice *_narmock_reset_function_for_compose_twice(void);
 
-_narmock_private_state_type_for_compose_twice _narmock_state_for_compose_twice =
+static _narmock_private_state_type_for_compose_twice _narmock_state_for_compose_twice =
 {
     .public = {
         .mock_return = _narmock_mock_return_function_for_compose_twice,
@@ -280,7 +280,7 @@ DummyStruct *__wrap_compose_twice(DummyStruct *arg1, DummyStruct *(*arg2)(DummyS
     return return_value;
 }
 
-const _narmock_state_type_for_compose_twice *_narmock_mock_return_function_for_compose_twice(DummyStruct *return_value)
+static const _narmock_state_type_for_compose_twice *_narmock_mock_return_function_for_compose_twice(DummyStruct *return_value)
 {
     _narmock_state_for_compose_twice.mode = 1;
     _narmock_state_for_compose_twice.return_value = return_value;
@@ -288,7 +288,7 @@ const _narmock_state_type_for_compose_twice *_narmock_mock_return_function_for_c
     return &_narmock_state_for_compose_twice.public;
 }
 
-const _narmock_state_type_for_compose_twice *_narmock_mock_implementation_function_for_compose_twice(DummyStruct *(*implementation)(DummyStruct *arg1, DummyStruct *(*arg2)(DummyStruct *dummy_struct)))
+static const _narmock_state_type_for_compose_twice *_narmock_mock_implementation_function_for_compose_twice(DummyStruct *(*implementation)(DummyStruct *arg1, DummyStruct *(*arg2)(DummyStruct *dummy_struct)))
 {
     _narmock_state_for_compose_twice.mode = 2;
     _narmock_state_for_compose_twice.implementation = implementation;
@@ -296,14 +296,14 @@ const _narmock_state_type_for_compose_twice *_narmock_mock_implementation_functi
     return &_narmock_state_for_compose_twice.public;
 }
 
-const _narmock_state_type_for_compose_twice *_narmock_disable_mock_function_for_compose_twice(void)
+static const _narmock_state_type_for_compose_twice *_narmock_disable_mock_function_for_compose_twice(void)
 {
     _narmock_state_for_compose_twice.mode = 0;
 
     return &_narmock_state_for_compose_twice.public;
 }
 
-const _narmock_state_type_for_compose_twice *_narmock_reset_function_for_compose_twice(void)
+static const _narmock_state_type_for_compose_twice *_narmock_reset_function_for_compose_twice(void)
 {
     _narmock_state_for_compose_twice.mode = 0;
     _narmock_state_for_compose_twice.public.call_count = 0;
@@ -335,12 +335,12 @@ struct _narmock_private_state_type_for_edit_number
     _narmock_params_type_for_edit_number last_call;
 };
 
-const _narmock_state_type_for_edit_number *_narmock_mock_return_function_for_edit_number(DummyStruct *return_value);
-const _narmock_state_type_for_edit_number *_narmock_mock_implementation_function_for_edit_number(DummyStruct *(*implementation)(DummyStruct *arg1, int arg2));
-const _narmock_state_type_for_edit_number *_narmock_disable_mock_function_for_edit_number(void);
-const _narmock_state_type_for_edit_number *_narmock_reset_function_for_edit_number(void);
+static const _narmock_state_type_for_edit_number *_narmock_mock_return_function_for_edit_number(DummyStruct *return_value);
+static const _narmock_state_type_for_edit_number *_narmock_mock_implementation_function_for_edit_number(DummyStruct *(*implementation)(DummyStruct *arg1, int arg2));
+static const _narmock_state_type_for_edit_number *_narmock_disable_mock_function_for_edit_number(void);
+static const _narmock_state_type_for_edit_number *_narmock_reset_function_for_edit_number(void);
 
-_narmock_private_state_type_for_edit_number _narmock_state_for_edit_number =
+static _narmock_private_state_type_for_edit_number _narmock_state_for_edit_number =
 {
     .public = {
         .mock_return = _narmock_mock_return_function_for_edit_number,
@@ -384,7 +384,7 @@ DummyStruct *__wrap_edit_number(DummyStruct *arg1, int arg2)
     return return_value;
 }
 
-const _narmock_state_type_for_edit_number *_narmock_mock_return_function_for_edit_number(DummyStruct *return_value)
+static const _narmock_state_type_for_edit_number *_narmock_mock_return_function_for_edit_number(DummyStruct *return_value)
 {
     _narmock_state_for_edit_number.mode = 1;
     _narmock_state_for_edit_number.return_value = return_value;
@@ -392,7 +392,7 @@ const _narmock_state_type_for_edit_number *_narmock_mock_return_function_for_edi
     return &_narmock_state_for_edit_number.public;
 }
 
-const _narmock_state_type_for_edit_number *_narmock_mock_implementation_function_for_edit_number(DummyStruct *(*implementation)(DummyStruct *arg1, int arg2))
+static const _narmock_state_type_for_edit_number *_narmock_mock_implementation_function_for_edit_number(DummyStruct *(*implementation)(DummyStruct *arg1, int arg2))
 {
     _narmock_state_for_edit_number.mode = 2;
     _narmock_state_for_edit_number.implementation = implementation;
@@ -400,14 +400,14 @@ const _narmock_state_type_for_edit_number *_narmock_mock_implementation_function
     return &_narmock_state_for_edit_number.public;
 }
 
-const _narmock_state_type_for_edit_number *_narmock_disable_mock_function_for_edit_number(void)
+static const _narmock_state_type_for_edit_number *_narmock_disable_mock_function_for_edit_number(void)
 {
     _narmock_state_for_edit_number.mode = 0;
 
     return &_narmock_state_for_edit_number.public;
 }
 
-const _narmock_state_type_for_edit_number *_narmock_reset_function_for_edit_number(void)
+static const _narmock_state_type_for_edit_number *_narmock_reset_function_for_edit_number(void)
 {
     _narmock_state_for_edit_number.mode = 0;
     _narmock_state_for_edit_number.public.call_count = 0;
@@ -439,12 +439,12 @@ struct _narmock_private_state_type_for_mount
     _narmock_params_type_for_mount last_call;
 };
 
-const _narmock_state_type_for_mount *_narmock_mock_return_function_for_mount(int return_value);
-const _narmock_state_type_for_mount *_narmock_mock_implementation_function_for_mount(int (*implementation)(const char *arg1, const char *arg2, const char *arg3, unsigned long int arg4, const void *arg5));
-const _narmock_state_type_for_mount *_narmock_disable_mock_function_for_mount(void);
-const _narmock_state_type_for_mount *_narmock_reset_function_for_mount(void);
+static const _narmock_state_type_for_mount *_narmock_mock_return_function_for_mount(int return_value);
+static const _narmock_state_type_for_mount *_narmock_mock_implementation_function_for_mount(int (*implementation)(const char *arg1, const char *arg2, const char *arg3, unsigned long int arg4, const void *arg5));
+static const _narmock_state_type_for_mount *_narmock_disable_mock_function_for_mount(void);
+static const _narmock_state_type_for_mount *_narmock_reset_function_for_mount(void);
 
-_narmock_private_state_type_for_mount _narmock_state_for_mount =
+static _narmock_private_state_type_for_mount _narmock_state_for_mount =
 {
     .public = {
         .mock_return = _narmock_mock_return_function_for_mount,
@@ -488,7 +488,7 @@ int __wrap_mount(const char *arg1, const char *arg2, const char *arg3, unsigned 
     return return_value;
 }
 
-const _narmock_state_type_for_mount *_narmock_mock_return_function_for_mount(int return_value)
+static const _narmock_state_type_for_mount *_narmock_mock_return_function_for_mount(int return_value)
 {
     _narmock_state_for_mount.mode = 1;
     _narmock_state_for_mount.return_value = return_value;
@@ -496,7 +496,7 @@ const _narmock_state_type_for_mount *_narmock_mock_return_function_for_mount(int
     return &_narmock_state_for_mount.public;
 }
 
-const _narmock_state_type_for_mount *_narmock_mock_implementation_function_for_mount(int (*implementation)(const char *arg1, const char *arg2, const char *arg3, unsigned long int arg4, const void *arg5))
+static const _narmock_state_type_for_mount *_narmock_mock_implementation_function_for_mount(int (*implementation)(const char *arg1, const char *arg2, const char *arg3, unsigned long int arg4, const void *arg5))
 {
     _narmock_state_for_mount.mode = 2;
     _narmock_state_for_mount.implementation = implementation;
@@ -504,14 +504,14 @@ const _narmock_state_type_for_mount *_narmock_mock_implementation_function_for_m
     return &_narmock_state_for_mount.public;
 }
 
-const _narmock_state_type_for_mount *_narmock_disable_mock_function_for_mount(void)
+static const _narmock_state_type_for_mount *_narmock_disable_mock_function_for_mount(void)
 {
     _narmock_state_for_mount.mode = 0;
 
     return &_narmock_state_for_mount.public;
 }
 
-const _narmock_state_type_for_mount *_narmock_reset_function_for_mount(void)
+static const _narmock_state_type_for_mount *_narmock_reset_function_for_mount(void)
 {
     _narmock_state_for_mount.mode = 0;
     _narmock_state_for_mount.public.call_count = 0;
@@ -542,12 +542,12 @@ struct _narmock_private_state_type_for_output_message
     _narmock_params_type_for_output_message last_call;
 };
 
-const _narmock_state_type_for_output_message *_narmock_mock_return_function_for_output_message(void);
-const _narmock_state_type_for_output_message *_narmock_mock_implementation_function_for_output_message(void (*implementation)(const char *arg1));
-const _narmock_state_type_for_output_message *_narmock_disable_mock_function_for_output_message(void);
-const _narmock_state_type_for_output_message *_narmock_reset_function_for_output_message(void);
+static const _narmock_state_type_for_output_message *_narmock_mock_return_function_for_output_message(void);
+static const _narmock_state_type_for_output_message *_narmock_mock_implementation_function_for_output_message(void (*implementation)(const char *arg1));
+static const _narmock_state_type_for_output_message *_narmock_disable_mock_function_for_output_message(void);
+static const _narmock_state_type_for_output_message *_narmock_reset_function_for_output_message(void);
 
-_narmock_private_state_type_for_output_message _narmock_state_for_output_message =
+static _narmock_private_state_type_for_output_message _narmock_state_for_output_message =
 {
     .public = {
         .mock_return = _narmock_mock_return_function_for_output_message,
@@ -585,14 +585,14 @@ void __wrap_output_message(const char *arg1)
     return;
 }
 
-const _narmock_state_type_for_output_message *_narmock_mock_return_function_for_output_message(void)
+static const _narmock_state_type_for_output_message *_narmock_mock_return_function_for_output_message(void)
 {
     _narmock_state_for_output_message.mode = 1;
 
     return &_narmock_state_for_output_message.public;
 }
 
-const _narmock_state_type_for_output_message *_narmock_mock_implementation_function_for_output_message(void (*implementation)(const char *arg1))
+static const _narmock_state_type_for_output_message *_narmock_mock_implementation_function_for_output_message(void (*implementation)(const char *arg1))
 {
     _narmock_state_for_output_message.mode = 2;
     _narmock_state_for_output_message.implementation = implementation;
@@ -600,14 +600,14 @@ const _narmock_state_type_for_output_message *_narmock_mock_implementation_funct
     return &_narmock_state_for_output_message.public;
 }
 
-const _narmock_state_type_for_output_message *_narmock_disable_mock_function_for_output_message(void)
+static const _narmock_state_type_for_output_message *_narmock_disable_mock_function_for_output_message(void)
 {
     _narmock_state_for_output_message.mode = 0;
 
     return &_narmock_state_for_output_message.public;
 }
 
-const _narmock_state_type_for_output_message *_narmock_reset_function_for_output_message(void)
+static const _narmock_state_type_for_output_message *_narmock_reset_function_for_output_message(void)
 {
     _narmock_state_for_output_message.mode = 0;
     _narmock_state_for_output_message.public.call_count = 0;
@@ -639,12 +639,12 @@ struct _narmock_private_state_type_for_pipe
     _narmock_params_type_for_pipe last_call;
 };
 
-const _narmock_state_type_for_pipe *_narmock_mock_return_function_for_pipe(int return_value);
-const _narmock_state_type_for_pipe *_narmock_mock_implementation_function_for_pipe(int (*implementation)(int arg1[2]));
-const _narmock_state_type_for_pipe *_narmock_disable_mock_function_for_pipe(void);
-const _narmock_state_type_for_pipe *_narmock_reset_function_for_pipe(void);
+static const _narmock_state_type_for_pipe *_narmock_mock_return_function_for_pipe(int return_value);
+static const _narmock_state_type_for_pipe *_narmock_mock_implementation_function_for_pipe(int (*implementation)(int arg1[2]));
+static const _narmock_state_type_for_pipe *_narmock_disable_mock_function_for_pipe(void);
+static const _narmock_state_type_for_pipe *_narmock_reset_function_for_pipe(void);
 
-_narmock_private_state_type_for_pipe _narmock_state_for_pipe =
+static _narmock_private_state_type_for_pipe _narmock_state_for_pipe =
 {
     .public = {
         .mock_return = _narmock_mock_return_function_for_pipe,
@@ -688,7 +688,7 @@ int __wrap_pipe(int arg1[2])
     return return_value;
 }
 
-const _narmock_state_type_for_pipe *_narmock_mock_return_function_for_pipe(int return_value)
+static const _narmock_state_type_for_pipe *_narmock_mock_return_function_for_pipe(int return_value)
 {
     _narmock_state_for_pipe.mode = 1;
     _narmock_state_for_pipe.return_value = return_value;
@@ -696,7 +696,7 @@ const _narmock_state_type_for_pipe *_narmock_mock_return_function_for_pipe(int r
     return &_narmock_state_for_pipe.public;
 }
 
-const _narmock_state_type_for_pipe *_narmock_mock_implementation_function_for_pipe(int (*implementation)(int arg1[2]))
+static const _narmock_state_type_for_pipe *_narmock_mock_implementation_function_for_pipe(int (*implementation)(int arg1[2]))
 {
     _narmock_state_for_pipe.mode = 2;
     _narmock_state_for_pipe.implementation = implementation;
@@ -704,14 +704,14 @@ const _narmock_state_type_for_pipe *_narmock_mock_implementation_function_for_pi
     return &_narmock_state_for_pipe.public;
 }
 
-const _narmock_state_type_for_pipe *_narmock_disable_mock_function_for_pipe(void)
+static const _narmock_state_type_for_pipe *_narmock_disable_mock_function_for_pipe(void)
 {
     _narmock_state_for_pipe.mode = 0;
 
     return &_narmock_state_for_pipe.public;
 }
 
-const _narmock_state_type_for_pipe *_narmock_reset_function_for_pipe(void)
+static const _narmock_state_type_for_pipe *_narmock_reset_function_for_pipe(void)
 {
     _narmock_state_for_pipe.mode = 0;
     _narmock_state_for_pipe.public.call_count = 0;
@@ -742,12 +742,12 @@ struct _narmock_private_state_type_for_print_hello
     _narmock_params_type_for_print_hello last_call;
 };
 
-const _narmock_state_type_for_print_hello *_narmock_mock_return_function_for_print_hello(void);
-const _narmock_state_type_for_print_hello *_narmock_mock_implementation_function_for_print_hello(void (*implementation)());
-const _narmock_state_type_for_print_hello *_narmock_disable_mock_function_for_print_hello(void);
-const _narmock_state_type_for_print_hello *_narmock_reset_function_for_print_hello(void);
+static const _narmock_state_type_for_print_hello *_narmock_mock_return_function_for_print_hello(void);
+static const _narmock_state_type_for_print_hello *_narmock_mock_implementation_function_for_print_hello(void (*implementation)());
+static const _narmock_state_type_for_print_hello *_narmock_disable_mock_function_for_print_hello(void);
+static const _narmock_state_type_for_print_hello *_narmock_reset_function_for_print_hello(void);
 
-_narmock_private_state_type_for_print_hello _narmock_state_for_print_hello =
+static _narmock_private_state_type_for_print_hello _narmock_state_for_print_hello =
 {
     .public = {
         .mock_return = _narmock_mock_return_function_for_print_hello,
@@ -785,14 +785,14 @@ void __wrap_print_hello()
     return;
 }
 
-const _narmock_state_type_for_print_hello *_narmock_mock_return_function_for_print_hello(void)
+static const _narmock_state_type_for_print_hello *_narmock_mock_return_function_for_print_hello(void)
 {
     _narmock_state_for_print_hello.mode = 1;
 
     return &_narmock_state_for_print_hello.public;
 }
 
-const _narmock_state_type_for_print_hello *_narmock_mock_implementation_function_for_print_hello(void (*implementation)())
+static const _narmock_state_type_for_print_hello *_narmock_mock_implementation_function_for_print_hello(void (*implementation)())
 {
     _narmock_state_for_print_hello.mode = 2;
     _narmock_state_for_print_hello.implementation = implementation;
@@ -800,14 +800,14 @@ const _narmock_state_type_for_print_hello *_narmock_mock_implementation_function
     return &_narmock_state_for_print_hello.public;
 }
 
-const _narmock_state_type_for_print_hello *_narmock_disable_mock_function_for_print_hello(void)
+static const _narmock_state_type_for_print_hello *_narmock_disable_mock_function_for_print_hello(void)
 {
     _narmock_state_for_print_hello.mode = 0;
 
     return &_narmock_state_for_print_hello.public;
 }
 
-const _narmock_state_type_for_print_hello *_narmock_reset_function_for_print_hello(void)
+static const _narmock_state_type_for_print_hello *_narmock_reset_function_for_print_hello(void)
 {
     _narmock_state_for_print_hello.mode = 0;
     _narmock_state_for_print_hello.public.call_count = 0;
@@ -838,12 +838,12 @@ struct _narmock_private_state_type_for_print_world
     _narmock_params_type_for_print_world last_call;
 };
 
-const _narmock_state_type_for_print_world *_narmock_mock_return_function_for_print_world(void);
-const _narmock_state_type_for_print_world *_narmock_mock_implementation_function_for_print_world(void (*implementation)(void));
-const _narmock_state_type_for_print_world *_narmock_disable_mock_function_for_print_world(void);
-const _narmock_state_type_for_print_world *_narmock_reset_function_for_print_world(void);
+static const _narmock_state_type_for_print_world *_narmock_mock_return_function_for_print_world(void);
+static const _narmock_state_type_for_print_world *_narmock_mock_implementation_function_for_print_world(void (*implementation)(void));
+static const _narmock_state_type_for_print_world *_narmock_disable_mock_function_for_print_world(void);
+static const _narmock_state_type_for_print_world *_narmock_reset_function_for_print_world(void);
 
-_narmock_private_state_type_for_print_world _narmock_state_for_print_world =
+static _narmock_private_state_type_for_print_world _narmock_state_for_print_world =
 {
     .public = {
         .mock_return = _narmock_mock_return_function_for_print_world,
@@ -881,14 +881,14 @@ void __wrap_print_world(void)
     return;
 }
 
-const _narmock_state_type_for_print_world *_narmock_mock_return_function_for_print_world(void)
+static const _narmock_state_type_for_print_world *_narmock_mock_return_function_for_print_world(void)
 {
     _narmock_state_for_print_world.mode = 1;
 
     return &_narmock_state_for_print_world.public;
 }
 
-const _narmock_state_type_for_print_world *_narmock_mock_implementation_function_for_print_world(void (*implementation)(void))
+static const _narmock_state_type_for_print_world *_narmock_mock_implementation_function_for_print_world(void (*implementation)(void))
 {
     _narmock_state_for_print_world.mode = 2;
     _narmock_state_for_print_world.implementation = implementation;
@@ -896,14 +896,14 @@ const _narmock_state_type_for_print_world *_narmock_mock_implementation_function
     return &_narmock_state_for_print_world.public;
 }
 
-const _narmock_state_type_for_print_world *_narmock_disable_mock_function_for_print_world(void)
+static const _narmock_state_type_for_print_world *_narmock_disable_mock_function_for_print_world(void)
 {
     _narmock_state_for_print_world.mode = 0;
 
     return &_narmock_state_for_print_world.public;
 }
 
-const _narmock_state_type_for_print_world *_narmock_reset_function_for_print_world(void)
+static const _narmock_state_type_for_print_world *_narmock_reset_function_for_print_world(void)
 {
     _narmock_state_for_print_world.mode = 0;
     _narmock_state_for_print_world.public.call_count = 0;
@@ -935,12 +935,12 @@ struct _narmock_private_state_type_for_return_add_one
     _narmock_params_type_for_return_add_one last_call;
 };
 
-const _narmock_state_type_for_return_add_one *_narmock_mock_return_function_for_return_add_one(DummyStruct *(*return_value)(DummyStruct *dummy_struct));
-const _narmock_state_type_for_return_add_one *_narmock_mock_implementation_function_for_return_add_one(DummyStruct *(*(*implementation)(void))(DummyStruct *dummy_struct));
-const _narmock_state_type_for_return_add_one *_narmock_disable_mock_function_for_return_add_one(void);
-const _narmock_state_type_for_return_add_one *_narmock_reset_function_for_return_add_one(void);
+static const _narmock_state_type_for_return_add_one *_narmock_mock_return_function_for_return_add_one(DummyStruct *(*return_value)(DummyStruct *dummy_struct));
+static const _narmock_state_type_for_return_add_one *_narmock_mock_implementation_function_for_return_add_one(DummyStruct *(*(*implementation)(void))(DummyStruct *dummy_struct));
+static const _narmock_state_type_for_return_add_one *_narmock_disable_mock_function_for_return_add_one(void);
+static const _narmock_state_type_for_return_add_one *_narmock_reset_function_for_return_add_one(void);
 
-_narmock_private_state_type_for_return_add_one _narmock_state_for_return_add_one =
+static _narmock_private_state_type_for_return_add_one _narmock_state_for_return_add_one =
 {
     .public = {
         .mock_return = _narmock_mock_return_function_for_return_add_one,
@@ -984,7 +984,7 @@ DummyStruct *(*__wrap_return_add_one(void))(DummyStruct *dummy_struct)
     return return_value;
 }
 
-const _narmock_state_type_for_return_add_one *_narmock_mock_return_function_for_return_add_one(DummyStruct *(*return_value)(DummyStruct *dummy_struct))
+static const _narmock_state_type_for_return_add_one *_narmock_mock_return_function_for_return_add_one(DummyStruct *(*return_value)(DummyStruct *dummy_struct))
 {
     _narmock_state_for_return_add_one.mode = 1;
     _narmock_state_for_return_add_one.return_value = return_value;
@@ -992,7 +992,7 @@ const _narmock_state_type_for_return_add_one *_narmock_mock_return_function_for_
     return &_narmock_state_for_return_add_one.public;
 }
 
-const _narmock_state_type_for_return_add_one *_narmock_mock_implementation_function_for_return_add_one(DummyStruct *(*(*implementation)(void))(DummyStruct *dummy_struct))
+static const _narmock_state_type_for_return_add_one *_narmock_mock_implementation_function_for_return_add_one(DummyStruct *(*(*implementation)(void))(DummyStruct *dummy_struct))
 {
     _narmock_state_for_return_add_one.mode = 2;
     _narmock_state_for_return_add_one.implementation = implementation;
@@ -1000,14 +1000,14 @@ const _narmock_state_type_for_return_add_one *_narmock_mock_implementation_funct
     return &_narmock_state_for_return_add_one.public;
 }
 
-const _narmock_state_type_for_return_add_one *_narmock_disable_mock_function_for_return_add_one(void)
+static const _narmock_state_type_for_return_add_one *_narmock_disable_mock_function_for_return_add_one(void)
 {
     _narmock_state_for_return_add_one.mode = 0;
 
     return &_narmock_state_for_return_add_one.public;
 }
 
-const _narmock_state_type_for_return_add_one *_narmock_reset_function_for_return_add_one(void)
+static const _narmock_state_type_for_return_add_one *_narmock_reset_function_for_return_add_one(void)
 {
     _narmock_state_for_return_add_one.mode = 0;
     _narmock_state_for_return_add_one.public.call_count = 0;
@@ -1039,12 +1039,12 @@ struct _narmock_private_state_type_for_time
     _narmock_params_type_for_time last_call;
 };
 
-const _narmock_state_type_for_time *_narmock_mock_return_function_for_time(time_t return_value);
-const _narmock_state_type_for_time *_narmock_mock_implementation_function_for_time(time_t (*implementation)(time_t *arg1));
-const _narmock_state_type_for_time *_narmock_disable_mock_function_for_time(void);
-const _narmock_state_type_for_time *_narmock_reset_function_for_time(void);
+static const _narmock_state_type_for_time *_narmock_mock_return_function_for_time(time_t return_value);
+static const _narmock_state_type_for_time *_narmock_mock_implementation_function_for_time(time_t (*implementation)(time_t *arg1));
+static const _narmock_state_type_for_time *_narmock_disable_mock_function_for_time(void);
+static const _narmock_state_type_for_time *_narmock_reset_function_for_time(void);
 
-_narmock_private_state_type_for_time _narmock_state_for_time =
+static _narmock_private_state_type_for_time _narmock_state_for_time =
 {
     .public = {
         .mock_return = _narmock_mock_return_function_for_time,
@@ -1088,7 +1088,7 @@ time_t __wrap_time(time_t *arg1)
     return return_value;
 }
 
-const _narmock_state_type_for_time *_narmock_mock_return_function_for_time(time_t return_value)
+static const _narmock_state_type_for_time *_narmock_mock_return_function_for_time(time_t return_value)
 {
     _narmock_state_for_time.mode = 1;
     _narmock_state_for_time.return_value = return_value;
@@ -1096,7 +1096,7 @@ const _narmock_state_type_for_time *_narmock_mock_return_function_for_time(time_
     return &_narmock_state_for_time.public;
 }
 
-const _narmock_state_type_for_time *_narmock_mock_implementation_function_for_time(time_t (*implementation)(time_t *arg1))
+static const _narmock_state_type_for_time *_narmock_mock_implementation_function_for_time(time_t (*implementation)(time_t *arg1))
 {
     _narmock_state_for_time.mode = 2;
     _narmock_state_for_time.implementation = implementation;
@@ -1104,14 +1104,14 @@ const _narmock_state_type_for_time *_narmock_mock_implementation_function_for_ti
     return &_narmock_state_for_time.public;
 }
 
-const _narmock_state_type_for_time *_narmock_disable_mock_function_for_time(void)
+static const _narmock_state_type_for_time *_narmock_disable_mock_function_for_time(void)
 {
     _narmock_state_for_time.mode = 0;
 
     return &_narmock_state_for_time.public;
 }
 
-const _narmock_state_type_for_time *_narmock_reset_function_for_time(void)
+static const _narmock_state_type_for_time *_narmock_reset_function_for_time(void)
 {
     _narmock_state_for_time.mode = 0;
     _narmock_state_for_time.public.call_count = 0;
