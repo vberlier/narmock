@@ -226,6 +226,7 @@ class ForgivingDeclarationParser:
             except IndexError:
                 self.source_context.append(filename)
 
+            self.erase_code_section(*self.current.span)
             self.next()
 
         elif self.current.is_keyword("__attribute__"):
