@@ -237,11 +237,7 @@ class ForgivingDeclarationParser:
             while len(self.bracket_stack) > stack_depth:
                 self.next()
 
-            end = self.current.span[1]
-
-            self.source_code = (
-                self.source_code[:begin] + " " * (end - begin) + self.source_code[end:]
-            )
+            self.erase_code_section(begin, self.current.span[1])
 
         return self.current
 
@@ -309,3 +305,8 @@ class ForgivingDeclarationParser:
                 rename_arguments(file_ast.ext[-1]),
                 IncludeDirective.from_source_context(self.source_context),
             )
+
+    def erase_code_section(self, begin, end):
+        self.source_code = (
+            self.source_code[:begin] + " " * (end - begin) + self.source_code[end:]
+        )
