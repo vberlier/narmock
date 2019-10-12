@@ -236,20 +236,9 @@ TEST(add_one_function_last_call)
     ASSERT_EQ(MOCK(add_one)->last_call->return_value, &dummy_struct);
 }
 
-int main(void)
+TEST(blah)
 {
-    return RUN_TESTS(add_function,
-                     output_message_function,
-                     print_hello_function,
-                     print_world_function,
-                     time_function,
-                     pipe_function,
-                     mount_function,
-                     edit_number_function,
-                     compose_twice_function,
-                     return_add_one_function,
-                     add_function_call_count,
-                     add_function_last_call,
-                     time_function_last_call,
-                     add_one_function_last_call);
+    MOCK(thing)->mock_return(2);
+
+    ASSERT_EQ(thing(5), 2);
 }
