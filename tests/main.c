@@ -235,10 +235,3 @@ TEST(add_one_function_last_call)
     ASSERT_EQ(MOCK(add_one)->last_call->arg1, &dummy_struct);
     ASSERT_EQ(MOCK(add_one)->last_call->return_value, &dummy_struct);
 }
-
-TEST(blah)
-{
-    MOCK(thing)->mock_return(2);
-
-    ASSERT_EQ(thing(5), 2);
-}
