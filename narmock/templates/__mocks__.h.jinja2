@@ -7,12 +7,12 @@ Do not edit manually
 
 #ifndef {{ guard_name }}
 #define {{ guard_name }}
-
+{{ includes }}
 #ifndef MOCK
 #define MOCK(function) (_narmock_get_mock_for_##function((void *)&function))
 #endif
 
-{{ includes }}
+void narmock_reset_all_mocks(void);
 {% for mock in mocks %}
 
 {{ mock.DECL_MARKER }} {{ mock.func_name }}

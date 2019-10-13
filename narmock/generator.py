@@ -46,17 +46,19 @@ def get_guard_name(filename):
 
 
 def generate_includes(system_includes, local_includes, directory):
-    return "\n\n".join(
+    includes = "\n".join(
         includes
         for includes in (
-            "\n".join(f"#include <{path}>" for path in sorted(system_includes)),
-            "\n".join(
-                f'#include "{os.path.relpath(path, directory)}"'
+            "".join(f"#include <{path}>\n" for path in sorted(system_includes)),
+            "".join(
+                f'#include "{os.path.relpath(path, directory)}"\n'
                 for path in sorted(local_includes)
             ),
         )
         if includes
     )
+
+    return includes and f"\n{includes}"
 
 
 class GeneratedMock:

@@ -7,6 +7,21 @@ Do not edit manually
 
 #include "__mocks__.h"
 
+void narmock_reset_all_mocks(void)
+{
+    MOCK(add)->reset();
+    MOCK(add_one)->reset();
+    MOCK(compose_twice)->reset();
+    MOCK(edit_number)->reset();
+    MOCK(mount)->reset();
+    MOCK(output_message)->reset();
+    MOCK(pipe)->reset();
+    MOCK(print_hello)->reset();
+    MOCK(print_world)->reset();
+    MOCK(return_add_one)->reset();
+    MOCK(time)->reset();
+}
+
 // NARMOCK_IMPLEMENTATION add
 
 int __real_add(int arg1, int arg2);

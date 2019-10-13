@@ -8,11 +8,13 @@ Do not edit manually
 #ifndef MOCKS_H
 #define MOCKS_H
 
+#include <time.h>
+
 #ifndef MOCK
 #define MOCK(function) (_narmock_get_mock_for_##function((void *)&function))
 #endif
 
-#include <time.h>
+void narmock_reset_all_mocks(void);
 
 // NARMOCK_DECLARATION time
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=time

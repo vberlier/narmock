@@ -4,8 +4,13 @@ Mocks source file
 Generated with Narmock v{{ narmock_version }} (https://github.com/vberlier/narmock)
 Do not edit manually
 */
-
 {{ includes }}
+void narmock_reset_all_mocks(void)
+{
+{% for mock in mocks %}
+    MOCK({{ mock.func_name }})->reset();
+{% endfor %}
+}
 {% for mock in mocks %}
 
 {{ mock.IMPL_MARKER }} {{ mock.func_name }}
