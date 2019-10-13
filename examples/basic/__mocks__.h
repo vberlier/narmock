@@ -12,7 +12,6 @@ Do not edit manually
 #define MOCK(function) (_narmock_get_mock_for_##function((void *)&function))
 #endif
 
-#include <stddef.h>
 #include <time.h>
 
 // NARMOCK_DECLARATION time
@@ -27,7 +26,7 @@ struct _narmock_state_type_for_time
     const _narmock_state_type_for_time *(*mock_implementation)(time_t (*implementation)(time_t *arg1));
     const _narmock_state_type_for_time *(*disable_mock)(void);
     const _narmock_state_type_for_time *(*reset)(void);
-    size_t call_count;
+    int call_count;
     const _narmock_params_type_for_time *last_call;
 };
 

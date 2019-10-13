@@ -162,7 +162,7 @@ class FileGenerator:
         self.header_template = self.jinja_env.get_template(f"{self.HEADER_FILE}.jinja2")
 
         self.mocks = []
-        self.system_includes = {"stddef.h"}
+        self.system_includes = set()
         self.local_includes = set()
 
     def add_mock(self, mocked_function):
