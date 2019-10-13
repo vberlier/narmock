@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "narmock"
-version = "0.2.8"
+version = "0.2.9"
 description = "A minimal mocking utility for C projects."
 authors = ["Valentin Berlier <berlier.v@gmail.com>"]
 license = "MIT"
