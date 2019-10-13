@@ -161,6 +161,12 @@ printf("%p\n", MOCK(time)->last_call);    // Outputs (nil)
 printf("%ld\n", time(NULL));              // Outputs the current time
 ```
 
+You can also call the `narmock_reset_all_mocks` function to reset all the mock.
+
+```c
+narmock_reset_all_mocks();
+```
+
 ## Contributing
 
 Contributions are welcome. Feel free to open issues and suggest improvements. This project uses [poetry](https://poetry.eustace.io/) so you'll need to install it first if you want to be able to work with the project locally.
