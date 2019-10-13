@@ -18,9 +18,10 @@ Do not edit manually
 #define MOCK(function) (_narmock_get_mock_for_##function((void *)&function))
 #endif
 
-#define _NARMOCK_RESET_ALL_MOCKS
-
+#ifndef _NARMOCK_RESET_ALL_MOCKS
+#define _NARMOCK_RESET_ALL_MOCKS 1
 void narmock_reset_all_mocks(void);
+#endif
 
 // NARMOCK_DECLARATION add
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=add
