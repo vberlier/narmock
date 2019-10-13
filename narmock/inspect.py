@@ -139,7 +139,7 @@ class ForgivingDeclarationParser:
         "KEYWORD": (
             "\\b(?:auto|break|case|char|const|continue|default|do|double|else|enum|extern|float"
             "|for|goto|if|int|long|register|return|short|signed|sizeof|static|struct|switch"
-            "|typedef|union|unsigned|void|volatile|while|__extension__|__attribute__)\\b"
+            "|typedef|union|unsigned|void|volatile|while|__extension__|__attribute__|__restrict)\\b"
         ),
         "IDENTIFIER": r"\b[a-zA-Z_](?:[a-zA-Z_0-9])*\b",
         "CHARACTER": r"L?'(?:\\.|[^\\'])+'",
@@ -239,6 +239,10 @@ class ForgivingDeclarationParser:
                 self.next()
 
             self.erase_code_section(begin, self.current.span[1])
+
+        elif self.current.is_keyword("__extension__", "__restrict"):
+            self.erase_code_section(*self.current.span)
+            self.next()
 
         return self.current
 
