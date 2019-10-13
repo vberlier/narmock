@@ -38,7 +38,7 @@ $ pip install narmock
 The command-line utility provides two essential commands that should make it possible to integrate Narmock in any kind of build system.
 
 ```
-usage: narmock [-h] (-g [<code>] | -f) [-d <directory>]
+usage: narmock [-h] (-g [<code>] | -f) [-d <directory>] [-k [<regex>]]
 
 A minimal mocking utility for C projects.
 
@@ -47,6 +47,7 @@ optional arguments:
   -g [<code>]     generate mocks
   -f              output linker flags
   -d <directory>  mocks directory
+  -k [<regex>]    keep argument names
 ```
 
 > Check out the [basic example](https://github.com/vberlier/narmock/tree/master/examples/basic) for a simple Makefile that integrates both [Narwhal](https://github.com/vberlier/narwhal) and Narmock.
@@ -143,7 +144,19 @@ printf("%p\n", MOCK(time)->last_call->arg1);           // Outputs (nil)
 printf("%ld\n", MOCK(time)->last_call->return_value);  // Outputs the current time
 ```
 
-Note that the `last_call` pointer is `NULL` until the function gets called for the first time.
+Note that the `last_call` pointer is `NULL` until the function gets called for the first time. By default, the arguments are accessible through the sequential `arg1`, `arg2`, `...`, `argN` attributes. If you want to keep the original name of the arguments for a set of specific functions you can use the `-k` option when generating the mocks.
+
+```bash
+$ gcc -E *.c | narmock -g -k "myprefix_.*"
+```
+
+The option takes a regular expression and generates mocks that use the original argument names for all the functions that match the regex.
+
+```bash
+$ gcc -E *.c | narmock -g -k
+```
+
+Note that the default regex is `.*` so here every function would be affected.
 
 ### Resetting everything
 
