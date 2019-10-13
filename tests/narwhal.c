@@ -1,5 +1,5 @@
 /*
-Narwhal v0.4.4 (https://github.com/vberlier/narwhal)
+Narwhal v0.4.7 (https://github.com/vberlier/narwhal)
 Amalgamated source file
 
 Generated with amalgamate.py (https://github.com/edlund/amalgamate)
@@ -53,10 +53,6 @@ size_t narwhal_optimal_bytes_per_row(size_t element_size, size_t target, size_t 
 #include <stdbool.h>
 #include <stdlib.h>
 
-// #include "narwhal/discovery/discovery.h"
-#ifndef NARWHAL_DISCOVERY_H
-#define NARWHAL_DISCOVERY_H
-
 // #include "narwhal/concat_macro.h"
 #ifndef NARWHAL_CONCAT_MACRO_H
 #define NARWHAL_CONCAT_MACRO_H
@@ -65,6 +61,12 @@ size_t narwhal_optimal_bytes_per_row(size_t element_size, size_t target, size_t 
 #define _NARWHAL_CONCAT(A, B) __NARWHAL_CONCAT(A, B)
 
 #endif
+
+// #include "narwhal/discovery/discovery.h"
+#ifndef NARWHAL_DISCOVERY_H
+#define NARWHAL_DISCOVERY_H
+
+// #include "narwhal/concat_macro.h"
 
 // #include "narwhal/types.h"
 #ifndef NARWHAL_TYPES_H
@@ -155,6 +157,7 @@ typedef void (*NarwhalTestModifierRegistration)(NarwhalTest *test,
                                                 NarwhalCollection *params,
                                                 NarwhalCollection *fixtures);
 typedef void (*NarwhalTestFunction)(void);
+typedef void (*NarwhalResetAllMocksFunction)(void);
 
 #endif
 
@@ -233,6 +236,7 @@ struct NarwhalTest
     NarwhalCollection *accessible_params;
     NarwhalTestResult *result;
     NarwhalOutputCapture *output_capture;
+    NarwhalResetAllMocksFunction reset_all_mocks;
 };
 
 NarwhalTest *narwhal_new_test(const char *name,
@@ -240,7 +244,8 @@ NarwhalTest *narwhal_new_test(const char *name,
                               size_t line_number,
                               NarwhalTestFunction function,
                               NarwhalTestModifierRegistration *test_modifiers,
-                              size_t modifier_count);
+                              size_t modifier_count,
+                              NarwhalResetAllMocksFunction reset_all_mocks);
 void narwhal_run_test(NarwhalTest *test);
 
 void narwhal_free_after_test(NarwhalTest *test, void *resource);
@@ -248,6 +253,7 @@ void auto_free(void *resource);
 void *narwhal_test_resource(NarwhalTest *test, size_t size);
 void *test_resource(size_t size);
 void narwhal_free_test_resources(NarwhalTest *test);
+void narwhal_call_reset_all_mocks(NarwhalTest *test);
 
 void narwhal_register_test_fixture(NarwhalTest *test,
                                    NarwhalCollection *access_collection,
@@ -270,6 +276,11 @@ void narwhal_test_set_skip(NarwhalTest *test,
 
 void narwhal_free_test(NarwhalTest *test);
 
+#define _NARWHAL_WHEN_NARMOCK_RESET_ALL_MOCKS_IS_1() narmock_reset_all_mocks
+#define _NARWHAL_WHEN_NARMOCK_RESET_ALL_MOCKS_IS_() narmock_reset_all_mocks
+#define _NARWHAL_WHEN_NARMOCK_RESET_ALL_MOCKS_IS__NARMOCK_RESET_ALL_MOCKS() NULL
+#define _NARWHAL_WHEN_NARMOCK_RESET_ALL_MOCKS_IS_0() NULL
+
 #define DECLARE_TEST(test_name) void test_name(NarwhalTestGroup *test_group)
 
 #define TEST(test_name, ...)                                                                 \
@@ -285,7 +296,9 @@ void narwhal_free_test(NarwhalTest *test);
                               _narwhal_test_function_##test_name,                            \
                               _narwhal_test_modifiers_##test_name,                           \
                               sizeof(_narwhal_test_modifiers_##test_name) /                  \
-                                  sizeof(*_narwhal_test_modifiers_##test_name));             \
+                                  sizeof(*_narwhal_test_modifiers_##test_name),              \
+                              _NARWHAL_CONCAT(_NARWHAL_WHEN_NARMOCK_RESET_ALL_MOCKS_IS_,     \
+                                              _NARMOCK_RESET_ALL_MOCKS)());                  \
     }                                                                                        \
     _NARWHAL_REGISTER_TEST_FOR_DISCOVERY(test_name)                                          \
     static void _narwhal_test_function_##test_name(void)
@@ -733,7 +746,8 @@ static void initialize_test(NarwhalTest *test,
                             size_t line_number,
                             NarwhalTestFunction function,
                             NarwhalTestModifierRegistration *test_modifiers,
-                            size_t modifier_count)
+                            size_t modifier_count,
+                            NarwhalResetAllMocksFunction reset_all_mocks)
 {
     test->name = name;
     test->filename = filename;
@@ -749,6 +763,7 @@ static void initialize_test(NarwhalTest *test,
     test->accessible_params = narwhal_empty_collection();
     test->result = NULL;
     test->output_capture = NULL;
+    test->reset_all_mocks = reset_all_mocks;
 
     for (size_t i = 0; i < modifier_count; i++)
     {
@@ -762,10 +777,18 @@ NarwhalTest *narwhal_new_test(const char *name,
                               size_t line_number,
                               NarwhalTestFunction function,
                               NarwhalTestModifierRegistration *test_modifiers,
-                              size_t modifier_count)
+                              size_t modifier_count,
+                              NarwhalResetAllMocksFunction reset_all_mocks)
 {
     NarwhalTest *test = malloc(sizeof(NarwhalTest));
-    initialize_test(test, name, filename, line_number, function, test_modifiers, modifier_count);
+    initialize_test(test,
+                    name,
+                    filename,
+                    line_number,
+                    function,
+                    test_modifiers,
+                    modifier_count,
+                    reset_all_mocks);
 
     return test;
 }
@@ -802,6 +825,14 @@ void narwhal_free_test_resources(NarwhalTest *test)
     {
         void *test_resource = narwhal_collection_pop(test->resources);
         free(test_resource);
+    }
+}
+
+void narwhal_call_reset_all_mocks(NarwhalTest *test)
+{
+    if (test->reset_all_mocks != NULL)
+    {
+        test->reset_all_mocks();
     }
 }
 
@@ -951,7 +982,9 @@ static int test_start(NarwhalTest *test)
         _narwhal_current_params = test_fixture->accessible_params;
         _narwhal_current_fixtures = test_fixture->accessible_fixtures;
 
+        narwhal_call_reset_all_mocks(test);
         test_fixture->setup(test_fixture->value, test_fixture);
+        narwhal_call_reset_all_mocks(test);
 
         _narwhal_current_test = NULL;
         _narwhal_current_params = NULL;
@@ -982,7 +1015,9 @@ static int test_end(NarwhalTest *test)
             _narwhal_current_params = test_fixture->accessible_params;
             _narwhal_current_fixtures = test_fixture->accessible_fixtures;
 
+            narwhal_call_reset_all_mocks(test);
             test_fixture->cleanup(test_fixture->value, test_fixture);
+            narwhal_call_reset_all_mocks(test);
 
             _narwhal_current_test = NULL;
             _narwhal_current_params = NULL;
@@ -1022,7 +1057,9 @@ static int execute_test_function(NarwhalTest *test)
 
     gettimeofday(&start_time, NULL);
 
+    narwhal_call_reset_all_mocks(test);
     test->function();
+    narwhal_call_reset_all_mocks(test);
 
     gettimeofday(&end_time, NULL);
 
@@ -1880,7 +1917,8 @@ void narwhal_register_test(NarwhalTestGroup *test_group,
                            size_t line_number,
                            NarwhalTestFunction function,
                            NarwhalTestModifierRegistration *test_modifiers,
-                           size_t modifier_count);
+                           size_t modifier_count,
+                           NarwhalResetAllMocksFunction reset_all_mocks);
 
 void narwhal_free_test_group(NarwhalTestGroup *test_group);
 
@@ -2047,7 +2085,7 @@ void narwhal_free_test_param(NarwhalTestParam *test_param)
 
 
 void narwhal_fail_test(NarwhalTest *test, const char *format, ...);
-bool narwhal_check_assertion(const NarwhalTest *test,
+bool narwhal_check_assertion(NarwhalTest *test,
                              bool assertion_success,
                              const char *assertion,
                              const char *assertion_file,
@@ -2439,10 +2477,11 @@ void narwhal_register_test(NarwhalTestGroup *test_group,
                            size_t line_number,
                            NarwhalTestFunction function,
                            NarwhalTestModifierRegistration *test_modifiers,
-                           size_t modifier_count)
+                           size_t modifier_count,
+                           NarwhalResetAllMocksFunction reset_all_mocks)
 {
-    NarwhalTest *test =
-        narwhal_new_test(name, filename, line_number, function, test_modifiers, modifier_count);
+    NarwhalTest *test = narwhal_new_test(
+        name, filename, line_number, function, test_modifiers, modifier_count, reset_all_mocks);
     test->group = test_group;
 
     narwhal_collection_append(test_group->tests, test);
@@ -3622,7 +3661,7 @@ void narwhal_fail_test(NarwhalTest *test, const char *format, ...)
     free(message);
 }
 
-bool narwhal_check_assertion(const NarwhalTest *test,
+bool narwhal_check_assertion(NarwhalTest *test,
                              bool assertion_success,
                              const char *assertion,
                              const char *assertion_file,
@@ -3632,6 +3671,8 @@ bool narwhal_check_assertion(const NarwhalTest *test,
     {
         return false;
     }
+
+    narwhal_call_reset_all_mocks(test);
 
     narwhal_pipe_assertion_failure(test->result, assertion, assertion_file, assertion_line);
     return true;
@@ -3643,6 +3684,8 @@ bool narwhal_check_string_equal(const char *actual, const char *expected)
     {
         return true;
     }
+
+    narwhal_call_reset_all_mocks(_narwhal_current_test);
 
     NarwhalTestResult *test_result = _narwhal_current_test->result;
     test_result->diff_original = (char *)expected;           // Can't be const because the parent
@@ -3667,6 +3710,8 @@ bool narwhal_check_memory_equal(const void *actual,
     {
         return true;
     }
+
+    narwhal_call_reset_all_mocks(_narwhal_current_test);
 
     size_t bytes_per_row = narwhal_optimal_bytes_per_row(element_size, 16, 8);
 

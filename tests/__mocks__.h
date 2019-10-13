@@ -288,4 +288,30 @@ struct _narmock_params_type_for_time
 
 const _narmock_state_type_for_time *_narmock_get_mock_for_time(const void *function);
 
+// NARMOCK_DECLARATION write
+// NARMOCK_LINKER_FLAGS -Wl,--wrap=write
+
+typedef struct _narmock_state_type_for_write _narmock_state_type_for_write;
+typedef struct _narmock_params_type_for_write _narmock_params_type_for_write;
+
+struct _narmock_state_type_for_write
+{
+    const _narmock_state_type_for_write *(*mock_return)(ssize_t return_value);
+    const _narmock_state_type_for_write *(*mock_implementation)(ssize_t (*implementation)(int arg1, const void *arg2, size_t arg3));
+    const _narmock_state_type_for_write *(*disable_mock)(void);
+    const _narmock_state_type_for_write *(*reset)(void);
+    int call_count;
+    const _narmock_params_type_for_write *last_call;
+};
+
+struct _narmock_params_type_for_write
+{
+    int arg1;
+    const void *arg2;
+    size_t arg3;
+    ssize_t return_value;
+};
+
+const _narmock_state_type_for_write *_narmock_get_mock_for_write(const void *function);
+
 #endif

@@ -20,6 +20,7 @@ void narmock_reset_all_mocks(void)
     MOCK(print_world)->reset();
     MOCK(return_add_one)->reset();
     MOCK(time)->reset();
+    MOCK(write)->reset();
 }
 
 // NARMOCK_IMPLEMENTATION add
@@ -1140,4 +1141,108 @@ const _narmock_state_type_for_time *_narmock_get_mock_for_time(const void *funct
     (void)function;
 
     return &_narmock_state_for_time.public;
+}
+
+// NARMOCK_IMPLEMENTATION write
+
+ssize_t __real_write(int arg1, const void *arg2, size_t arg3);
+
+typedef struct _narmock_private_state_type_for_write _narmock_private_state_type_for_write;
+
+struct _narmock_private_state_type_for_write
+{
+    _narmock_state_type_for_write public;
+
+    int mode;
+    ssize_t return_value;
+    ssize_t (*implementation)(int arg1, const void *arg2, size_t arg3);
+    _narmock_params_type_for_write last_call;
+};
+
+static const _narmock_state_type_for_write *_narmock_mock_return_function_for_write(ssize_t return_value);
+static const _narmock_state_type_for_write *_narmock_mock_implementation_function_for_write(ssize_t (*implementation)(int arg1, const void *arg2, size_t arg3));
+static const _narmock_state_type_for_write *_narmock_disable_mock_function_for_write(void);
+static const _narmock_state_type_for_write *_narmock_reset_function_for_write(void);
+
+static _narmock_private_state_type_for_write _narmock_state_for_write =
+{
+    .public = {
+        .mock_return = _narmock_mock_return_function_for_write,
+        .mock_implementation = _narmock_mock_implementation_function_for_write,
+        .disable_mock = _narmock_disable_mock_function_for_write,
+        .reset = _narmock_reset_function_for_write,
+        .call_count = 0,
+        .last_call = NULL
+    },
+
+    .mode = 0
+};
+
+ssize_t __wrap_write(int arg1, const void *arg2, size_t arg3)
+{
+    ssize_t return_value;
+
+    switch (_narmock_state_for_write.mode)
+    {
+        case 1:
+            return_value =
+            _narmock_state_for_write.return_value;
+            break;
+        case 2:
+            return_value =
+            _narmock_state_for_write.implementation(arg1, arg2, arg3);
+            break;
+        default:
+            return_value =
+            __real_write(arg1, arg2, arg3);
+            break;
+    }
+
+    _narmock_state_for_write.public.call_count++;
+
+    _narmock_params_type_for_write last_call = { arg1, arg2, arg3, return_value };
+
+    _narmock_state_for_write.last_call = last_call;
+    _narmock_state_for_write.public.last_call = &_narmock_state_for_write.last_call;
+
+    return return_value;
+}
+
+static const _narmock_state_type_for_write *_narmock_mock_return_function_for_write(ssize_t return_value)
+{
+    _narmock_state_for_write.mode = 1;
+    _narmock_state_for_write.return_value = return_value;
+
+    return &_narmock_state_for_write.public;
+}
+
+static const _narmock_state_type_for_write *_narmock_mock_implementation_function_for_write(ssize_t (*implementation)(int arg1, const void *arg2, size_t arg3))
+{
+    _narmock_state_for_write.mode = 2;
+    _narmock_state_for_write.implementation = implementation;
+
+    return &_narmock_state_for_write.public;
+}
+
+static const _narmock_state_type_for_write *_narmock_disable_mock_function_for_write(void)
+{
+    _narmock_state_for_write.mode = 0;
+
+    return &_narmock_state_for_write.public;
+}
+
+static const _narmock_state_type_for_write *_narmock_reset_function_for_write(void)
+{
+    _narmock_state_for_write.mode = 0;
+    _narmock_state_for_write.public.call_count = 0;
+    _narmock_state_for_write.public.last_call = NULL;
+
+    return &_narmock_state_for_write.public;
+}
+
+const _narmock_state_type_for_write *_narmock_get_mock_for_write(const void *function)
+{
+    (void)function;
+
+    return &_narmock_state_for_write.public;
 }
