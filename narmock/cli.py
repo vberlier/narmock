@@ -27,11 +27,20 @@ group.add_argument("-f", action="store_true", help="output linker flags")
 
 parser.add_argument("-d", metavar="<directory>", default=".", help="mocks directory")
 
+parser.add_argument(
+    "-k",
+    metavar="<regex>",
+    nargs="?",
+    default="",
+    const=".*",
+    help="keep argument names",
+)
+
 
 def main():
     args = parser.parse_args()
 
     if args.g:
-        generate_mocks(expanded_code=args.g.read(), directory=args.d)
+        generate_mocks(expanded_code=args.g.read(), directory=args.d, keep_args=args.k)
     elif args.f:
         print(" ".join(collect_linker_flags(directory=args.d)).strip())

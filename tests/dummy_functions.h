@@ -8,6 +8,7 @@ typedef struct DummyStruct
 
 int add(int x, int y);
 void output_message(const char *message);
+void keep_args_output_message(const char *message);
 void print_hello();
 void print_world(void);
 DummyStruct *edit_number(DummyStruct *dummy_struct, int number);

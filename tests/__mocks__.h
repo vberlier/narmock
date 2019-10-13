@@ -122,6 +122,29 @@ struct _narmock_params_type_for_edit_number
 
 const _narmock_state_type_for_edit_number *_narmock_get_mock_for_edit_number(const void *function);
 
+// NARMOCK_DECLARATION keep_args_output_message
+// NARMOCK_LINKER_FLAGS -Wl,--wrap=keep_args_output_message
+
+typedef struct _narmock_state_type_for_keep_args_output_message _narmock_state_type_for_keep_args_output_message;
+typedef struct _narmock_params_type_for_keep_args_output_message _narmock_params_type_for_keep_args_output_message;
+
+struct _narmock_state_type_for_keep_args_output_message
+{
+    const _narmock_state_type_for_keep_args_output_message *(*mock_return)(void);
+    const _narmock_state_type_for_keep_args_output_message *(*mock_implementation)(void (*implementation)(const char *message));
+    const _narmock_state_type_for_keep_args_output_message *(*disable_mock)(void);
+    const _narmock_state_type_for_keep_args_output_message *(*reset)(void);
+    int call_count;
+    const _narmock_params_type_for_keep_args_output_message *last_call;
+};
+
+struct _narmock_params_type_for_keep_args_output_message
+{
+    const char *message;
+};
+
+const _narmock_state_type_for_keep_args_output_message *_narmock_get_mock_for_keep_args_output_message(const void *function);
+
 // NARMOCK_DECLARATION mount
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=mount
 

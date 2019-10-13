@@ -12,6 +12,11 @@ void output_message(const char *message)
     printf("%s\n", message);
 }
 
+void keep_args_output_message(const char *message)
+{
+    output_message(message);
+}
+
 void print_hello()
 {
     output_message("hello");

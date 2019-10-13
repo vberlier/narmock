@@ -242,3 +242,12 @@ TEST(write_function)
 
     ASSERT_EQ(write(1234, NULL, 8), 64);
 }
+
+TEST(keep_args_output_message_function)
+{
+    MOCK(keep_args_output_message)->mock_return();
+
+    keep_args_output_message("foo");
+
+    ASSERT_EQ(MOCK(keep_args_output_message)->last_call->message, "foo");
+}

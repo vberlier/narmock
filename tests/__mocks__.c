@@ -13,6 +13,7 @@ void narmock_reset_all_mocks(void)
     MOCK(add_one)->reset();
     MOCK(compose_twice)->reset();
     MOCK(edit_number)->reset();
+    MOCK(keep_args_output_message)->reset();
     MOCK(mount)->reset();
     MOCK(output_message)->reset();
     MOCK(pipe)->reset();
@@ -437,6 +438,102 @@ const _narmock_state_type_for_edit_number *_narmock_get_mock_for_edit_number(con
     (void)function;
 
     return &_narmock_state_for_edit_number.public;
+}
+
+// NARMOCK_IMPLEMENTATION keep_args_output_message
+
+void __real_keep_args_output_message(const char *message);
+
+typedef struct _narmock_private_state_type_for_keep_args_output_message _narmock_private_state_type_for_keep_args_output_message;
+
+struct _narmock_private_state_type_for_keep_args_output_message
+{
+    _narmock_state_type_for_keep_args_output_message public;
+
+    int mode;
+    void (*implementation)(const char *message);
+    _narmock_params_type_for_keep_args_output_message last_call;
+};
+
+static const _narmock_state_type_for_keep_args_output_message *_narmock_mock_return_function_for_keep_args_output_message(void);
+static const _narmock_state_type_for_keep_args_output_message *_narmock_mock_implementation_function_for_keep_args_output_message(void (*implementation)(const char *message));
+static const _narmock_state_type_for_keep_args_output_message *_narmock_disable_mock_function_for_keep_args_output_message(void);
+static const _narmock_state_type_for_keep_args_output_message *_narmock_reset_function_for_keep_args_output_message(void);
+
+static _narmock_private_state_type_for_keep_args_output_message _narmock_state_for_keep_args_output_message =
+{
+    .public = {
+        .mock_return = _narmock_mock_return_function_for_keep_args_output_message,
+        .mock_implementation = _narmock_mock_implementation_function_for_keep_args_output_message,
+        .disable_mock = _narmock_disable_mock_function_for_keep_args_output_message,
+        .reset = _narmock_reset_function_for_keep_args_output_message,
+        .call_count = 0,
+        .last_call = NULL
+    },
+
+    .mode = 0
+};
+
+void __wrap_keep_args_output_message(const char *message)
+{
+    switch (_narmock_state_for_keep_args_output_message.mode)
+    {
+        case 1:
+            break;
+        case 2:
+            _narmock_state_for_keep_args_output_message.implementation(message);
+            break;
+        default:
+            __real_keep_args_output_message(message);
+            break;
+    }
+
+    _narmock_state_for_keep_args_output_message.public.call_count++;
+
+    _narmock_params_type_for_keep_args_output_message last_call = { message };
+
+    _narmock_state_for_keep_args_output_message.last_call = last_call;
+    _narmock_state_for_keep_args_output_message.public.last_call = &_narmock_state_for_keep_args_output_message.last_call;
+
+    return;
+}
+
+static const _narmock_state_type_for_keep_args_output_message *_narmock_mock_return_function_for_keep_args_output_message(void)
+{
+    _narmock_state_for_keep_args_output_message.mode = 1;
+
+    return &_narmock_state_for_keep_args_output_message.public;
+}
+
+static const _narmock_state_type_for_keep_args_output_message *_narmock_mock_implementation_function_for_keep_args_output_message(void (*implementation)(const char *message))
+{
+    _narmock_state_for_keep_args_output_message.mode = 2;
+    _narmock_state_for_keep_args_output_message.implementation = implementation;
+
+    return &_narmock_state_for_keep_args_output_message.public;
+}
+
+static const _narmock_state_type_for_keep_args_output_message *_narmock_disable_mock_function_for_keep_args_output_message(void)
+{
+    _narmock_state_for_keep_args_output_message.mode = 0;
+
+    return &_narmock_state_for_keep_args_output_message.public;
+}
+
+static const _narmock_state_type_for_keep_args_output_message *_narmock_reset_function_for_keep_args_output_message(void)
+{
+    _narmock_state_for_keep_args_output_message.mode = 0;
+    _narmock_state_for_keep_args_output_message.public.call_count = 0;
+    _narmock_state_for_keep_args_output_message.public.last_call = NULL;
+
+    return &_narmock_state_for_keep_args_output_message.public;
+}
+
+const _narmock_state_type_for_keep_args_output_message *_narmock_get_mock_for_keep_args_output_message(const void *function)
+{
+    (void)function;
+
+    return &_narmock_state_for_keep_args_output_message.public;
 }
 
 // NARMOCK_IMPLEMENTATION mount

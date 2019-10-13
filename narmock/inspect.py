@@ -27,7 +27,7 @@ GETTER_REGEX = re.compile(
 )
 
 
-def collect_mocked_functions(expanded_source_code):
+def collect_mocked_functions(expanded_source_code, keep_args):
     """Yield all the mocked functions used in the expanded source code."""
 
     functions = set()
@@ -37,7 +37,7 @@ def collect_mocked_functions(expanded_source_code):
         if not return_type:
             functions.add(function_name)
 
-    yield from ForgivingDeclarationParser(expanded_source_code, functions)
+    yield from ForgivingDeclarationParser(expanded_source_code, functions, keep_args)
 
     if functions:
         for function in functions:
@@ -104,7 +104,7 @@ class IncludeDirective(NamedTuple):
 
 class MockedFunction(NamedTuple):
     name: str
-    declaration: str
+    declaration: node.FuncDecl
     include: IncludeDirective
 
 
@@ -163,7 +163,7 @@ class ForgivingDeclarationParser:
         flags=re.MULTILINE,
     )
 
-    def __init__(self, source_code, functions=None):
+    def __init__(self, source_code, functions=None, keep_args=""):
         self.source_code = source_code
         self.functions = functions
         self.token_stream = self.tokenize(source_code)
@@ -175,6 +175,8 @@ class ForgivingDeclarationParser:
         self.typedefs = ["typedef int __builtin_va_list;"]
 
         self.cparser = CParser()
+
+        self.keep_args = re.compile(f"^{keep_args}$")
 
     @classmethod
     def tokenize(cls, source_code):
@@ -307,7 +309,9 @@ class ForgivingDeclarationParser:
 
             return MockedFunction(
                 func_name,
-                rename_arguments(file_ast.ext[-1]),
+                file_ast.ext[-1]
+                if self.keep_args.match(func_name)
+                else rename_arguments(file_ast.ext[-1]),
                 IncludeDirective.from_source_context(self.source_context),
             )
 
