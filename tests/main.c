@@ -117,7 +117,7 @@ TEST(mount_function)
 
     MOCK(mount)->reset();
 
-    ASSERT_EQ(MOCK(mount)->call_count, (size_t)0);
+    ASSERT_EQ(MOCK(mount)->call_count, 0);
     ASSERT_EQ(MOCK(mount)->last_call, NULL);
     ASSERT_EQ(mount("a", "b", "c", 0, ""), -1);
 }
@@ -177,18 +177,18 @@ TEST(return_add_one_function)
 
 TEST(add_function_call_count)
 {
-    ASSERT_EQ(MOCK(add)->call_count, (size_t)0);
+    ASSERT_EQ(MOCK(add)->call_count, 0);
 
     for (int i = 0; i < 10; i++)
     {
         ASSERT_EQ(add(i, i * 2), 3 * i);
     }
 
-    ASSERT_EQ(MOCK(add)->call_count, (size_t)10);
+    ASSERT_EQ(MOCK(add)->call_count, 10);
 
     MOCK(add)->reset();
 
-    ASSERT_EQ(MOCK(add)->call_count, (size_t)0);
+    ASSERT_EQ(MOCK(add)->call_count, 0);
 }
 
 TEST(add_function_last_call)
