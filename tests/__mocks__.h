@@ -28,8 +28,7 @@ typedef struct _narmock_params_type_for_add _narmock_params_type_for_add;
 struct _narmock_state_type_for_add
 {
     const _narmock_state_type_for_add *(*mock_return)(int return_value);
-    const _narmock_state_type_for_add *(*mock_implementation)(int (*implementation)(int arg1,
-                                                                                    int arg2));
+    const _narmock_state_type_for_add *(*mock_implementation)(int (*implementation)(int arg1, int arg2));
     const _narmock_state_type_for_add *(*disable_mock)(void);
     const _narmock_state_type_for_add *(*reset)(void);
     size_t call_count;
@@ -54,8 +53,7 @@ typedef struct _narmock_params_type_for_add_one _narmock_params_type_for_add_one
 struct _narmock_state_type_for_add_one
 {
     const _narmock_state_type_for_add_one *(*mock_return)(DummyStruct *return_value);
-    const _narmock_state_type_for_add_one *(*mock_implementation)(
-        DummyStruct *(*implementation)(DummyStruct *arg1));
+    const _narmock_state_type_for_add_one *(*mock_implementation)(DummyStruct *(*implementation)(DummyStruct *arg1));
     const _narmock_state_type_for_add_one *(*disable_mock)(void);
     const _narmock_state_type_for_add_one *(*reset)(void);
     size_t call_count;
@@ -79,8 +77,7 @@ typedef struct _narmock_params_type_for_compose_twice _narmock_params_type_for_c
 struct _narmock_state_type_for_compose_twice
 {
     const _narmock_state_type_for_compose_twice *(*mock_return)(DummyStruct *return_value);
-    const _narmock_state_type_for_compose_twice *(*mock_implementation)(DummyStruct *(
-        *implementation)(DummyStruct *arg1, DummyStruct *(*arg2)(DummyStruct *dummy_struct)));
+    const _narmock_state_type_for_compose_twice *(*mock_implementation)(DummyStruct *(*implementation)(DummyStruct *arg1, DummyStruct *(*arg2)(DummyStruct *dummy_struct)));
     const _narmock_state_type_for_compose_twice *(*disable_mock)(void);
     const _narmock_state_type_for_compose_twice *(*reset)(void);
     size_t call_count;
@@ -94,8 +91,7 @@ struct _narmock_params_type_for_compose_twice
     DummyStruct *return_value;
 };
 
-const _narmock_state_type_for_compose_twice *_narmock_get_mock_for_compose_twice(
-    const void *function);
+const _narmock_state_type_for_compose_twice *_narmock_get_mock_for_compose_twice(const void *function);
 
 // NARMOCK_DECLARATION edit_number
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=edit_number
@@ -106,8 +102,7 @@ typedef struct _narmock_params_type_for_edit_number _narmock_params_type_for_edi
 struct _narmock_state_type_for_edit_number
 {
     const _narmock_state_type_for_edit_number *(*mock_return)(DummyStruct *return_value);
-    const _narmock_state_type_for_edit_number *(*mock_implementation)(
-        DummyStruct *(*implementation)(DummyStruct *arg1, int arg2));
+    const _narmock_state_type_for_edit_number *(*mock_implementation)(DummyStruct *(*implementation)(DummyStruct *arg1, int arg2));
     const _narmock_state_type_for_edit_number *(*disable_mock)(void);
     const _narmock_state_type_for_edit_number *(*reset)(void);
     size_t call_count;
@@ -132,12 +127,7 @@ typedef struct _narmock_params_type_for_mount _narmock_params_type_for_mount;
 struct _narmock_state_type_for_mount
 {
     const _narmock_state_type_for_mount *(*mock_return)(int return_value);
-    const _narmock_state_type_for_mount *(*mock_implementation)(
-        int (*implementation)(const char *arg1,
-                              const char *arg2,
-                              const char *arg3,
-                              unsigned long int arg4,
-                              const void *arg5));
+    const _narmock_state_type_for_mount *(*mock_implementation)(int (*implementation)(const char *arg1, const char *arg2, const char *arg3, unsigned long int arg4, const void *arg5));
     const _narmock_state_type_for_mount *(*disable_mock)(void);
     const _narmock_state_type_for_mount *(*reset)(void);
     size_t call_count;
@@ -165,8 +155,7 @@ typedef struct _narmock_params_type_for_output_message _narmock_params_type_for_
 struct _narmock_state_type_for_output_message
 {
     const _narmock_state_type_for_output_message *(*mock_return)(void);
-    const _narmock_state_type_for_output_message *(*mock_implementation)(
-        void (*implementation)(const char *arg1));
+    const _narmock_state_type_for_output_message *(*mock_implementation)(void (*implementation)(const char *arg1));
     const _narmock_state_type_for_output_message *(*disable_mock)(void);
     const _narmock_state_type_for_output_message *(*reset)(void);
     size_t call_count;
@@ -178,8 +167,7 @@ struct _narmock_params_type_for_output_message
     const char *arg1;
 };
 
-const _narmock_state_type_for_output_message *_narmock_get_mock_for_output_message(
-    const void *function);
+const _narmock_state_type_for_output_message *_narmock_get_mock_for_output_message(const void *function);
 
 // NARMOCK_DECLARATION pipe
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=pipe
@@ -236,8 +224,7 @@ typedef struct _narmock_params_type_for_print_world _narmock_params_type_for_pri
 struct _narmock_state_type_for_print_world
 {
     const _narmock_state_type_for_print_world *(*mock_return)(void);
-    const _narmock_state_type_for_print_world *(*mock_implementation)(
-        void (*implementation)(void));
+    const _narmock_state_type_for_print_world *(*mock_implementation)(void (*implementation)(void));
     const _narmock_state_type_for_print_world *(*disable_mock)(void);
     const _narmock_state_type_for_print_world *(*reset)(void);
     size_t call_count;
@@ -258,10 +245,8 @@ typedef struct _narmock_params_type_for_return_add_one _narmock_params_type_for_
 
 struct _narmock_state_type_for_return_add_one
 {
-    const _narmock_state_type_for_return_add_one *(*mock_return)(
-        DummyStruct *(*return_value)(DummyStruct *dummy_struct));
-    const _narmock_state_type_for_return_add_one *(*mock_implementation)(
-        DummyStruct *(*(*implementation)(void))(DummyStruct *dummy_struct));
+    const _narmock_state_type_for_return_add_one *(*mock_return)(DummyStruct *(*return_value)(DummyStruct *dummy_struct));
+    const _narmock_state_type_for_return_add_one *(*mock_implementation)(DummyStruct *(*(*implementation)(void))(DummyStruct *dummy_struct));
     const _narmock_state_type_for_return_add_one *(*disable_mock)(void);
     const _narmock_state_type_for_return_add_one *(*reset)(void);
     size_t call_count;
@@ -273,8 +258,7 @@ struct _narmock_params_type_for_return_add_one
     DummyStruct *(*return_value)(DummyStruct *dummy_struct);
 };
 
-const _narmock_state_type_for_return_add_one *_narmock_get_mock_for_return_add_one(
-    const void *function);
+const _narmock_state_type_for_return_add_one *_narmock_get_mock_for_return_add_one(const void *function);
 
 // NARMOCK_DECLARATION time
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=time
@@ -285,8 +269,7 @@ typedef struct _narmock_params_type_for_time _narmock_params_type_for_time;
 struct _narmock_state_type_for_time
 {
     const _narmock_state_type_for_time *(*mock_return)(time_t return_value);
-    const _narmock_state_type_for_time *(*mock_implementation)(
-        time_t (*implementation)(time_t *arg1));
+    const _narmock_state_type_for_time *(*mock_implementation)(time_t (*implementation)(time_t *arg1));
     const _narmock_state_type_for_time *(*disable_mock)(void);
     const _narmock_state_type_for_time *(*reset)(void);
     size_t call_count;
