@@ -115,6 +115,17 @@ MOCK(time)->mock_implementation(time_stub);
 printf("%ld\n", time(NULL));  // Outputs 42
 ```
 
+### Mocking errno
+
+You can make a function set `errno` to a specific value.
+
+```c
+MOCK(malloc)->mock_return(NULL)->mock_errno(ENOMEM);
+
+char *ptr = malloc(42);
+printf("%d\n", errno == ENOMEM);  // Outputs 1
+```
+
 ### Disabling the mock
 
 You can disable the mock and make the function call its original implementation.
@@ -148,6 +159,7 @@ The value of `errno` is captured and saved in the `errsv` attribute.
 
 ```c
 fopen("does_not_exist.txt", "r");
+
 printf("%d\n", MOCK(fopen)->last_call->errsv == ENOENT);  // Outputs 1
 ```
 
