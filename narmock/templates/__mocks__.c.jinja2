@@ -28,11 +28,13 @@ struct {{ mock.private_state_type }}
     {{ mock.return_value_decl | render }};
     {% endif %}
     {{ mock.implementation_decl | render }};
+    int errno_value;
     {{ mock.params_type }} last_call;
 };
 
 static const {{ mock.state_type }} *_narmock_mock_return_function_for_{{ mock.func_name }}({{ mock.return_value_decl | render }});
 static const {{ mock.state_type }} *_narmock_mock_implementation_function_for_{{ mock.func_name }}({{ mock.implementation_decl | render }});
+static const {{ mock.state_type }} *_narmock_mock_errno_function_for_{{ mock.func_name }}(int errno_value);
 static const {{ mock.state_type }} *_narmock_disable_mock_function_for_{{ mock.func_name }}(void);
 static const {{ mock.state_type }} *_narmock_reset_function_for_{{ mock.func_name }}(void);
 
@@ -41,13 +43,15 @@ static {{ mock.private_state_type }} {{ mock.state_name }} =
     .public = {
         .mock_return = _narmock_mock_return_function_for_{{ mock.func_name }},
         .mock_implementation = _narmock_mock_implementation_function_for_{{ mock.func_name }},
+        .mock_errno = _narmock_mock_errno_function_for_{{ mock.func_name }},
         .disable_mock = _narmock_disable_mock_function_for_{{ mock.func_name }},
         .reset = _narmock_reset_function_for_{{ mock.func_name }},
         .call_count = 0,
         .last_call = NULL
     },
 
-    .mode = 0
+    .mode = 0,
+    .errno_value = 0
 };
 
 {{ mock.wrapped_decl | render }}
@@ -78,6 +82,11 @@ static {{ mock.private_state_type }} {{ mock.state_name }} =
             break;
     }
 
+    if ({{ mock.state_name }}.errno_value != 0)
+    {
+        errno = {{ mock.state_name }}.errno_value;
+    }
+
     {{ mock.state_name }}.public.call_count++;
 
     {{ mock.params_type }} last_call = { {%- if mock.forward_args %} {{ mock.forward_args }}{% if mock.return_value %},{% endif %}{% endif %}{% if mock.return_value %} return_value{% endif %} };
@@ -106,9 +115,17 @@ static const {{ mock.state_type }} *_narmock_mock_implementation_function_for_{{
     return &{{ mock.state_name }}.public;
 }
 
+static const {{ mock.state_type }} *_narmock_mock_errno_function_for_{{ mock.func_name }}(int errno_value)
+{
+    {{ mock.state_name }}.errno_value = errno_value;
+
+    return &{{ mock.state_name }}.public;
+}
+
 static const {{ mock.state_type }} *_narmock_disable_mock_function_for_{{ mock.func_name }}(void)
 {
     {{ mock.state_name }}.mode = 0;
+    {{ mock.state_name }}.errno_value = 0;
 
     return &{{ mock.state_name }}.public;
 }
@@ -116,6 +133,7 @@ static const {{ mock.state_type }} *_narmock_disable_mock_function_for_{{ mock.f
 static const {{ mock.state_type }} *_narmock_reset_function_for_{{ mock.func_name }}(void)
 {
     {{ mock.state_name }}.mode = 0;
+    {{ mock.state_name }}.errno_value = 0;
     {{ mock.state_name }}.public.call_count = 0;
     {{ mock.state_name }}.public.last_call = NULL;
 

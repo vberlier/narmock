@@ -121,6 +121,15 @@ class GeneratedMock:
         self.mock_implementation_decl = self.state_function(
             "mock_implementation", [self.implementation_decl]
         )
+        self.mock_errno_decl = self.state_function(
+            "mock_errno",
+            [
+                decl(
+                    "errno_value",
+                    node.TypeDecl("errno_value", [], node.IdentifierType(["int"])),
+                )
+            ],
+        )
         self.disable_mock_decl = self.state_function("disable_mock", void_params())
         self.reset_decl = self.state_function("reset", void_params())
 
@@ -184,7 +193,7 @@ class FileGenerator:
 
         source_code = self.source_template.render(
             narmock_version=__version__,
-            includes=generate_includes([], [header_filename], directory),
+            includes=generate_includes({"errno.h"}, {header_filename}, directory),
             mocks=mocks,
         )
 

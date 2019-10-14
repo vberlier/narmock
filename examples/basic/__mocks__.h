@@ -29,6 +29,7 @@ struct _narmock_state_type_for_time
 {
     const _narmock_state_type_for_time *(*mock_return)(time_t return_value);
     const _narmock_state_type_for_time *(*mock_implementation)(time_t (*implementation)(time_t *arg1));
+    const _narmock_state_type_for_time *(*mock_errno)(int errno_value);
     const _narmock_state_type_for_time *(*disable_mock)(void);
     const _narmock_state_type_for_time *(*reset)(void);
     int call_count;

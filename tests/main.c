@@ -1,3 +1,5 @@
+#include <err.h>
+#include <errno.h>
 #include <sys/mount.h>
 #include <time.h>
 #include <unistd.h>
@@ -250,4 +252,28 @@ TEST(keep_args_output_message_function)
     keep_args_output_message("foo");
 
     ASSERT_EQ(MOCK(keep_args_output_message)->last_call->message, "foo");
+}
+
+TEST(fopen_with_errno)
+{
+    MOCK(fopen)->mock_return(NULL)->mock_errno(ENOENT);
+
+    FILE *f = fopen(__FILE__, "r");
+
+    ASSERT_EQ(f, NULL);
+    ASSERT_EQ(errno, ENOENT);
+
+    CAPTURE_OUTPUT(output) { warn("fopen"); }
+
+    ASSERT_EQ(output, "run_tests: fopen: No such file or directory\n");
+
+    MOCK(fopen)->disable_mock();
+
+    errno = 0;
+
+    f = fopen(__FILE__, "r");
+    ASSERT_NE(f, NULL);
+    fclose(f);
+
+    ASSERT_EQ(errno, 0);
 }
