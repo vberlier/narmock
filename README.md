@@ -135,7 +135,7 @@ printf("%ld\n", time(NULL));  // Outputs the current time
 printf("%ld\n", MOCK(time)->call_count);  // Outputs 1
 ```
 
-You can also inspect the last call of a function.
+You can also inspect the last call of a function. Note that the `last_call` pointer is `NULL` until the function gets called for the first time.
 
 ```c
 printf("%ld\n", time(NULL));  // Outputs the current time
@@ -144,7 +144,14 @@ printf("%p\n", MOCK(time)->last_call->arg1);           // Outputs (nil)
 printf("%ld\n", MOCK(time)->last_call->return_value);  // Outputs the current time
 ```
 
-Note that the `last_call` pointer is `NULL` until the function gets called for the first time. By default, the arguments are accessible through the sequential `arg1`, `arg2`, `...`, `argN` attributes. If you want to keep the original name of the arguments for a set of specific functions you can use the `-k` option when generating the mocks.
+The value of `errno` is captured and saved in the `errsv` attribute.
+
+```c
+fopen("does_not_exist.txt", "r");
+printf("%d\n", MOCK(fopen)->last_call->errsv == ENOENT);  // Outputs 1
+```
+
+By default, the arguments are accessible through the sequential `arg1`, `arg2`, `...`, `argN` attributes. If you want to keep the original name of the arguments for a set of specific functions you can use the `-k` option when generating the mocks.
 
 ```bash
 $ gcc -E *.c | narmock -g -k "myprefix_.*"
