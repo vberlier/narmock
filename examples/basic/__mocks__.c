@@ -80,7 +80,7 @@ time_t __wrap_time(time_t *arg1)
 
     _narmock_state_for_time.public.call_count++;
 
-    _narmock_params_type_for_time last_call = { arg1, return_value };
+    _narmock_params_type_for_time last_call = { arg1, return_value, errno };
 
     _narmock_state_for_time.last_call = last_call;
     _narmock_state_for_time.public.last_call = &_narmock_state_for_time.last_call;

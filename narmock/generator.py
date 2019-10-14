@@ -106,6 +106,10 @@ class GeneratedMock:
             else "return_value"
         )
 
+        self.save_args = ", ".join(
+            filter(None, [self.forward_args, self.return_value, "errno"])
+        )
+
         self.return_value_decl = decl(
             self.return_value, rename_return_type(return_type, self.return_value)
         )

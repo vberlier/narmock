@@ -121,7 +121,9 @@ TEST(mount_function)
 
     ASSERT_EQ(MOCK(mount)->call_count, 0);
     ASSERT_EQ(MOCK(mount)->last_call, NULL);
+
     ASSERT_EQ(mount("a", "b", "c", 0, ""), -1);
+    ASSERT_EQ(MOCK(mount)->last_call->errsv, ENOENT);
 }
 
 DummyStruct *fake_edit_number(DummyStruct *dummy_struct, int number)
@@ -262,6 +264,7 @@ TEST(fopen_with_errno)
 
     ASSERT_EQ(f, NULL);
     ASSERT_EQ(errno, ENOENT);
+    ASSERT_EQ(MOCK(fopen)->last_call->errsv, ENOENT);
 
     CAPTURE_OUTPUT(output) { warn("fopen"); }
 

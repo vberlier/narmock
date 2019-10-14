@@ -43,6 +43,7 @@ struct {{ mock.params_type }}
     {% if mock.return_value %}
     {{ mock.return_value_decl | render }};
     {% endif %}
+    int errsv;
 };
 
 const {{ mock.state_type }} *_narmock_get_mock_for_{{ mock.func_name }}(const void *function);

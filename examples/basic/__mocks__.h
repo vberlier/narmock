@@ -40,6 +40,7 @@ struct _narmock_params_type_for_time
 {
     time_t *arg1;
     time_t return_value;
+    int errsv;
 };
 
 const _narmock_state_type_for_time *_narmock_get_mock_for_time(const void *function);

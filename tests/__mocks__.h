@@ -46,6 +46,7 @@ struct _narmock_params_type_for_add
     int arg1;
     int arg2;
     int return_value;
+    int errsv;
 };
 
 const _narmock_state_type_for_add *_narmock_get_mock_for_add(const void *function);
@@ -71,6 +72,7 @@ struct _narmock_params_type_for_add_one
 {
     DummyStruct *arg1;
     DummyStruct *return_value;
+    int errsv;
 };
 
 const _narmock_state_type_for_add_one *_narmock_get_mock_for_add_one(const void *function);
@@ -97,6 +99,7 @@ struct _narmock_params_type_for_compose_twice
     DummyStruct *arg1;
     DummyStruct *(*arg2)(DummyStruct *dummy_struct);
     DummyStruct *return_value;
+    int errsv;
 };
 
 const _narmock_state_type_for_compose_twice *_narmock_get_mock_for_compose_twice(const void *function);
@@ -123,6 +126,7 @@ struct _narmock_params_type_for_edit_number
     DummyStruct *arg1;
     int arg2;
     DummyStruct *return_value;
+    int errsv;
 };
 
 const _narmock_state_type_for_edit_number *_narmock_get_mock_for_edit_number(const void *function);
@@ -149,6 +153,7 @@ struct _narmock_params_type_for_fopen
     const char *arg1;
     const char *arg2;
     FILE *return_value;
+    int errsv;
 };
 
 const _narmock_state_type_for_fopen *_narmock_get_mock_for_fopen(const void *function);
@@ -173,6 +178,7 @@ struct _narmock_state_type_for_keep_args_output_message
 struct _narmock_params_type_for_keep_args_output_message
 {
     const char *message;
+    int errsv;
 };
 
 const _narmock_state_type_for_keep_args_output_message *_narmock_get_mock_for_keep_args_output_message(const void *function);
@@ -202,6 +208,7 @@ struct _narmock_params_type_for_mount
     unsigned long int arg4;
     const void *arg5;
     int return_value;
+    int errsv;
 };
 
 const _narmock_state_type_for_mount *_narmock_get_mock_for_mount(const void *function);
@@ -226,6 +233,7 @@ struct _narmock_state_type_for_output_message
 struct _narmock_params_type_for_output_message
 {
     const char *arg1;
+    int errsv;
 };
 
 const _narmock_state_type_for_output_message *_narmock_get_mock_for_output_message(const void *function);
@@ -251,6 +259,7 @@ struct _narmock_params_type_for_pipe
 {
     int *arg1;
     int return_value;
+    int errsv;
 };
 
 const _narmock_state_type_for_pipe *_narmock_get_mock_for_pipe(const void *function);
@@ -274,6 +283,7 @@ struct _narmock_state_type_for_print_hello
 
 struct _narmock_params_type_for_print_hello
 {
+    int errsv;
 };
 
 const _narmock_state_type_for_print_hello *_narmock_get_mock_for_print_hello(const void *function);
@@ -297,6 +307,7 @@ struct _narmock_state_type_for_print_world
 
 struct _narmock_params_type_for_print_world
 {
+    int errsv;
 };
 
 const _narmock_state_type_for_print_world *_narmock_get_mock_for_print_world(const void *function);
@@ -321,6 +332,7 @@ struct _narmock_state_type_for_return_add_one
 struct _narmock_params_type_for_return_add_one
 {
     DummyStruct *(*return_value)(DummyStruct *dummy_struct);
+    int errsv;
 };
 
 const _narmock_state_type_for_return_add_one *_narmock_get_mock_for_return_add_one(const void *function);
@@ -346,6 +358,7 @@ struct _narmock_params_type_for_time
 {
     time_t *arg1;
     time_t return_value;
+    int errsv;
 };
 
 const _narmock_state_type_for_time *_narmock_get_mock_for_time(const void *function);
@@ -373,6 +386,7 @@ struct _narmock_params_type_for_write
     const void *arg2;
     size_t arg3;
     ssize_t return_value;
+    int errsv;
 };
 
 const _narmock_state_type_for_write *_narmock_get_mock_for_write(const void *function);

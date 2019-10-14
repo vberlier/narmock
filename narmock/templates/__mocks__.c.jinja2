@@ -89,7 +89,7 @@ static {{ mock.private_state_type }} {{ mock.state_name }} =
 
     {{ mock.state_name }}.public.call_count++;
 
-    {{ mock.params_type }} last_call = { {%- if mock.forward_args %} {{ mock.forward_args }}{% if mock.return_value %},{% endif %}{% endif %}{% if mock.return_value %} return_value{% endif %} };
+    {{ mock.params_type }} last_call = { {{ mock.save_args }} };
 
     {{ mock.state_name }}.last_call = last_call;
     {{ mock.state_name }}.public.last_call = &{{ mock.state_name }}.last_call;

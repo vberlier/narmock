@@ -93,7 +93,7 @@ int __wrap_add(int arg1, int arg2)
 
     _narmock_state_for_add.public.call_count++;
 
-    _narmock_params_type_for_add last_call = { arg1, arg2, return_value };
+    _narmock_params_type_for_add last_call = { arg1, arg2, return_value, errno };
 
     _narmock_state_for_add.last_call = last_call;
     _narmock_state_for_add.public.last_call = &_narmock_state_for_add.last_call;
@@ -215,7 +215,7 @@ DummyStruct *__wrap_add_one(DummyStruct *arg1)
 
     _narmock_state_for_add_one.public.call_count++;
 
-    _narmock_params_type_for_add_one last_call = { arg1, return_value };
+    _narmock_params_type_for_add_one last_call = { arg1, return_value, errno };
 
     _narmock_state_for_add_one.last_call = last_call;
     _narmock_state_for_add_one.public.last_call = &_narmock_state_for_add_one.last_call;
@@ -337,7 +337,7 @@ DummyStruct *__wrap_compose_twice(DummyStruct *arg1, DummyStruct *(*arg2)(DummyS
 
     _narmock_state_for_compose_twice.public.call_count++;
 
-    _narmock_params_type_for_compose_twice last_call = { arg1, arg2, return_value };
+    _narmock_params_type_for_compose_twice last_call = { arg1, arg2, return_value, errno };
 
     _narmock_state_for_compose_twice.last_call = last_call;
     _narmock_state_for_compose_twice.public.last_call = &_narmock_state_for_compose_twice.last_call;
@@ -459,7 +459,7 @@ DummyStruct *__wrap_edit_number(DummyStruct *arg1, int arg2)
 
     _narmock_state_for_edit_number.public.call_count++;
 
-    _narmock_params_type_for_edit_number last_call = { arg1, arg2, return_value };
+    _narmock_params_type_for_edit_number last_call = { arg1, arg2, return_value, errno };
 
     _narmock_state_for_edit_number.last_call = last_call;
     _narmock_state_for_edit_number.public.last_call = &_narmock_state_for_edit_number.last_call;
@@ -581,7 +581,7 @@ FILE *__wrap_fopen(const char *arg1, const char *arg2)
 
     _narmock_state_for_fopen.public.call_count++;
 
-    _narmock_params_type_for_fopen last_call = { arg1, arg2, return_value };
+    _narmock_params_type_for_fopen last_call = { arg1, arg2, return_value, errno };
 
     _narmock_state_for_fopen.last_call = last_call;
     _narmock_state_for_fopen.public.last_call = &_narmock_state_for_fopen.last_call;
@@ -696,7 +696,7 @@ void __wrap_keep_args_output_message(const char *message)
 
     _narmock_state_for_keep_args_output_message.public.call_count++;
 
-    _narmock_params_type_for_keep_args_output_message last_call = { message };
+    _narmock_params_type_for_keep_args_output_message last_call = { message, errno };
 
     _narmock_state_for_keep_args_output_message.last_call = last_call;
     _narmock_state_for_keep_args_output_message.public.last_call = &_narmock_state_for_keep_args_output_message.last_call;
@@ -817,7 +817,7 @@ int __wrap_mount(const char *arg1, const char *arg2, const char *arg3, unsigned 
 
     _narmock_state_for_mount.public.call_count++;
 
-    _narmock_params_type_for_mount last_call = { arg1, arg2, arg3, arg4, arg5, return_value };
+    _narmock_params_type_for_mount last_call = { arg1, arg2, arg3, arg4, arg5, return_value, errno };
 
     _narmock_state_for_mount.last_call = last_call;
     _narmock_state_for_mount.public.last_call = &_narmock_state_for_mount.last_call;
@@ -932,7 +932,7 @@ void __wrap_output_message(const char *arg1)
 
     _narmock_state_for_output_message.public.call_count++;
 
-    _narmock_params_type_for_output_message last_call = { arg1 };
+    _narmock_params_type_for_output_message last_call = { arg1, errno };
 
     _narmock_state_for_output_message.last_call = last_call;
     _narmock_state_for_output_message.public.last_call = &_narmock_state_for_output_message.last_call;
@@ -1053,7 +1053,7 @@ int __wrap_pipe(int arg1[2])
 
     _narmock_state_for_pipe.public.call_count++;
 
-    _narmock_params_type_for_pipe last_call = { arg1, return_value };
+    _narmock_params_type_for_pipe last_call = { arg1, return_value, errno };
 
     _narmock_state_for_pipe.last_call = last_call;
     _narmock_state_for_pipe.public.last_call = &_narmock_state_for_pipe.last_call;
@@ -1168,7 +1168,7 @@ void __wrap_print_hello()
 
     _narmock_state_for_print_hello.public.call_count++;
 
-    _narmock_params_type_for_print_hello last_call = { };
+    _narmock_params_type_for_print_hello last_call = { errno };
 
     _narmock_state_for_print_hello.last_call = last_call;
     _narmock_state_for_print_hello.public.last_call = &_narmock_state_for_print_hello.last_call;
@@ -1282,7 +1282,7 @@ void __wrap_print_world(void)
 
     _narmock_state_for_print_world.public.call_count++;
 
-    _narmock_params_type_for_print_world last_call = { };
+    _narmock_params_type_for_print_world last_call = { errno };
 
     _narmock_state_for_print_world.last_call = last_call;
     _narmock_state_for_print_world.public.last_call = &_narmock_state_for_print_world.last_call;
@@ -1403,7 +1403,7 @@ DummyStruct *(*__wrap_return_add_one(void))(DummyStruct *dummy_struct)
 
     _narmock_state_for_return_add_one.public.call_count++;
 
-    _narmock_params_type_for_return_add_one last_call = { return_value };
+    _narmock_params_type_for_return_add_one last_call = { return_value, errno };
 
     _narmock_state_for_return_add_one.last_call = last_call;
     _narmock_state_for_return_add_one.public.last_call = &_narmock_state_for_return_add_one.last_call;
@@ -1525,7 +1525,7 @@ time_t __wrap_time(time_t *arg1)
 
     _narmock_state_for_time.public.call_count++;
 
-    _narmock_params_type_for_time last_call = { arg1, return_value };
+    _narmock_params_type_for_time last_call = { arg1, return_value, errno };
 
     _narmock_state_for_time.last_call = last_call;
     _narmock_state_for_time.public.last_call = &_narmock_state_for_time.last_call;
@@ -1647,7 +1647,7 @@ ssize_t __wrap_write(int arg1, const void *arg2, size_t arg3)
 
     _narmock_state_for_write.public.call_count++;
 
-    _narmock_params_type_for_write last_call = { arg1, arg2, arg3, return_value };
+    _narmock_params_type_for_write last_call = { arg1, arg2, arg3, return_value, errno };
 
     _narmock_state_for_write.last_call = last_call;
     _narmock_state_for_write.public.last_call = &_narmock_state_for_write.last_call;
