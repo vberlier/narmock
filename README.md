@@ -123,6 +123,7 @@ You can make a function set `errno` to a specific value.
 MOCK(malloc)->mock_return(NULL)->mock_errno(ENOMEM);
 
 char *ptr = malloc(42);
+
 printf("%d\n", errno == ENOMEM);  // Outputs 1
 ```
 
