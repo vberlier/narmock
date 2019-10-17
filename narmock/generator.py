@@ -197,7 +197,9 @@ class FileGenerator:
 
         source_code = self.source_template.render(
             narmock_version=__version__,
-            includes=generate_includes({"errno.h"}, {header_filename}, directory),
+            includes=generate_includes(
+                {"stddef.h", "errno.h"}, {header_filename}, directory
+            ),
             mocks=mocks,
         )
 
