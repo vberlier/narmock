@@ -1,11 +1,12 @@
 /*
 Mocks source file
 
-Generated with Narmock v0.2.11 (https://github.com/vberlier/narmock)
+Generated with Narmock v0.2.12 (https://github.com/vberlier/narmock)
 Do not edit manually
 */
 
 #include <errno.h>
+#include <stddef.h>
 
 #include "__mocks__.h"
 
