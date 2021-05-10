@@ -24,7 +24,7 @@ pycparser = "^2.19"
 jinja2 = "^2.10"
 
 [tool.poetry.dev-dependencies]
-black = { version = "^21.4b2", allows-prereleases = true }
+black = { version = "^21.5b0", allows-prereleases = true }
 
 [tool.poetry.scripts]
 narmock = 'narmock.cli:main'
