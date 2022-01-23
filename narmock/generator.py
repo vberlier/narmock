@@ -16,7 +16,7 @@ from . import __version__
 
 
 def decl(name, type):
-    return node.Decl(name, [], [], [], type, None, None)
+    return node.Decl(name, [], [], [], [], type, None, None)
 
 
 def function_ptr_decl(name, return_type, parameters):
@@ -26,7 +26,7 @@ def function_ptr_decl(name, return_type, parameters):
 
 
 def void_params():
-    return [decl(None, node.TypeDecl(None, [], node.IdentifierType(["void"])))]
+    return [decl(None, node.TypeDecl(None, [], [], node.IdentifierType(["void"])))]
 
 
 def rename_return_type(return_type, name):
@@ -130,7 +130,7 @@ class GeneratedMock:
             [
                 decl(
                     "errno_value",
-                    node.TypeDecl("errno_value", [], node.IdentifierType(["int"])),
+                    node.TypeDecl("errno_value", [], [], node.IdentifierType(["int"])),
                 )
             ],
         )
@@ -145,7 +145,9 @@ class GeneratedMock:
             name,
             node.PtrDecl(
                 [],
-                node.TypeDecl(name, ["const"], node.IdentifierType([self.state_type])),
+                node.TypeDecl(
+                    name, ["const"], [], node.IdentifierType([self.state_type])
+                ),
             ),
             parameters,
         )
