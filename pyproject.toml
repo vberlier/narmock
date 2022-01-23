@@ -20,11 +20,12 @@ keywords = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
-pycparser = "^2.19"
-jinja2 = ">=2.10,<4.0"
+pycparser = "^2.21"
+Jinja2 = "^3.0.3"
 
 [tool.poetry.dev-dependencies]
-black = { version = "^21.7b0", allows-prereleases = true }
+black = "^21.12b0"
+isort = "^5.10.1"
 
 [tool.poetry.scripts]
 narmock = 'narmock.cli:main'
