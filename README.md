@@ -1,6 +1,6 @@
 # 🎣 narmock
 
-[![Build Status](https://travis-ci.com/vberlier/narmock.svg?branch=master)](https://travis-ci.com/vberlier/narmock)
+[![GitHub Actions](https://github.com/vberlier/narmock/workflows/CI/badge.svg)](https://github.com/vberlier/narmock/actions)
 [![PyPI](https://img.shields.io/pypi/v/narmock.svg)](https://pypi.org/project/narmock/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/narmock.svg)](https://pypi.org/project/narmock/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
