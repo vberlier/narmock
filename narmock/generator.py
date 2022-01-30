@@ -66,7 +66,7 @@ class GeneratedMock:
     IMPL_MARKER = "// NARMOCK_IMPLEMENTATION"
     FLAGS_MARKER = "// NARMOCK_LINKER_FLAGS"
 
-    FLAGS_REGEX = re.compile(fr"^{FLAGS_MARKER}\s+(.+)$", re.MULTILINE)
+    FLAGS_REGEX = re.compile(rf"^{FLAGS_MARKER}\s+(.+)$", re.MULTILINE)
 
     @classmethod
     def extract_flags(cls, mock_declarations):

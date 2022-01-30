@@ -22,7 +22,7 @@ from pycparser.plyparser import ParseError
 
 GETTER_REGEX = re.compile(
     r"(_narmock_state_type_for_[A-Za-z0-9_]+\s*\*\s*)?\b"
-    + fr"_narmock_get_mock_for_([A-Za-z0-9_]+)\s*\("
+    + rf"_narmock_get_mock_for_([A-Za-z0-9_]+)\s*\("
 )
 
 
