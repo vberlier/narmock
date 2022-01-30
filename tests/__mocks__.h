@@ -1,17 +1,18 @@
 /*
 Mocks header file
 
-Generated with Narmock v0.2.12 (https://github.com/vberlier/narmock)
+Generated with Narmock v0.2.14 (https://github.com/vberlier/narmock)
 Do not edit manually
 */
 
 #ifndef MOCKS_H
 #define MOCKS_H
 
+#include <fcntl.h>
 #include <stdio.h>
-#include <sys/mount.h>
 #include <time.h>
 #include <unistd.h>
+#include <x86_64-linux-gnu/sys/mount.h>
 
 #include "dummy_functions.h"
 
@@ -212,6 +213,33 @@ struct _narmock_params_type_for_mount
 };
 
 const _narmock_state_type_for_mount *_narmock_get_mock_for_mount(const void *function);
+
+// NARMOCK_DECLARATION open
+// NARMOCK_LINKER_FLAGS -Wl,--wrap=open
+
+typedef struct _narmock_state_type_for_open _narmock_state_type_for_open;
+typedef struct _narmock_params_type_for_open _narmock_params_type_for_open;
+
+struct _narmock_state_type_for_open
+{
+    const _narmock_state_type_for_open *(*mock_return)(int return_value);
+    const _narmock_state_type_for_open *(*mock_implementation)(int (*implementation)(const char *arg1, int arg2));
+    const _narmock_state_type_for_open *(*mock_errno)(int errno_value);
+    const _narmock_state_type_for_open *(*disable_mock)(void);
+    const _narmock_state_type_for_open *(*reset)(void);
+    int call_count;
+    const _narmock_params_type_for_open *last_call;
+};
+
+struct _narmock_params_type_for_open
+{
+    const char *arg1;
+    int arg2;
+    int return_value;
+    int errsv;
+};
+
+const _narmock_state_type_for_open *_narmock_get_mock_for_open(const void *function);
 
 // NARMOCK_DECLARATION output_message
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=output_message

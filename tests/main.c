@@ -1,5 +1,6 @@
 #include <err.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <sys/mount.h>
 #include <time.h>
 #include <unistd.h>
@@ -279,4 +280,11 @@ TEST(fopen_with_errno)
     fclose(f);
 
     ASSERT_EQ(errno, 0);
+}
+
+TEST(open_function)
+{
+    MOCK(open)->mock_return(1);
+
+    ASSERT_EQ(open("a", 0), 1);
 }

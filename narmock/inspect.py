@@ -11,15 +11,14 @@ __all__ = [
 
 
 import os
-import sys
 import re
+import sys
 from collections import defaultdict
-from typing import NamedTuple, List, Tuple
+from typing import List, NamedTuple, Tuple
 
 from pycparser import c_ast as node
 from pycparser.c_parser import CParser
 from pycparser.plyparser import ParseError
-
 
 GETTER_REGEX = re.compile(
     r"(_narmock_state_type_for_[A-Za-z0-9_]+\s*\*\s*)?\b"
@@ -50,6 +49,10 @@ def rename_arguments(function_declaration):
         return function_declaration
 
     for i, param in enumerate(function_declaration.type.args.params):
+        if isinstance(param, node.EllipsisParam):
+            del function_declaration.type.args.params[i]
+            return function_declaration
+
         param_type = param.type
 
         if (

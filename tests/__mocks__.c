@@ -1,7 +1,7 @@
 /*
 Mocks source file
 
-Generated with Narmock v0.2.12 (https://github.com/vberlier/narmock)
+Generated with Narmock v0.2.14 (https://github.com/vberlier/narmock)
 Do not edit manually
 */
 
@@ -19,6 +19,7 @@ void narmock_reset_all_mocks(void)
     MOCK(fopen)->reset();
     MOCK(keep_args_output_message)->reset();
     MOCK(mount)->reset();
+    MOCK(open)->reset();
     MOCK(output_message)->reset();
     MOCK(pipe)->reset();
     MOCK(print_hello)->reset();
@@ -872,6 +873,128 @@ const _narmock_state_type_for_mount *_narmock_get_mock_for_mount(const void *fun
     (void)function;
 
     return &_narmock_state_for_mount.public;
+}
+
+// NARMOCK_IMPLEMENTATION open
+
+int __real_open(const char *arg1, int arg2);
+
+typedef struct _narmock_private_state_type_for_open _narmock_private_state_type_for_open;
+
+struct _narmock_private_state_type_for_open
+{
+    _narmock_state_type_for_open public;
+
+    int mode;
+    int return_value;
+    int (*implementation)(const char *arg1, int arg2);
+    int errno_value;
+    _narmock_params_type_for_open last_call;
+};
+
+static const _narmock_state_type_for_open *_narmock_mock_return_function_for_open(int return_value);
+static const _narmock_state_type_for_open *_narmock_mock_implementation_function_for_open(int (*implementation)(const char *arg1, int arg2));
+static const _narmock_state_type_for_open *_narmock_mock_errno_function_for_open(int errno_value);
+static const _narmock_state_type_for_open *_narmock_disable_mock_function_for_open(void);
+static const _narmock_state_type_for_open *_narmock_reset_function_for_open(void);
+
+static _narmock_private_state_type_for_open _narmock_state_for_open =
+{
+    .public = {
+        .mock_return = _narmock_mock_return_function_for_open,
+        .mock_implementation = _narmock_mock_implementation_function_for_open,
+        .mock_errno = _narmock_mock_errno_function_for_open,
+        .disable_mock = _narmock_disable_mock_function_for_open,
+        .reset = _narmock_reset_function_for_open,
+        .call_count = 0,
+        .last_call = NULL
+    },
+
+    .mode = 0,
+    .errno_value = 0
+};
+
+int __wrap_open(const char *arg1, int arg2)
+{
+    int return_value;
+
+    switch (_narmock_state_for_open.mode)
+    {
+        case 1:
+            return_value =
+            _narmock_state_for_open.return_value;
+            break;
+        case 2:
+            return_value =
+            _narmock_state_for_open.implementation(arg1, arg2);
+            break;
+        default:
+            return_value =
+            __real_open(arg1, arg2);
+            break;
+    }
+
+    if (_narmock_state_for_open.errno_value != 0)
+    {
+        errno = _narmock_state_for_open.errno_value;
+    }
+
+    _narmock_state_for_open.public.call_count++;
+
+    _narmock_params_type_for_open last_call = { arg1, arg2, return_value, errno };
+
+    _narmock_state_for_open.last_call = last_call;
+    _narmock_state_for_open.public.last_call = &_narmock_state_for_open.last_call;
+
+    return return_value;
+}
+
+static const _narmock_state_type_for_open *_narmock_mock_return_function_for_open(int return_value)
+{
+    _narmock_state_for_open.mode = 1;
+    _narmock_state_for_open.return_value = return_value;
+
+    return &_narmock_state_for_open.public;
+}
+
+static const _narmock_state_type_for_open *_narmock_mock_implementation_function_for_open(int (*implementation)(const char *arg1, int arg2))
+{
+    _narmock_state_for_open.mode = 2;
+    _narmock_state_for_open.implementation = implementation;
+
+    return &_narmock_state_for_open.public;
+}
+
+static const _narmock_state_type_for_open *_narmock_mock_errno_function_for_open(int errno_value)
+{
+    _narmock_state_for_open.errno_value = errno_value;
+
+    return &_narmock_state_for_open.public;
+}
+
+static const _narmock_state_type_for_open *_narmock_disable_mock_function_for_open(void)
+{
+    _narmock_state_for_open.mode = 0;
+    _narmock_state_for_open.errno_value = 0;
+
+    return &_narmock_state_for_open.public;
+}
+
+static const _narmock_state_type_for_open *_narmock_reset_function_for_open(void)
+{
+    _narmock_state_for_open.mode = 0;
+    _narmock_state_for_open.errno_value = 0;
+    _narmock_state_for_open.public.call_count = 0;
+    _narmock_state_for_open.public.last_call = NULL;
+
+    return &_narmock_state_for_open.public;
+}
+
+const _narmock_state_type_for_open *_narmock_get_mock_for_open(const void *function)
+{
+    (void)function;
+
+    return &_narmock_state_for_open.public;
 }
 
 // NARMOCK_IMPLEMENTATION output_message
