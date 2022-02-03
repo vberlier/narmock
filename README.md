@@ -38,7 +38,7 @@ $ pip install narmock
 The command-line utility provides two essential commands that should make it possible to integrate Narmock in any kind of build system.
 
 ```
-usage: narmock [-h] (-g [<code>] | -f) [-d <directory>] [-k [<regex>]]
+usage: narmock [-h] (-g [<code>] | -f) [-d <directory>] [-k [<regex>]] [-s <size>]
 
 A minimal mocking utility for C projects.
 
@@ -48,6 +48,7 @@ optional arguments:
   -f              output linker flags
   -d <directory>  mocks directory
   -k [<regex>]    keep argument names
+  -s <size>       stack size used to forward variadic arguments
 ```
 
 > Check out the [basic example](https://github.com/vberlier/narmock/tree/master/examples/basic) for a simple Makefile that integrates both [Narwhal](https://github.com/vberlier/narwhal) and Narmock.
@@ -177,6 +178,24 @@ $ gcc -E *.c | narmock -g -k
 ```
 
 Note that the default regex is `.*` so here every function would be affected.
+
+### Variadic functions
+
+Narmock can mock functions with variadic arguments. The generated code uses the GNU extension for [constructing function calls](https://gcc.gnu.org/onlinedocs/gcc-4.1.2/gcc/Constructing-Calls.html) to forward the arguments. If GNU extensions are unavailable the mock will simply ignore the variadic arguments and only forward the fixed arguments.
+
+```c
+MOCK(open)->mock_return(1);
+
+ASSERT_EQ(open("a", 0), 1);
+```
+
+> `open()` is variadic because of the optional `mode` argument.
+
+The functions provided by the GNU extension need to reserve some fixed space on the stack. By default, Narmock uses 512 bytes but you can specify a custom size by using the `-s` command-line argument when generating the mocks.
+
+```bash
+$ gcc -E *.c | narmock -g -s 1024
+```
 
 ### Resetting everything
 
