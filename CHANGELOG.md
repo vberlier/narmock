@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.16 (2022-02-03)
+### Fix
+* Forward variadic arguments using gcc builtins ([`83c4a6c`](https://github.com/vberlier/narmock/commit/83c4a6c3e31d1ce611b7ac9cbc240f563b9260f2))
+
 ## v0.2.15 (2022-01-30)
 ### Fix
 * Add limited support for varargs ([`7681327`](https://github.com/vberlier/narmock/commit/76813273b724905bf2ca42168d16c90432949358))
