@@ -1,7 +1,7 @@
 /*
 Mocks header file
 
-Generated with Narmock v0.2.15 (https://github.com/vberlier/narmock)
+Generated with Narmock v0.2.16 (https://github.com/vberlier/narmock)
 Do not edit manually
 */
 

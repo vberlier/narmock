@@ -1,6 +1,7 @@
 #include <err.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <stdarg.h>
 #include <sys/mount.h>
 #include <time.h>
 #include <unistd.h>
@@ -289,23 +290,43 @@ TEST(open_function)
     ASSERT_EQ(open("a", 0), 1);
 }
 
-void sum_variadic_stub(int count, int *result, ...)
+void fake_sum_variadic1(int count, int *result, ...)
 {
     (void)count;
     *result = 5;
 }
 
+void fake_sum_variadic2(int count, int *result, ...)
+{
+    va_list ap;
+    va_start(ap, result);
+
+    *result = 0;
+
+    for (int i = 0; i < count; i++)
+    {
+        *result += va_arg(ap, int) + 1;
+    }
+
+    va_end(ap);
+}
+
 TEST(sum_variadic_function)
 {
-    MOCK(sum_variadic)->mock_implementation(sum_variadic_stub);
-
     int value = 0;
 
+    MOCK(sum_variadic)->mock_implementation(fake_sum_variadic1);
     sum_variadic(3, &value, 9, 9, 9);
     ASSERT_EQ(value, 5);
+    ASSERT_EQ(MOCK(sum_variadic)->last_call->arg1, 3);
+
+    MOCK(sum_variadic)->mock_implementation(fake_sum_variadic2);
+    sum_variadic(3, &value, 9, 9, 9);
+    ASSERT_EQ(value, 30);
+    ASSERT_EQ(MOCK(sum_variadic)->last_call->arg1, 3);
 
     MOCK(sum_variadic)->disable_mock();
-
     sum_variadic(3, &value, 9, 9, 9);
     ASSERT_EQ(value, 27);
+    ASSERT_EQ(MOCK(sum_variadic)->last_call->arg1, 3);
 }
