@@ -54,33 +54,78 @@ static {{ mock.private_state_type }} {{ mock.state_name }} =
     .errno_value = 0
 };
 
+{{ mock.perform_decl | render }}
+{
+    switch ({{ mock.state_name }}.mode)
+    {
+        case 1:
+            {% if mock.return_value %}
+            return {{ mock.state_name }}.return_value;
+            {% else %}
+            return;
+            {% endif %}
+        case 2:
+            {% if mock.variadic %}
+#ifdef __GNUC__
+            {% for param in mock.params_struct %}
+            (void){{ param.name }};
+            {% endfor %}
+            __builtin_return(__builtin_apply((void *){{ mock.state_name }}.implementation, __builtin_apply_args(), {{ variadic_forward_size }}));
+#else
+            {% endif %}
+            {% if mock.return_value %}
+            return {{ mock.state_name }}.implementation({{ mock.forward_args }});
+            {% else %}
+            {{ mock.state_name }}.implementation({{ mock.forward_args }});
+            return;
+            {% endif %}
+            {% if mock.variadic %}
+#endif
+            {% endif %}
+        default:
+            {% if mock.variadic %}
+#ifdef __GNUC__
+            {% for param in mock.params_struct %}
+            (void){{ param.name }};
+            {% endfor %}
+            __builtin_return(__builtin_apply((void *){{ mock.real_func }}, __builtin_apply_args(), {{ variadic_forward_size }}));
+#else
+            {% endif %}
+            {% if mock.return_value %}
+            return {{ mock.real_func }}({{ mock.forward_args }});
+            {% else %}
+            {{ mock.real_func }}({{ mock.forward_args }});
+            return;
+            {% endif %}
+            {% if mock.variadic %}
+#endif
+            {% endif %}
+    }
+}
+
 {{ mock.wrapped_decl | render }}
 {
     {% if mock.return_value %}
     {{ mock.return_value_decl | render }};
 
     {% endif %}
-    switch ({{ mock.state_name }}.mode)
-    {
-        case 1:
-            {% if mock.return_value %}
-            return_value =
-            {{ mock.state_name }}.return_value;
-            {% endif %}
-            break;
-        case 2:
-            {% if mock.return_value %}
-            return_value =
-            {% endif %}
-            {{ mock.state_name }}.implementation({{ mock.forward_args }});
-            break;
-        default:
-            {% if mock.return_value %}
-            return_value =
-            {% endif %}
-            {{ mock.real_func }}({{ mock.forward_args }});
-            break;
-    }
+    {% if mock.variadic %}
+#ifdef __GNUC__
+    {% if mock.return_value %}
+    return_value = *(({{ mock.return_value_decl.type | render }} *)__builtin_apply((void *){{ mock.perform_func }}, __builtin_apply_args(), {{ variadic_forward_size }}));
+    {% else %}
+    __builtin_apply((void*){{ mock.perform_func }}, __builtin_apply_args(), {{ variadic_forward_size }});
+    {% endif %}
+#else
+    {% endif %}
+    {% if mock.return_value %}
+    return_value = {{ mock.perform_func }}({{ mock.forward_args }});
+    {% else %}
+    {{ mock.perform_func }}({{ mock.forward_args }});
+    {% endif %}
+    {% if mock.variadic %}
+#endif
+    {% endif %}
 
     if ({{ mock.state_name }}.errno_value != 0)
     {

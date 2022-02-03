@@ -1,7 +1,7 @@
 /*
 Mocks header file
 
-Generated with Narmock v0.2.14 (https://github.com/vberlier/narmock)
+Generated with Narmock v0.2.15 (https://github.com/vberlier/narmock)
 Do not edit manually
 */
 
@@ -223,7 +223,7 @@ typedef struct _narmock_params_type_for_open _narmock_params_type_for_open;
 struct _narmock_state_type_for_open
 {
     const _narmock_state_type_for_open *(*mock_return)(int return_value);
-    const _narmock_state_type_for_open *(*mock_implementation)(int (*implementation)(const char *arg1, int arg2));
+    const _narmock_state_type_for_open *(*mock_implementation)(int (*implementation)(const char *arg1, int arg2, ...));
     const _narmock_state_type_for_open *(*mock_errno)(int errno_value);
     const _narmock_state_type_for_open *(*disable_mock)(void);
     const _narmock_state_type_for_open *(*reset)(void);
@@ -364,6 +364,32 @@ struct _narmock_params_type_for_return_add_one
 };
 
 const _narmock_state_type_for_return_add_one *_narmock_get_mock_for_return_add_one(const void *function);
+
+// NARMOCK_DECLARATION sum_variadic
+// NARMOCK_LINKER_FLAGS -Wl,--wrap=sum_variadic
+
+typedef struct _narmock_state_type_for_sum_variadic _narmock_state_type_for_sum_variadic;
+typedef struct _narmock_params_type_for_sum_variadic _narmock_params_type_for_sum_variadic;
+
+struct _narmock_state_type_for_sum_variadic
+{
+    const _narmock_state_type_for_sum_variadic *(*mock_return)(void);
+    const _narmock_state_type_for_sum_variadic *(*mock_implementation)(void (*implementation)(int arg1, int *arg2, ...));
+    const _narmock_state_type_for_sum_variadic *(*mock_errno)(int errno_value);
+    const _narmock_state_type_for_sum_variadic *(*disable_mock)(void);
+    const _narmock_state_type_for_sum_variadic *(*reset)(void);
+    int call_count;
+    const _narmock_params_type_for_sum_variadic *last_call;
+};
+
+struct _narmock_params_type_for_sum_variadic
+{
+    int arg1;
+    int *arg2;
+    int errsv;
+};
+
+const _narmock_state_type_for_sum_variadic *_narmock_get_mock_for_sum_variadic(const void *function);
 
 // NARMOCK_DECLARATION time
 // NARMOCK_LINKER_FLAGS -Wl,--wrap=time

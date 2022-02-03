@@ -78,6 +78,7 @@ class GeneratedMock:
         self.func_name = function.name
 
         self.wrapped_func = f"__wrap_{self.func_name}"
+        self.perform_func = f"__perform_{self.func_name}"
         self.real_func = f"__real_{self.func_name}"
         self.linker_flags = f"-Wl,--wrap={self.func_name}"
 
@@ -88,11 +89,16 @@ class GeneratedMock:
 
         self.func_decl = self.function.declaration.type
         self.func_params = self.func_decl.args.params if self.func_decl.args else []
+
+        self.variadic = bool(self.func_params) and isinstance(
+            self.func_params[-1], node.EllipsisParam
+        )
+
         self.params_struct = [
             decl(param.name, node.PtrDecl([], param.type.type))
             if isinstance(param.type, node.ArrayDecl)
             else param
-            for param in self.func_params
+            for param in (self.func_params[:-1] if self.variadic else self.func_params)
             if param.name
         ]
         self.forward_args = ", ".join(param.name for param in self.params_struct)
@@ -139,6 +145,7 @@ class GeneratedMock:
 
         self.real_decl = self.rename_function(self.real_func)
         self.wrapped_decl = self.rename_function(self.wrapped_func)
+        self.perform_decl = self.rename_function(self.perform_func)
 
     def state_function(self, name, parameters):
         return function_ptr_decl(
@@ -165,7 +172,7 @@ class FileGenerator:
     SOURCE_FILE = "__mocks__.c"
     HEADER_FILE = "__mocks__.h"
 
-    def __init__(self):
+    def __init__(self, variadic_forward_size=512):
         self.code_generator = CGenerator()
 
         self.jinja_env = Environment(
@@ -181,6 +188,7 @@ class FileGenerator:
         self.mocks = []
         self.system_includes = set()
         self.local_includes = set()
+        self.variadic_forward_size = variadic_forward_size
 
     def add_mock(self, mocked_function):
         self.mocks.append(GeneratedMock(mocked_function))
@@ -203,6 +211,7 @@ class FileGenerator:
                 {"stddef.h", "errno.h"}, {header_filename}, directory
             ),
             mocks=mocks,
+            variadic_forward_size=self.variadic_forward_size,
         )
 
         header_code = self.header_template.render(

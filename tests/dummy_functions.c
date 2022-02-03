@@ -1,5 +1,6 @@
 #include "dummy_functions.h"
 
+#include <stdarg.h>
 #include <stdio.h>
 
 int add(int x, int y)
@@ -53,4 +54,19 @@ DummyStruct *add_two(DummyStruct *dummy_struct)
 DummyStruct *(*return_add_one(void))(DummyStruct *dummy_struct)
 {
     return add_one;
+}
+
+void sum_variadic(int count, int *result, ...)
+{
+    va_list ap;
+    va_start(ap, result);
+
+    *result = 0;
+
+    for (int i = 0; i < count; i++)
+    {
+        *result += va_arg(ap, int);
+    }
+
+    va_end(ap);
 }

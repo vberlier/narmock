@@ -288,3 +288,24 @@ TEST(open_function)
 
     ASSERT_EQ(open("a", 0), 1);
 }
+
+void sum_variadic_stub(int count, int *result, ...)
+{
+    (void)count;
+    *result = 5;
+}
+
+TEST(sum_variadic_function)
+{
+    MOCK(sum_variadic)->mock_implementation(sum_variadic_stub);
+
+    int value = 0;
+
+    sum_variadic(3, &value, 9, 9, 9);
+    ASSERT_EQ(value, 5);
+
+    MOCK(sum_variadic)->disable_mock();
+
+    sum_variadic(3, &value, 9, 9, 9);
+    ASSERT_EQ(value, 27);
+}

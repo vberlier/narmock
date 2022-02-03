@@ -7,8 +7,7 @@ __all__ = ["main"]
 import sys
 from argparse import ArgumentParser, FileType
 
-from .api import generate_mocks, collect_linker_flags
-
+from .api import collect_linker_flags, generate_mocks
 
 parser = ArgumentParser(
     prog="narmock", description="A minimal mocking utility for C projects."
@@ -36,11 +35,23 @@ parser.add_argument(
     help="keep argument names",
 )
 
+parser.add_argument(
+    "-s",
+    metavar="<size>",
+    default=512,
+    help="stack size used to forward variadic arguments",
+)
+
 
 def main():
     args = parser.parse_args()
 
     if args.g:
-        generate_mocks(expanded_code=args.g.read(), directory=args.d, keep_args=args.k)
+        generate_mocks(
+            expanded_code=args.g.read(),
+            directory=args.d,
+            keep_args=args.k,
+            variadic_forward_size=args.s,
+        )
     elif args.f:
         print(" ".join(collect_linker_flags(directory=args.d)).strip())

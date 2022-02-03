@@ -17,5 +17,6 @@ DummyStruct *compose_twice(DummyStruct *dummy_struct,
                            DummyStruct *(*dummy_struct_modifier)(DummyStruct *dummy_struct));
 DummyStruct *add_two(DummyStruct *dummy_struct);
 DummyStruct *(*return_add_one(void))(DummyStruct *dummy_struct);
+void sum_variadic(int count, int *result, ...);
 
 #endif

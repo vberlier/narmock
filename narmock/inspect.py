@@ -50,8 +50,7 @@ def rename_arguments(function_declaration):
 
     for i, param in enumerate(function_declaration.type.args.params):
         if isinstance(param, node.EllipsisParam):
-            del function_declaration.type.args.params[i]
-            return function_declaration
+            break
 
         param_type = param.type
 

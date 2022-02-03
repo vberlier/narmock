@@ -1,7 +1,7 @@
 /*
 Mocks source file
 
-Generated with Narmock v0.2.14 (https://github.com/vberlier/narmock)
+Generated with Narmock v0.2.15 (https://github.com/vberlier/narmock)
 Do not edit manually
 */
 
@@ -25,6 +25,7 @@ void narmock_reset_all_mocks(void)
     MOCK(print_hello)->reset();
     MOCK(print_world)->reset();
     MOCK(return_add_one)->reset();
+    MOCK(sum_variadic)->reset();
     MOCK(time)->reset();
     MOCK(write)->reset();
 }
@@ -68,25 +69,24 @@ static _narmock_private_state_type_for_add _narmock_state_for_add =
     .errno_value = 0
 };
 
+int __perform_add(int arg1, int arg2)
+{
+    switch (_narmock_state_for_add.mode)
+    {
+        case 1:
+            return _narmock_state_for_add.return_value;
+        case 2:
+            return _narmock_state_for_add.implementation(arg1, arg2);
+        default:
+            return __real_add(arg1, arg2);
+    }
+}
+
 int __wrap_add(int arg1, int arg2)
 {
     int return_value;
 
-    switch (_narmock_state_for_add.mode)
-    {
-        case 1:
-            return_value =
-            _narmock_state_for_add.return_value;
-            break;
-        case 2:
-            return_value =
-            _narmock_state_for_add.implementation(arg1, arg2);
-            break;
-        default:
-            return_value =
-            __real_add(arg1, arg2);
-            break;
-    }
+    return_value = __perform_add(arg1, arg2);
 
     if (_narmock_state_for_add.errno_value != 0)
     {
@@ -190,25 +190,24 @@ static _narmock_private_state_type_for_add_one _narmock_state_for_add_one =
     .errno_value = 0
 };
 
+DummyStruct *__perform_add_one(DummyStruct *arg1)
+{
+    switch (_narmock_state_for_add_one.mode)
+    {
+        case 1:
+            return _narmock_state_for_add_one.return_value;
+        case 2:
+            return _narmock_state_for_add_one.implementation(arg1);
+        default:
+            return __real_add_one(arg1);
+    }
+}
+
 DummyStruct *__wrap_add_one(DummyStruct *arg1)
 {
     DummyStruct *return_value;
 
-    switch (_narmock_state_for_add_one.mode)
-    {
-        case 1:
-            return_value =
-            _narmock_state_for_add_one.return_value;
-            break;
-        case 2:
-            return_value =
-            _narmock_state_for_add_one.implementation(arg1);
-            break;
-        default:
-            return_value =
-            __real_add_one(arg1);
-            break;
-    }
+    return_value = __perform_add_one(arg1);
 
     if (_narmock_state_for_add_one.errno_value != 0)
     {
@@ -312,25 +311,24 @@ static _narmock_private_state_type_for_compose_twice _narmock_state_for_compose_
     .errno_value = 0
 };
 
+DummyStruct *__perform_compose_twice(DummyStruct *arg1, DummyStruct *(*arg2)(DummyStruct *dummy_struct))
+{
+    switch (_narmock_state_for_compose_twice.mode)
+    {
+        case 1:
+            return _narmock_state_for_compose_twice.return_value;
+        case 2:
+            return _narmock_state_for_compose_twice.implementation(arg1, arg2);
+        default:
+            return __real_compose_twice(arg1, arg2);
+    }
+}
+
 DummyStruct *__wrap_compose_twice(DummyStruct *arg1, DummyStruct *(*arg2)(DummyStruct *dummy_struct))
 {
     DummyStruct *return_value;
 
-    switch (_narmock_state_for_compose_twice.mode)
-    {
-        case 1:
-            return_value =
-            _narmock_state_for_compose_twice.return_value;
-            break;
-        case 2:
-            return_value =
-            _narmock_state_for_compose_twice.implementation(arg1, arg2);
-            break;
-        default:
-            return_value =
-            __real_compose_twice(arg1, arg2);
-            break;
-    }
+    return_value = __perform_compose_twice(arg1, arg2);
 
     if (_narmock_state_for_compose_twice.errno_value != 0)
     {
@@ -434,25 +432,24 @@ static _narmock_private_state_type_for_edit_number _narmock_state_for_edit_numbe
     .errno_value = 0
 };
 
+DummyStruct *__perform_edit_number(DummyStruct *arg1, int arg2)
+{
+    switch (_narmock_state_for_edit_number.mode)
+    {
+        case 1:
+            return _narmock_state_for_edit_number.return_value;
+        case 2:
+            return _narmock_state_for_edit_number.implementation(arg1, arg2);
+        default:
+            return __real_edit_number(arg1, arg2);
+    }
+}
+
 DummyStruct *__wrap_edit_number(DummyStruct *arg1, int arg2)
 {
     DummyStruct *return_value;
 
-    switch (_narmock_state_for_edit_number.mode)
-    {
-        case 1:
-            return_value =
-            _narmock_state_for_edit_number.return_value;
-            break;
-        case 2:
-            return_value =
-            _narmock_state_for_edit_number.implementation(arg1, arg2);
-            break;
-        default:
-            return_value =
-            __real_edit_number(arg1, arg2);
-            break;
-    }
+    return_value = __perform_edit_number(arg1, arg2);
 
     if (_narmock_state_for_edit_number.errno_value != 0)
     {
@@ -556,25 +553,24 @@ static _narmock_private_state_type_for_fopen _narmock_state_for_fopen =
     .errno_value = 0
 };
 
+FILE *__perform_fopen(const char *arg1, const char *arg2)
+{
+    switch (_narmock_state_for_fopen.mode)
+    {
+        case 1:
+            return _narmock_state_for_fopen.return_value;
+        case 2:
+            return _narmock_state_for_fopen.implementation(arg1, arg2);
+        default:
+            return __real_fopen(arg1, arg2);
+    }
+}
+
 FILE *__wrap_fopen(const char *arg1, const char *arg2)
 {
     FILE *return_value;
 
-    switch (_narmock_state_for_fopen.mode)
-    {
-        case 1:
-            return_value =
-            _narmock_state_for_fopen.return_value;
-            break;
-        case 2:
-            return_value =
-            _narmock_state_for_fopen.implementation(arg1, arg2);
-            break;
-        default:
-            return_value =
-            __real_fopen(arg1, arg2);
-            break;
-    }
+    return_value = __perform_fopen(arg1, arg2);
 
     if (_narmock_state_for_fopen.errno_value != 0)
     {
@@ -677,19 +673,24 @@ static _narmock_private_state_type_for_keep_args_output_message _narmock_state_f
     .errno_value = 0
 };
 
-void __wrap_keep_args_output_message(const char *message)
+void __perform_keep_args_output_message(const char *message)
 {
     switch (_narmock_state_for_keep_args_output_message.mode)
     {
         case 1:
-            break;
+            return;
         case 2:
             _narmock_state_for_keep_args_output_message.implementation(message);
-            break;
+            return;
         default:
             __real_keep_args_output_message(message);
-            break;
+            return;
     }
+}
+
+void __wrap_keep_args_output_message(const char *message)
+{
+    __perform_keep_args_output_message(message);
 
     if (_narmock_state_for_keep_args_output_message.errno_value != 0)
     {
@@ -792,25 +793,24 @@ static _narmock_private_state_type_for_mount _narmock_state_for_mount =
     .errno_value = 0
 };
 
+int __perform_mount(const char *arg1, const char *arg2, const char *arg3, unsigned long int arg4, const void *arg5)
+{
+    switch (_narmock_state_for_mount.mode)
+    {
+        case 1:
+            return _narmock_state_for_mount.return_value;
+        case 2:
+            return _narmock_state_for_mount.implementation(arg1, arg2, arg3, arg4, arg5);
+        default:
+            return __real_mount(arg1, arg2, arg3, arg4, arg5);
+    }
+}
+
 int __wrap_mount(const char *arg1, const char *arg2, const char *arg3, unsigned long int arg4, const void *arg5)
 {
     int return_value;
 
-    switch (_narmock_state_for_mount.mode)
-    {
-        case 1:
-            return_value =
-            _narmock_state_for_mount.return_value;
-            break;
-        case 2:
-            return_value =
-            _narmock_state_for_mount.implementation(arg1, arg2, arg3, arg4, arg5);
-            break;
-        default:
-            return_value =
-            __real_mount(arg1, arg2, arg3, arg4, arg5);
-            break;
-    }
+    return_value = __perform_mount(arg1, arg2, arg3, arg4, arg5);
 
     if (_narmock_state_for_mount.errno_value != 0)
     {
@@ -877,7 +877,7 @@ const _narmock_state_type_for_mount *_narmock_get_mock_for_mount(const void *fun
 
 // NARMOCK_IMPLEMENTATION open
 
-int __real_open(const char *arg1, int arg2);
+int __real_open(const char *arg1, int arg2, ...);
 
 typedef struct _narmock_private_state_type_for_open _narmock_private_state_type_for_open;
 
@@ -887,13 +887,13 @@ struct _narmock_private_state_type_for_open
 
     int mode;
     int return_value;
-    int (*implementation)(const char *arg1, int arg2);
+    int (*implementation)(const char *arg1, int arg2, ...);
     int errno_value;
     _narmock_params_type_for_open last_call;
 };
 
 static const _narmock_state_type_for_open *_narmock_mock_return_function_for_open(int return_value);
-static const _narmock_state_type_for_open *_narmock_mock_implementation_function_for_open(int (*implementation)(const char *arg1, int arg2));
+static const _narmock_state_type_for_open *_narmock_mock_implementation_function_for_open(int (*implementation)(const char *arg1, int arg2, ...));
 static const _narmock_state_type_for_open *_narmock_mock_errno_function_for_open(int errno_value);
 static const _narmock_state_type_for_open *_narmock_disable_mock_function_for_open(void);
 static const _narmock_state_type_for_open *_narmock_reset_function_for_open(void);
@@ -914,25 +914,40 @@ static _narmock_private_state_type_for_open _narmock_state_for_open =
     .errno_value = 0
 };
 
-int __wrap_open(const char *arg1, int arg2)
+int __perform_open(const char *arg1, int arg2, ...)
 {
-    int return_value;
-
     switch (_narmock_state_for_open.mode)
     {
         case 1:
-            return_value =
-            _narmock_state_for_open.return_value;
-            break;
+            return _narmock_state_for_open.return_value;
         case 2:
-            return_value =
-            _narmock_state_for_open.implementation(arg1, arg2);
-            break;
+#ifdef __GNUC__
+            (void)arg1;
+            (void)arg2;
+            __builtin_return(__builtin_apply((void *)_narmock_state_for_open.implementation, __builtin_apply_args(), 512));
+#else
+            return _narmock_state_for_open.implementation(arg1, arg2);
+#endif
         default:
-            return_value =
-            __real_open(arg1, arg2);
-            break;
+#ifdef __GNUC__
+            (void)arg1;
+            (void)arg2;
+            __builtin_return(__builtin_apply((void *)__real_open, __builtin_apply_args(), 512));
+#else
+            return __real_open(arg1, arg2);
+#endif
     }
+}
+
+int __wrap_open(const char *arg1, int arg2, ...)
+{
+    int return_value;
+
+#ifdef __GNUC__
+    return_value = *((int *)__builtin_apply((void *)__perform_open, __builtin_apply_args(), 512));
+#else
+    return_value = __perform_open(arg1, arg2);
+#endif
 
     if (_narmock_state_for_open.errno_value != 0)
     {
@@ -957,7 +972,7 @@ static const _narmock_state_type_for_open *_narmock_mock_return_function_for_ope
     return &_narmock_state_for_open.public;
 }
 
-static const _narmock_state_type_for_open *_narmock_mock_implementation_function_for_open(int (*implementation)(const char *arg1, int arg2))
+static const _narmock_state_type_for_open *_narmock_mock_implementation_function_for_open(int (*implementation)(const char *arg1, int arg2, ...))
 {
     _narmock_state_for_open.mode = 2;
     _narmock_state_for_open.implementation = implementation;
@@ -1035,19 +1050,24 @@ static _narmock_private_state_type_for_output_message _narmock_state_for_output_
     .errno_value = 0
 };
 
-void __wrap_output_message(const char *arg1)
+void __perform_output_message(const char *arg1)
 {
     switch (_narmock_state_for_output_message.mode)
     {
         case 1:
-            break;
+            return;
         case 2:
             _narmock_state_for_output_message.implementation(arg1);
-            break;
+            return;
         default:
             __real_output_message(arg1);
-            break;
+            return;
     }
+}
+
+void __wrap_output_message(const char *arg1)
+{
+    __perform_output_message(arg1);
 
     if (_narmock_state_for_output_message.errno_value != 0)
     {
@@ -1150,25 +1170,24 @@ static _narmock_private_state_type_for_pipe _narmock_state_for_pipe =
     .errno_value = 0
 };
 
+int __perform_pipe(int arg1[2])
+{
+    switch (_narmock_state_for_pipe.mode)
+    {
+        case 1:
+            return _narmock_state_for_pipe.return_value;
+        case 2:
+            return _narmock_state_for_pipe.implementation(arg1);
+        default:
+            return __real_pipe(arg1);
+    }
+}
+
 int __wrap_pipe(int arg1[2])
 {
     int return_value;
 
-    switch (_narmock_state_for_pipe.mode)
-    {
-        case 1:
-            return_value =
-            _narmock_state_for_pipe.return_value;
-            break;
-        case 2:
-            return_value =
-            _narmock_state_for_pipe.implementation(arg1);
-            break;
-        default:
-            return_value =
-            __real_pipe(arg1);
-            break;
-    }
+    return_value = __perform_pipe(arg1);
 
     if (_narmock_state_for_pipe.errno_value != 0)
     {
@@ -1271,19 +1290,24 @@ static _narmock_private_state_type_for_print_hello _narmock_state_for_print_hell
     .errno_value = 0
 };
 
-void __wrap_print_hello()
+void __perform_print_hello()
 {
     switch (_narmock_state_for_print_hello.mode)
     {
         case 1:
-            break;
+            return;
         case 2:
             _narmock_state_for_print_hello.implementation();
-            break;
+            return;
         default:
             __real_print_hello();
-            break;
+            return;
     }
+}
+
+void __wrap_print_hello()
+{
+    __perform_print_hello();
 
     if (_narmock_state_for_print_hello.errno_value != 0)
     {
@@ -1385,19 +1409,24 @@ static _narmock_private_state_type_for_print_world _narmock_state_for_print_worl
     .errno_value = 0
 };
 
-void __wrap_print_world(void)
+void __perform_print_world(void)
 {
     switch (_narmock_state_for_print_world.mode)
     {
         case 1:
-            break;
+            return;
         case 2:
             _narmock_state_for_print_world.implementation();
-            break;
+            return;
         default:
             __real_print_world();
-            break;
+            return;
     }
+}
+
+void __wrap_print_world(void)
+{
+    __perform_print_world();
 
     if (_narmock_state_for_print_world.errno_value != 0)
     {
@@ -1500,25 +1529,24 @@ static _narmock_private_state_type_for_return_add_one _narmock_state_for_return_
     .errno_value = 0
 };
 
+DummyStruct *(*__perform_return_add_one(void))(DummyStruct *dummy_struct)
+{
+    switch (_narmock_state_for_return_add_one.mode)
+    {
+        case 1:
+            return _narmock_state_for_return_add_one.return_value;
+        case 2:
+            return _narmock_state_for_return_add_one.implementation();
+        default:
+            return __real_return_add_one();
+    }
+}
+
 DummyStruct *(*__wrap_return_add_one(void))(DummyStruct *dummy_struct)
 {
     DummyStruct *(*return_value)(DummyStruct *dummy_struct);
 
-    switch (_narmock_state_for_return_add_one.mode)
-    {
-        case 1:
-            return_value =
-            _narmock_state_for_return_add_one.return_value;
-            break;
-        case 2:
-            return_value =
-            _narmock_state_for_return_add_one.implementation();
-            break;
-        default:
-            return_value =
-            __real_return_add_one();
-            break;
-    }
+    return_value = __perform_return_add_one();
 
     if (_narmock_state_for_return_add_one.errno_value != 0)
     {
@@ -1583,6 +1611,141 @@ const _narmock_state_type_for_return_add_one *_narmock_get_mock_for_return_add_o
     return &_narmock_state_for_return_add_one.public;
 }
 
+// NARMOCK_IMPLEMENTATION sum_variadic
+
+void __real_sum_variadic(int arg1, int *arg2, ...);
+
+typedef struct _narmock_private_state_type_for_sum_variadic _narmock_private_state_type_for_sum_variadic;
+
+struct _narmock_private_state_type_for_sum_variadic
+{
+    _narmock_state_type_for_sum_variadic public;
+
+    int mode;
+    void (*implementation)(int arg1, int *arg2, ...);
+    int errno_value;
+    _narmock_params_type_for_sum_variadic last_call;
+};
+
+static const _narmock_state_type_for_sum_variadic *_narmock_mock_return_function_for_sum_variadic(void);
+static const _narmock_state_type_for_sum_variadic *_narmock_mock_implementation_function_for_sum_variadic(void (*implementation)(int arg1, int *arg2, ...));
+static const _narmock_state_type_for_sum_variadic *_narmock_mock_errno_function_for_sum_variadic(int errno_value);
+static const _narmock_state_type_for_sum_variadic *_narmock_disable_mock_function_for_sum_variadic(void);
+static const _narmock_state_type_for_sum_variadic *_narmock_reset_function_for_sum_variadic(void);
+
+static _narmock_private_state_type_for_sum_variadic _narmock_state_for_sum_variadic =
+{
+    .public = {
+        .mock_return = _narmock_mock_return_function_for_sum_variadic,
+        .mock_implementation = _narmock_mock_implementation_function_for_sum_variadic,
+        .mock_errno = _narmock_mock_errno_function_for_sum_variadic,
+        .disable_mock = _narmock_disable_mock_function_for_sum_variadic,
+        .reset = _narmock_reset_function_for_sum_variadic,
+        .call_count = 0,
+        .last_call = NULL
+    },
+
+    .mode = 0,
+    .errno_value = 0
+};
+
+void __perform_sum_variadic(int arg1, int *arg2, ...)
+{
+    switch (_narmock_state_for_sum_variadic.mode)
+    {
+        case 1:
+            return;
+        case 2:
+#ifdef __GNUC__
+            (void)arg1;
+            (void)arg2;
+            __builtin_return(__builtin_apply((void *)_narmock_state_for_sum_variadic.implementation, __builtin_apply_args(), 512));
+#else
+            _narmock_state_for_sum_variadic.implementation(arg1, arg2);
+            return;
+#endif
+        default:
+#ifdef __GNUC__
+            (void)arg1;
+            (void)arg2;
+            __builtin_return(__builtin_apply((void *)__real_sum_variadic, __builtin_apply_args(), 512));
+#else
+            __real_sum_variadic(arg1, arg2);
+            return;
+#endif
+    }
+}
+
+void __wrap_sum_variadic(int arg1, int *arg2, ...)
+{
+#ifdef __GNUC__
+    __builtin_apply((void*)__perform_sum_variadic, __builtin_apply_args(), 512);
+#else
+    __perform_sum_variadic(arg1, arg2);
+#endif
+
+    if (_narmock_state_for_sum_variadic.errno_value != 0)
+    {
+        errno = _narmock_state_for_sum_variadic.errno_value;
+    }
+
+    _narmock_state_for_sum_variadic.public.call_count++;
+
+    _narmock_params_type_for_sum_variadic last_call = { arg1, arg2, errno };
+
+    _narmock_state_for_sum_variadic.last_call = last_call;
+    _narmock_state_for_sum_variadic.public.last_call = &_narmock_state_for_sum_variadic.last_call;
+
+    return;
+}
+
+static const _narmock_state_type_for_sum_variadic *_narmock_mock_return_function_for_sum_variadic(void)
+{
+    _narmock_state_for_sum_variadic.mode = 1;
+
+    return &_narmock_state_for_sum_variadic.public;
+}
+
+static const _narmock_state_type_for_sum_variadic *_narmock_mock_implementation_function_for_sum_variadic(void (*implementation)(int arg1, int *arg2, ...))
+{
+    _narmock_state_for_sum_variadic.mode = 2;
+    _narmock_state_for_sum_variadic.implementation = implementation;
+
+    return &_narmock_state_for_sum_variadic.public;
+}
+
+static const _narmock_state_type_for_sum_variadic *_narmock_mock_errno_function_for_sum_variadic(int errno_value)
+{
+    _narmock_state_for_sum_variadic.errno_value = errno_value;
+
+    return &_narmock_state_for_sum_variadic.public;
+}
+
+static const _narmock_state_type_for_sum_variadic *_narmock_disable_mock_function_for_sum_variadic(void)
+{
+    _narmock_state_for_sum_variadic.mode = 0;
+    _narmock_state_for_sum_variadic.errno_value = 0;
+
+    return &_narmock_state_for_sum_variadic.public;
+}
+
+static const _narmock_state_type_for_sum_variadic *_narmock_reset_function_for_sum_variadic(void)
+{
+    _narmock_state_for_sum_variadic.mode = 0;
+    _narmock_state_for_sum_variadic.errno_value = 0;
+    _narmock_state_for_sum_variadic.public.call_count = 0;
+    _narmock_state_for_sum_variadic.public.last_call = NULL;
+
+    return &_narmock_state_for_sum_variadic.public;
+}
+
+const _narmock_state_type_for_sum_variadic *_narmock_get_mock_for_sum_variadic(const void *function)
+{
+    (void)function;
+
+    return &_narmock_state_for_sum_variadic.public;
+}
+
 // NARMOCK_IMPLEMENTATION time
 
 time_t __real_time(time_t *arg1);
@@ -1622,25 +1785,24 @@ static _narmock_private_state_type_for_time _narmock_state_for_time =
     .errno_value = 0
 };
 
+time_t __perform_time(time_t *arg1)
+{
+    switch (_narmock_state_for_time.mode)
+    {
+        case 1:
+            return _narmock_state_for_time.return_value;
+        case 2:
+            return _narmock_state_for_time.implementation(arg1);
+        default:
+            return __real_time(arg1);
+    }
+}
+
 time_t __wrap_time(time_t *arg1)
 {
     time_t return_value;
 
-    switch (_narmock_state_for_time.mode)
-    {
-        case 1:
-            return_value =
-            _narmock_state_for_time.return_value;
-            break;
-        case 2:
-            return_value =
-            _narmock_state_for_time.implementation(arg1);
-            break;
-        default:
-            return_value =
-            __real_time(arg1);
-            break;
-    }
+    return_value = __perform_time(arg1);
 
     if (_narmock_state_for_time.errno_value != 0)
     {
@@ -1744,25 +1906,24 @@ static _narmock_private_state_type_for_write _narmock_state_for_write =
     .errno_value = 0
 };
 
+ssize_t __perform_write(int arg1, const void *arg2, size_t arg3)
+{
+    switch (_narmock_state_for_write.mode)
+    {
+        case 1:
+            return _narmock_state_for_write.return_value;
+        case 2:
+            return _narmock_state_for_write.implementation(arg1, arg2, arg3);
+        default:
+            return __real_write(arg1, arg2, arg3);
+    }
+}
+
 ssize_t __wrap_write(int arg1, const void *arg2, size_t arg3)
 {
     ssize_t return_value;
 
-    switch (_narmock_state_for_write.mode)
-    {
-        case 1:
-            return_value =
-            _narmock_state_for_write.return_value;
-            break;
-        case 2:
-            return_value =
-            _narmock_state_for_write.implementation(arg1, arg2, arg3);
-            break;
-        default:
-            return_value =
-            __real_write(arg1, arg2, arg3);
-            break;
-    }
+    return_value = __perform_write(arg1, arg2, arg3);
 
     if (_narmock_state_for_write.errno_value != 0)
     {

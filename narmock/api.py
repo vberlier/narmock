@@ -4,13 +4,18 @@
 __all__ = ["generate_mocks", "collect_linker_flags"]
 
 
+from .generator import FileGenerator, GeneratedMock
 from .inspect import collect_mocked_functions
-from .generator import GeneratedMock, FileGenerator
 
 
-def generate_mocks(expanded_code, directory, keep_args):
+def generate_mocks(
+    expanded_code,
+    directory,
+    keep_args=False,
+    variadic_forward_size=512,
+):
     """Identify mocked functions and generate the source and header files."""
-    generator = FileGenerator()
+    generator = FileGenerator(variadic_forward_size)
 
     for function in collect_mocked_functions(expanded_code, keep_args):
         generator.add_mock(function)
