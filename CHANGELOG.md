@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.17 (2022-02-03)
+### Fix
+* Forgot to update readme ([`cfcb500`](https://github.com/vberlier/narmock/commit/cfcb500739b3cbfaf7038d7c48b5356765cbd69d))
+
 ## v0.2.16 (2022-02-03)
 ### Fix
 * Forward variadic arguments using gcc builtins ([`83c4a6c`](https://github.com/vberlier/narmock/commit/83c4a6c3e31d1ce611b7ac9cbc240f563b9260f2))
