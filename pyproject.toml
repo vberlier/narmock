@@ -24,7 +24,7 @@ pycparser = "^2.21"
 Jinja2 = "^3.0.3"
 
 [tool.poetry.dev-dependencies]
-black = "^22.1.0"
+black = "^22.10.0"
 isort = "^5.10.1"
 python-semantic-release = "^7.24.0"
 
