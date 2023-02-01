@@ -25,7 +25,7 @@ Jinja2 = "^3.0.3"
 
 [tool.poetry.dev-dependencies]
 black = "^22.1.0"
-isort = "^5.10.1"
+isort = "^5.11.5"
 python-semantic-release = "^7.24.0"
 
 [tool.poetry.scripts]
